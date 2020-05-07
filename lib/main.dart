@@ -35,9 +35,9 @@ class MyAppState extends State<MyApp>{
         title: "College Companion",
         home: Scaffold(
 
-          body: _pageOptions[_selectedPage],
+          body: _pageOptions[_selectedPage], //selecting page
           bottomNavigationBar: BottomNavigationBar(
-
+            // setting attributes for the bar
             backgroundColor: const Color(0xFF1a232d),
             selectedItemColor: Colors.white,
             unselectedItemColor: const Color(0xFF6a7076),
