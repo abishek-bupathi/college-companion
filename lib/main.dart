@@ -38,12 +38,12 @@ class MyAppState extends State<MyApp>{
           body: _pageOptions[_selectedPage], //selecting page
           bottomNavigationBar: BottomNavigationBar(
             // setting attributes for the bar
-            backgroundColor: const Color(0xFF1a232d),
+        //    backgroundColor: const Color(0xFF1a232d),
             selectedItemColor: Colors.white,
-            unselectedItemColor: const Color(0xFF6a7076),
+            unselectedItemColor: Colors.white38,
             showSelectedLabels: false,
             showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
+        //    type: BottomNavigationBarType.fixed,
 
             currentIndex: _selectedPage,
             onTap: (int index){
@@ -54,22 +54,27 @@ class MyAppState extends State<MyApp>{
             items: [
               BottomNavigationBarItem(
                   icon: Icon(CustomIcons.test),
+                  backgroundColor: Color(0xFF00a064),
                   title: Text('Exam'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.calendar),
+                backgroundColor: Color(0xFF1cb096),
                 title: Text('Classes'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.list),
+                backgroundColor: Color(0xFFd2341b),
                 title: Text('Academic'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.scout),
+                backgroundColor: Color(0xFF0488e3),
                 title: Text('Activities'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.man_avatar),
+                backgroundColor: Color(0xFF9e1bd6),
                 title: Text('Profile'),
               ),
             ],

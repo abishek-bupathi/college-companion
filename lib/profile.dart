@@ -7,7 +7,7 @@ class Profile extends StatelessWidget{
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/backgrounds/wallpaper5.jpg"),
+              image: AssetImage("assets/backgrounds/wallpaper3.jpg"),
               fit: BoxFit.cover)),
       child: Scaffold(
           backgroundColor: Colors.transparent,

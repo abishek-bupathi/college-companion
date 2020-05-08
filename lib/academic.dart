@@ -8,7 +8,7 @@ class Academic extends StatelessWidget{
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/backgrounds/wallpaper2.jpg"), fit: BoxFit.cover)),
+              image: AssetImage("assets/backgrounds/wallpaper1.jpg"), fit: BoxFit.cover)),
       child: Scaffold(
              backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -16,7 +16,6 @@ class Academic extends StatelessWidget{
               backgroundColor: Colors.transparent,
               title: Text('Academic', style: TextStyle(fontSize: 50,color: Colors.white)),
             )
-
        ),
 
     );
