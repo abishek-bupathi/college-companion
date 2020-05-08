@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 
   @override
     State<StatefulWidget> createState() {
-      // TODO: implement createState
       return MyAppState();
     }
 }
@@ -32,6 +31,7 @@ class MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "College Companion",
         home: Scaffold(
 
