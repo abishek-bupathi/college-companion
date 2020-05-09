@@ -15,10 +15,9 @@ class Academic extends StatelessWidget{
             elevation: 0,
             backgroundColor: Colors.transparent,
             title: Text('Academic', style: TextStyle(fontSize: 50,color: Colors.white)),
+
           )
       ),
-
     );
   }
-
 }

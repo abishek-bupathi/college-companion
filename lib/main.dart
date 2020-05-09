@@ -20,6 +20,8 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp>{
 
   int _selectedPage = 2;
+  var _pageController = PageController(initialPage: 2);
+
   final _pageOptions = [
     Exams(),
     Classes(),
@@ -28,6 +30,8 @@ class MyAppState extends State<MyApp>{
     Profile(),
   ];
 
+  int index = 2;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,22 +39,32 @@ class MyAppState extends State<MyApp>{
         title: "College Companion",
         home: Scaffold(
 
-          body: _pageOptions[_selectedPage], //selecting page
-          bottomNavigationBar: BottomNavigationBar(
-            // setting attributes for the bar
-        //    backgroundColor: const Color(0xFF1a232d),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white38,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-        //    type: BottomNavigationBarType.fixed,
-
-            currentIndex: _selectedPage,
-            onTap: (int index){
+          body: PageView(
+            children: _pageOptions,
+            onPageChanged: (index){
               setState(() {
                 _selectedPage = index;
               });
             },
+            controller: _pageController,
+          ),
+
+          bottomNavigationBar: BottomNavigationBar(
+            // setting attributes for the bar
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white38,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            //    backgroundColor: const Color(0xFF1a232d),
+            //    type: BottomNavigationBarType.fixed,
+
+            currentIndex: _selectedPage,
+            onTap: (index){
+              setState(() {
+                _pageController.jumpToPage(index);
+              });
+            },
+
             items: [
               BottomNavigationBarItem(
                   icon: Icon(CustomIcons.test),
