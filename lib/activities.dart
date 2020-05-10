@@ -8,18 +8,19 @@ class Activities extends StatelessWidget{
 
     return Container(
       decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/backgrounds/wallpaper5.jpg"), fit: BoxFit.cover)),
+          gradient: LinearGradient(
+        colors: [Color(0xFFe6f2ff), Colors.white],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      )),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text('Activities', style: TextStyle(fontSize: 50,color: Colors.white)),
-          )
-
-      ),
-
+            title: Text('Activities',
+                style: TextStyle(fontSize: 50, color: Colors.blue)),
+          )),
     );
   }
 
