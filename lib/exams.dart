@@ -7,10 +7,11 @@ class Exams extends StatelessWidget{
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-        colors: [Color(0xFFe6ffe6), Colors.white],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+             colors: [Color(0xFFe6ffe6), Colors.white],
+             begin: Alignment.topCenter,
+             end: Alignment.bottomCenter,
+         )
+      ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -18,7 +19,8 @@ class Exams extends StatelessWidget{
             backgroundColor: Colors.transparent,
             title: Text('Exams',
                 style: TextStyle(fontSize: 50, color: Colors.green)),
-          )),
+          )
+      ),
     );
   }
 }

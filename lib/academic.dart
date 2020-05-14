@@ -8,10 +8,11 @@ class Academic extends StatelessWidget{
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-        colors: [Color(0xFFffebe6), Colors.white],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+            colors: [Color(0xFFffebe6), Colors.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+        )
+      ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -19,7 +20,8 @@ class Academic extends StatelessWidget{
             backgroundColor: Colors.transparent,
             title: Text('Academic',
                 style: TextStyle(fontSize: 50, color: Colors.red)),
-          )),
+          )
+      ),
     );
   }
 }
