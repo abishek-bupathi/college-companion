@@ -70,7 +70,7 @@ class MyAppState extends State<MyApp>{
                 activeIcon: Icon(
                   CustomIcons.test,
                   color: Color(0xFF00a064),
-                  size: 25,
+                  size: 30,
                 ),
                 title: Text('Exam'),
               ),
@@ -78,28 +78,28 @@ class MyAppState extends State<MyApp>{
                 icon: Icon(CustomIcons.calendar),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.calendar, color: Color(0xFFff8000), size: 25,),
+                  CustomIcons.calendar, color: Color(0xFFff8000), size: 30,),
                 title: Text('Classes'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.list),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.list, color: Color(0xFFd2341b), size: 25,),
+                  CustomIcons.list, color: Color(0xFFd2341b), size: 30,),
                 title: Text('Academic'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.scout),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.scout, color: Color(0xFF0488e3), size: 25,),
+                  CustomIcons.scout, color: Color(0xFF0488e3), size: 30,),
                 title: Text('Activities'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.man_avatar),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.man_avatar, color: Color(0xFF9e1bd6), size: 25,),
+                  CustomIcons.man_avatar, color: Color(0xFF9e1bd6), size: 30,),
                 title: Text('Profile'),
               ),
             ],

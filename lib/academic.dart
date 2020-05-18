@@ -100,6 +100,7 @@ class Academic extends StatelessWidget {
                     SizedBox(height: 15),
                     Expanded(
                         child: SingleChildScrollView(
+
                             child: Container(
                                 padding: EdgeInsets.all(20),
                                 child: Column(children: <Widget>[
