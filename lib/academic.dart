@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import './calendar.dart';
 
-class Academic extends StatelessWidget {
+class Academic extends StatefulWidget {
+  @override
+  _AcademicState createState() => _AcademicState();
+}
+
+class _AcademicState extends State<Academic> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,21 +50,27 @@ class Academic extends StatelessWidget {
               ),
             ],
           ),
+          body: ListItems(),
         ));
   }
+}
 
-  AddTaskDialog(BuildContext context) {
-    String dropdownValue = 'Maths';
-    return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Color(0xFFFF6E5E),
-            child: Container(
+AddTaskDialog(BuildContext context) {
+  String _module = 'Maths', _date = "Not set", _note = "", _title = "";
+  var dateWithoutFormat;
+
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Color(0xFFFF6E5E),
+          child: StatefulBuilder(// You need this, notice the parameters below:
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
               height: 500,
               child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -77,10 +90,13 @@ class Academic extends StatelessWidget {
                                 bottomRight: Radius.circular(15),
                                 topLeft: Radius.circular(15)),
                           ),
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 50,
+                          child: Hero(
+                            tag: "Add",
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 50,
+                            ),
                           ),
                         ),
                         Text(
@@ -100,7 +116,6 @@ class Academic extends StatelessWidget {
                     SizedBox(height: 15),
                     Expanded(
                         child: SingleChildScrollView(
-
                             child: Container(
                                 padding: EdgeInsets.all(20),
                                 child: Column(children: <Widget>[
@@ -122,6 +137,11 @@ class Academic extends StatelessWidget {
                                             BorderSide(color: Colors.white),
                                       ),
                                     ),
+                                    onSubmitted: (String title) {
+                                      setState(() {
+                                        _title = title;
+                                      });
+                                    },
                                   ),
                                   SizedBox(height: 10),
                                   TextField(
@@ -142,6 +162,11 @@ class Academic extends StatelessWidget {
                                             BorderSide(color: Colors.white),
                                       ),
                                     ),
+                                    onSubmitted: (String note) {
+                                      setState(() {
+                                        _note = note;
+                                      });
+                                    },
                                   ),
                                   SizedBox(height: 20),
                                   Column(
@@ -158,14 +183,46 @@ class Academic extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text("Wed 15, Mar",
+                                            Text(_date,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 25)),
-                                            Icon(
-                                              Icons.edit,
-                                              color: Colors.white,
-                                            ),
+                                            ButtonTheme(
+                                                minWidth: 5,
+                                                child: FlatButton(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  onPressed: () {
+                                                    DatePicker.showDatePicker(
+                                                        context,
+                                                        showTitleActions: true,
+                                                        minTime: DateTime(
+                                                            2020, 1, 1),
+                                                        maxTime: DateTime(
+                                                            2025, 6, 7),
+                                                        onConfirm: (date) {
+                                                      setState(() {
+                                                        dateWithoutFormat =
+                                                            date;
+                                                        _date = DateFormat(
+                                                                "dd MMM, yyyy")
+                                                            .format(
+                                                                dateWithoutFormat);
+                                                      });
+                                                    },
+                                                        currentTime:
+                                                            DateTime.now(),
+                                                        locale: LocaleType.en);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.edit,
+                                                    color: Colors.white,
+                                                  ),
+                                                  color: Colors.transparent,
+                                                )),
                                           ]),
                                       Divider(
                                         color: Colors.white,
@@ -184,7 +241,7 @@ class Academic extends StatelessWidget {
                                       child: DropdownButton<String>(
                                         dropdownColor: Colors.white,
                                         isExpanded: true,
-                                        value: dropdownValue,
+                                        value: _module,
                                         icon: Icon(
                                           Icons.arrow_drop_down,
                                           color: Color(0XFFFF6D5D),
@@ -195,9 +252,9 @@ class Academic extends StatelessWidget {
                                             color: Color(0XFFFF6D5D),
                                             fontSize: 25),
                                         onChanged: (String newValue) {
-                                          /*   setState(() {
-                                dropdownValue = newValue;
-                              });*/
+                                          setState(() {
+                                            _module = newValue;
+                                          });
                                         },
                                         items: <String>[
                                           'Maths',
@@ -226,7 +283,9 @@ class Academic extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             elevation: 0,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             child: Text(
                               "Cancel",
                               style: TextStyle(color: Colors.white),
@@ -250,8 +309,14 @@ class Academic extends StatelessWidget {
                       ),
                     )
                   ]),
-            ));
-      },
-    );
-  }
+            );
+          }));
+    },
+  );
+}
+
+ListItems() {
+  return Container(
+    child: Text("List is here !"),
+  );
 }
