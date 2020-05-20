@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import './calendar.dart';
 
-class Activities extends StatelessWidget {
+class Activities extends StatefulWidget {
+  @override
+  _ActivitiesState createState() => _ActivitiesState();
+}
+
+class _ActivitiesState extends State<Activities> {
   int color_blue = 0xFF0276CB;
 
   @override
@@ -44,21 +51,25 @@ class Activities extends StatelessWidget {
           )),
     );
   }
+}
 
-  AddActivityDialog(BuildContext context) {
-    String date_time = '9:00 Am Wed 15, Mar';
+AddActivityDialog(BuildContext context) {
+  String _dateEvent = " - ", _timeEvent = " - ", _note = "", _title = "";
+  var dateWithoutFormat, timeWithoutFormat;
 
-    return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Color(0xFF3C9CE2),
-            child: Container(
-                height: 525,
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Color(0xFF3C9CE2),
+          child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+                height: 485,
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -106,97 +117,166 @@ class Activities extends StatelessWidget {
                                     TextField(
                                       cursorColor: Colors.white,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
+                                          color: Colors.white, fontSize: 20),
                                       decoration: InputDecoration(
                                         focusColor: Colors.white,
                                         labelStyle: new TextStyle(
-                                            color: Colors.white, fontSize: 18),
+                                            color: Colors.white, fontSize: 20),
                                         labelText: 'Title',
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xFF89CDFF)),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
-                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                       ),
                                     ),
-                                    SizedBox(height: 10),
+                                    SizedBox(height: 20),
                                     TextField(
                                       cursorColor: Colors.white,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
+                                          color: Colors.white, fontSize: 20),
                                       decoration: InputDecoration(
                                         labelText: 'Note',
                                         focusColor: Colors.white,
                                         labelStyle: new TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xFF89CDFF)),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
-                                        ),
+                                            color: Colors.white, fontSize: 20),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                       ),
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
                                       cursorColor: Colors.white,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
+                                          color: Colors.white, fontSize: 20),
                                       decoration: InputDecoration(
                                         labelText: 'Location',
                                         focusColor: Colors.white,
                                         labelStyle: new TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xFF89CDFF)),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
-                                        ),
+                                            color: Colors.white, fontSize: 20),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                       ),
                                     ),
                                     SizedBox(height: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          "Date and Time",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        SizedBox(height: 3),
-                                        Row(
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.white),
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                        child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(date_time,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25)),
-                                              Icon(
-                                                Icons.edit,
-                                                color: Colors.white,
+                                              Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.schedule,
+                                                    color: Color(0xFF3C9CE2),
+                                                    size: 15,
+                                                  ),
+                                                  SizedBox(width: 5),
+                                                  Text(_timeEvent,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xFF3C9CE2),
+                                                          fontSize: 15)),
+                                                ],
                                               ),
-                                            ]),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Divider(
-                                          thickness: 0.75,
-                                          color: Color(0xFF89CDFF),
-                                        )
-                                      ],
-                                    ),
+                                              Row(
+                                                children: <Widget>[
+                                                  Icon(Icons.calendar_today,
+                                                      color: Color(0xFF3C9CE2),
+                                                      size: 15),
+                                                  SizedBox(width: 5),
+                                                  Text(_dateEvent,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xFF3C9CE2),
+                                                          fontSize: 15)),
+                                                ],
+                                              ),
+                                              ButtonTheme(
+                                                  minWidth: 5,
+                                                  child: IconButton(
+                                                    icon: Icon(
+                                                      Icons.edit,
+                                                      color: Color(0xFF3C9CE2),
+                                                    ),
+                                                    onPressed: () {
+                                                      DatePicker.showDatePicker(
+                                                          context,
+                                                          showTitleActions:
+                                                              true,
+                                                          minTime: DateTime(
+                                                              2020, 1, 1),
+                                                          maxTime: DateTime(
+                                                              2050, 6, 7),
+                                                          onConfirm: (date) {
+                                                        setState(() {
+                                                          dateWithoutFormat =
+                                                              date;
+                                                          _dateEvent = DateFormat(
+                                                                  "dd MMM, yyyy")
+                                                              .format(
+                                                                  dateWithoutFormat);
+
+                                                          DatePicker
+                                                              .showTime12hPicker(
+                                                                  context,
+                                                                  showTitleActions:
+                                                                      true,
+                                                                  onConfirm:
+                                                                      (time) {
+                                                            setState(() {
+                                                              timeWithoutFormat =
+                                                                  time;
+                                                              _timeEvent = DateFormat(
+                                                                      "hh:mm a")
+                                                                  .format(
+                                                                      timeWithoutFormat);
+                                                            });
+                                                          },
+                                                                  currentTime:
+                                                                      DateTime
+                                                                          .now(),
+                                                                  locale:
+                                                                      LocaleType
+                                                                          .en);
+                                                        });
+                                                      },
+                                                          currentTime:
+                                                              DateTime.now(),
+                                                          locale:
+                                                              LocaleType.en);
+                                                    },
+                                                  )),
+                                            ])),
+
                                     // SizedBox(height: 10),
                                   ])))),
                       Container(
@@ -210,7 +290,9 @@ class Activities extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               elevation: 0,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               child: Text(
                                 "Cancel",
                                 style: TextStyle(color: Colors.white),
@@ -233,8 +315,8 @@ class Activities extends StatelessWidget {
                           ],
                         ),
                       )
-                    ])));
-      },
-    );
-  }
+                    ]));
+          }));
+    },
+  );
 }

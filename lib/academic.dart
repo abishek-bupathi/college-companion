@@ -56,7 +56,7 @@ class _AcademicState extends State<Academic> {
 }
 
 AddTaskDialog(BuildContext context) {
-  String _module = 'Maths', _date = "Not set", _note = "", _title = "";
+  String _module = 'Maths', _date = " - ", _note = "", _title = "";
   var dateWithoutFormat;
 
   return showDialog(
@@ -67,11 +67,11 @@ AddTaskDialog(BuildContext context) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          backgroundColor: Color(0xFFFF6E5E),
+          backgroundColor: Color(0xFFFF5B51),
           child: StatefulBuilder(// You need this, notice the parameters below:
               builder: (BuildContext context, StateSetter setState) {
             return Container(
-              height: 500,
+              height: 470,
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -84,7 +84,7 @@ AddTaskDialog(BuildContext context) {
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Color(0xFFFF403E),
+                            color: Color(0xFFEB2E2E),
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(15),
@@ -122,20 +122,22 @@ AddTaskDialog(BuildContext context) {
                                   TextField(
                                     cursorColor: Colors.white,
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 25),
+                                        color: Colors.white, fontSize: 20),
                                     decoration: InputDecoration(
                                       focusColor: Colors.white,
                                       labelStyle: new TextStyle(
-                                          color: Colors.white, fontSize: 18),
+                                          color: Colors.white, fontSize: 20),
                                       labelText: 'Title',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFFFACA9)),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                     ),
                                     onSubmitted: (String title) {
                                       setState(() {
@@ -143,24 +145,26 @@ AddTaskDialog(BuildContext context) {
                                       });
                                     },
                                   ),
-                                  SizedBox(height: 10),
+                                  SizedBox(height: 20),
                                   TextField(
                                     cursorColor: Colors.white,
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 25),
+                                        color: Colors.white, fontSize: 20),
                                     decoration: InputDecoration(
                                       labelText: 'Note',
                                       focusColor: Colors.white,
                                       labelStyle: new TextStyle(
-                                          color: Colors.white, fontSize: 18),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFFFACA9)),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
+                                          color: Colors.white, fontSize: 20),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                     ),
                                     onSubmitted: (String note) {
                                       setState(() {
@@ -169,65 +173,60 @@ AddTaskDialog(BuildContext context) {
                                     },
                                   ),
                                   SizedBox(height: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Due",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 13),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(_date,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 25)),
-                                            ButtonTheme(
-                                                minWidth: 5,
-                                                child: FlatButton(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                  ),
-                                                  onPressed: () {
-                                                    DatePicker.showDatePicker(
-                                                        context,
-                                                        showTitleActions: true,
-                                                        minTime: DateTime(
-                                                            2020, 1, 1),
-                                                        maxTime: DateTime(
-                                                            2025, 6, 7),
-                                                        onConfirm: (date) {
-                                                      setState(() {
-                                                        dateWithoutFormat =
-                                                            date;
-                                                        _date = DateFormat(
-                                                                "dd MMM, yyyy")
-                                                            .format(
-                                                                dateWithoutFormat);
-                                                      });
-                                                    },
-                                                        currentTime:
-                                                            DateTime.now(),
-                                                        locale: LocaleType.en);
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
+                                            Icons.calendar_today,
+                                            color: Color(0xFFFF5B51),
+                                            size: 20,
+                                          ),
+                                          Text("   " + _date,
+                                              style: TextStyle(
+                                                  color: Color(0xFFFF5B51),
+                                                  fontSize: 20)),
+                                          ButtonTheme(
+                                              minWidth: 0,
+                                              child: IconButton(
+                                                focusColor: Colors.black12,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                iconSize: 20,
+                                                icon: Icon(
+                                                  Icons.edit,
+                                                  color: Color(0xFFFF5B51),
+                                                ),
+                                                onPressed: () {
+                                                  DatePicker.showDatePicker(
+                                                      context,
+                                                      showTitleActions: true,
+                                                      minTime:
+                                                          DateTime(2020, 1, 1),
+                                                      maxTime:
+                                                          DateTime(2025, 6, 7),
+                                                      onConfirm: (date) {
+                                                    setState(() {
+                                                      dateWithoutFormat = date;
+                                                      _date = DateFormat(
+                                                              "dd MMM, yyyy")
+                                                          .format(
+                                                              dateWithoutFormat);
+                                                    });
                                                   },
-                                                  child: Icon(
-                                                    Icons.edit,
-                                                    color: Colors.white,
-                                                  ),
-                                                  color: Colors.transparent,
-                                                )),
-                                          ]),
-                                      Divider(
-                                        color: Colors.white,
-                                      )
-                                    ],
+                                                      currentTime:
+                                                          DateTime.now(),
+                                                      locale: LocaleType.en);
+                                                },
+                                              )),
+                                        ]),
                                   ),
                                   SizedBox(height: 20),
                                   Container(
@@ -244,13 +243,13 @@ AddTaskDialog(BuildContext context) {
                                         value: _module,
                                         icon: Icon(
                                           Icons.arrow_drop_down,
-                                          color: Color(0XFFFF6D5D),
+                                          color: Color(0xFFFF5B51),
                                         ),
                                         iconSize: 30,
                                         elevation: 0,
                                         style: TextStyle(
-                                            color: Color(0XFFFF6D5D),
-                                            fontSize: 25),
+                                            color: Color(0xFFFF5B51),
+                                            fontSize: 20),
                                         onChanged: (String newValue) {
                                           setState(() {
                                             _module = newValue;
