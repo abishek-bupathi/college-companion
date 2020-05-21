@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import './calendar.dart';
@@ -9,6 +12,10 @@ class Academic extends StatefulWidget {
 }
 
 class _AcademicState extends State<Academic> {
+  List<String> titleList = ["Assignment 1", "Assignment 3", "Assignment 4", "Class Test", "Assignment 2"];
+  List<String> noteList = ["Based on Lecture 2", "Based on Lecture 10","Based on Lecture 2 and 3","Study all concepts","Based on Lecture 4 and 5",];
+  List<String> moduleList = ["Maths", "Programming", "Analog Devices", "Microprocessor", "Electrical"];
+  List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb",];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,19 +50,25 @@ class _AcademicState extends State<Academic> {
               new IconButton(
                 icon: new Icon(Icons.add),
                 onPressed: () {
-                  AddTaskDialog(context);
+                  addTaskDialog(context);
                 },
                 iconSize: 40,
                 color: Colors.red,
               ),
             ],
           ),
-          body: ListItems(),
+          body:  new Container(
+            padding: EdgeInsets.fromLTRB(0 ,5, 0, 5),
+            child: new ListView.builder(
+                itemBuilder: (_, int index) => Item(titleList[index], noteList[index], moduleList[index], dateList[index]),
+              itemCount: 5,
+            ),
+          ),
         ));
   }
 }
 
-AddTaskDialog(BuildContext context) {
+addTaskDialog(BuildContext context) {
   String _module = 'Maths', _date = " - ", _note = "", _title = "";
   var dateWithoutFormat;
 
@@ -216,7 +229,7 @@ AddTaskDialog(BuildContext context) {
                                                     setState(() {
                                                       dateWithoutFormat = date;
                                                       _date = DateFormat(
-                                                              "dd MMM, yyyy")
+                                                              "EEE, dd MMM")
                                                           .format(
                                                               dateWithoutFormat);
                                                     });
@@ -314,8 +327,73 @@ AddTaskDialog(BuildContext context) {
   );
 }
 
-ListItems() {
-  return Container(
-    child: Text("List is here !"),
-  );
+
+class Item extends StatefulWidget {
+
+  String title, note, module, date;
+
+  Item(this.title, this.note, this.module, this.date);
+
+  @override
+  _ItemState createState() => _ItemState();
+}
+
+class _ItemState extends State<Item> {
+  var check_icon = Icons.radio_button_unchecked;
+  @override
+  Widget build(BuildContext context) {
+    return new Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
+        height: 75,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFff9d7e),Color(0xFFff403d)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.red,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(check_icon, color: Colors.white,),
+                    onPressed: (){
+                      setState(() {
+                        check_icon = Icons.check_circle;
+                      });
+                    },
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(widget.title ,style: TextStyle(color: Colors.white, fontSize: 25),),
+                      Text(widget.note,style: TextStyle(color: Colors.white, fontSize: 15),)
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(widget.module ,style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text(widget.date,style: TextStyle(color: Colors.white, fontSize: 16),)
+                ],
+              )
+            ],
+          )
+      ),
+      elevation: 5,
+      margin: EdgeInsets.all(10),
+
+    );
+  }
 }
