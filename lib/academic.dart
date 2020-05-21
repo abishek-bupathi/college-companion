@@ -13,9 +13,9 @@ class Academic extends StatefulWidget {
 
 class _AcademicState extends State<Academic> {
   List<String> titleList = ["Assignment 1", "Assignment 3", "Assignment 4", "Class Test", "Assignment 2"];
-  List<String> noteList = ["Based on Lecture 2", "Based on Lecture 10","Based on Lecture 2 and 3","Study all concepts","Based on Lecture 4 and 5",];
+  List<String> noteList = ["Based on Lecture 2", "Based on Lecture 10","Based on Lecture 2 and 3","Study all concepts","Based on Lecture 4 and 5"];
   List<String> moduleList = ["Maths", "Programming", "Analog Devices", "Microprocessor", "Electrical"];
-  List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb",];
+  List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,10 +58,11 @@ class _AcademicState extends State<Academic> {
             ],
           ),
           body:  new Container(
-            padding: EdgeInsets.fromLTRB(0 ,5, 0, 5),
+            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: new ListView.builder(
+              physics: BouncingScrollPhysics(),
                 itemBuilder: (_, int index) => Item(titleList[index], noteList[index], moduleList[index], dateList[index]),
-              itemCount: 5,
+              itemCount: titleList.length,
             ),
           ),
         ));
@@ -340,6 +341,7 @@ class Item extends StatefulWidget {
 
 class _ItemState extends State<Item> {
   var check_icon = Icons.radio_button_unchecked;
+  int ctr = 0;
   @override
   Widget build(BuildContext context) {
     return new Card(
@@ -366,7 +368,11 @@ class _ItemState extends State<Item> {
                     icon: Icon(check_icon, color: Colors.white,),
                     onPressed: (){
                       setState(() {
-                        check_icon = Icons.check_circle;
+                        if(ctr%2 == 0) {
+                          check_icon = Icons.check_circle;
+                        }else
+                          check_icon = Icons.radio_button_unchecked;
+                          ctr++;
                       });
                     },
                   ),
@@ -391,7 +397,8 @@ class _ItemState extends State<Item> {
             ],
           )
       ),
-      elevation: 5,
+      elevation: 8,
+  //    shadowColor: Colors.red,
       margin: EdgeInsets.all(10),
 
     );
