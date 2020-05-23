@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 
 
 class Calendar extends StatelessWidget {
@@ -15,12 +16,12 @@ class Calendar extends StatelessWidget {
   }
 
   dialogContent(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        //...bottom card part,
-        //...top circlular image part,
-      ],
+    return Container(
+        height: 425,
+        padding: EdgeInsets.all(5),
+        child: CalendarCarousel(
+          daysHaveCircularBorder: true,
+        )
     );
   }
-  }
-
+}

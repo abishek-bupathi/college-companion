@@ -9,14 +9,17 @@ class Activities extends StatefulWidget {
 }
 
 class _ActivitiesState extends State<Activities> {
-  int color_blue = 0xFF0276CB;
-
+ int color_blue = 0xFF0276CB;
+  List<String> titleList = ["Badminton", "Photography", "Swimming", "Quiz", "Community work"];
+  List<String> locationList = ["Kingfisher", "Bailey Allen","Kingfisher3","ENG-3004","Art and Science Building"];
+  List<String> timeList = ["9:00 AM", "9:00 PM", "11:00 AM", "5:00 PM", "10:00 AM"];
+  List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb"];
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-        colors: [Color(0xFFe6f2ff), Colors.white],
+        colors: [Colors.white/*Color(0xFFe6f2ff)*/, Colors.white],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       )),
@@ -42,20 +45,30 @@ class _ActivitiesState extends State<Activities> {
               new IconButton(
                 icon: new Icon(Icons.add),
                 onPressed: () {
-                  AddActivityDialog(context);
+                  addActivityDialog(context);
                 },
                 iconSize: 40,
                 color: Color(color_blue),
               ),
             ],
-          )),
+          ),
+      body: new Container(
+      padding: EdgeInsets.all(5),
+      child: new ListView.builder(
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (_, int index) => ItemActivity(titleList[index], locationList[index], timeList[index], dateList[index]),
+        itemCount: titleList.length,
+      ),
+     ),
+      ),
     );
   }
 }
 
-AddActivityDialog(BuildContext context) {
+addActivityDialog(BuildContext context) {
   String _dateEvent = " - ", _timeEvent = " - ", _note = "", _title = "";
   var dateWithoutFormat, timeWithoutFormat;
+  int blue_bg = 0xFF3C9CE2, blue_high = 0xFFF0274C7;
 
   return showDialog(
     barrierDismissible: false,
@@ -65,7 +78,7 @@ AddActivityDialog(BuildContext context) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          backgroundColor: Color(0xFF3C9CE2),
+          backgroundColor: Color(blue_bg),
           child: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -82,7 +95,7 @@ AddActivityDialog(BuildContext context) {
                           Container(
                             padding: EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: Color(0xFFF0274C7),
+                              color: Color(blue_high),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(15),
@@ -203,20 +216,20 @@ AddActivityDialog(BuildContext context) {
                                                   Text(_timeEvent,
                                                       style: TextStyle(
                                                           color:
-                                                              Color(0xFF3C9CE2),
+                                                              Color(blue_bg),
                                                           fontSize: 15)),
                                                 ],
                                               ),
                                               Row(
                                                 children: <Widget>[
                                                   Icon(Icons.calendar_today,
-                                                      color: Color(0xFF3C9CE2),
+                                                      color: Color(blue_bg),
                                                       size: 15),
                                                   SizedBox(width: 5),
                                                   Text(_dateEvent,
                                                       style: TextStyle(
                                                           color:
-                                                              Color(0xFF3C9CE2),
+                                                              Color(blue_bg),
                                                           fontSize: 15)),
                                                 ],
                                               ),
@@ -225,7 +238,7 @@ AddActivityDialog(BuildContext context) {
                                                   child: IconButton(
                                                     icon: Icon(
                                                       Icons.edit,
-                                                      color: Color(0xFF3C9CE2),
+                                                      color: Color(blue_bg),
                                                     ),
                                                     onPressed: () {
                                                       DatePicker.showDatePicker(
@@ -309,7 +322,7 @@ AddActivityDialog(BuildContext context) {
                               onPressed: () {},
                               child: Text(
                                 "Done",
-                                style: TextStyle(color: Color(0xFF3C9CE2)),
+                                style: TextStyle(color: Color(blue_bg)),
                               ),
                             )
                           ],
@@ -319,4 +332,81 @@ AddActivityDialog(BuildContext context) {
           }));
     },
   );
+}
+
+class ItemActivity extends StatefulWidget {
+
+  String title, note;
+  var time, date;
+
+  ItemActivity(this.title, this.note, this.time, this.date);
+
+  @override
+  _ItemActivityState createState() => _ItemActivityState();
+}
+
+class _ItemActivityState extends State<ItemActivity> {
+  var check_icon = Icons.radio_button_unchecked;
+  int ctr = 0;
+  @override
+  Widget build(BuildContext context) {
+    return new Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Container(
+          padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
+          height: 75,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF79C6FF),Color(0xFF0173C7)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.red,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(check_icon, color: Colors.white,),
+                    onPressed: (){
+                      setState(() {
+                        if(ctr%2 == 0) {
+                          check_icon = Icons.check_circle;
+                        }else
+                          check_icon = Icons.radio_button_unchecked;
+                        ctr++;
+                      });
+                    },
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(widget.title ,style: TextStyle(color: Colors.white, fontSize: 25),),
+                      Text(widget.note,style: TextStyle(color: Colors.white, fontSize: 15),)
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(widget.time ,style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text(widget.date,style: TextStyle(color: Colors.white, fontSize: 16),)
+                ],
+              )
+            ],
+          )
+      ),
+      elevation: 8,
+      //    shadowColor: Colors.red,
+      margin: EdgeInsets.all(10),
+
+    );
+  }
 }

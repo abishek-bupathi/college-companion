@@ -21,7 +21,7 @@ class _AcademicState extends State<Academic> {
     return Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          colors: [Color(0xFFffebe6), Colors.white],
+          colors: [Colors.white/*Color(0xFFffebe6)*/, Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         )),
@@ -58,10 +58,10 @@ class _AcademicState extends State<Academic> {
             ],
           ),
           body:  new Container(
-            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+            padding: EdgeInsets.all(5),
             child: new ListView.builder(
               physics: BouncingScrollPhysics(),
-                itemBuilder: (_, int index) => Item(titleList[index], noteList[index], moduleList[index], dateList[index]),
+                itemBuilder: (_, int index) => ItemAcademic(titleList[index], noteList[index], moduleList[index], dateList[index]),
               itemCount: titleList.length,
             ),
           ),
@@ -70,8 +70,9 @@ class _AcademicState extends State<Academic> {
 }
 
 addTaskDialog(BuildContext context) {
-  String _module = 'Maths', _date = " - ", _note = "", _title = "";
-  var dateWithoutFormat;
+  String _module = 'Maths',_note = "", _title = "";
+  var dateWithoutFormat,  _date = " - ";
+  int red_bg = 0xFFFF6659, red_high = 0xFFEC4343;
 
   return showDialog(
     barrierDismissible: false,
@@ -81,7 +82,7 @@ addTaskDialog(BuildContext context) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          backgroundColor: Color(0xFFFF5B51),
+          backgroundColor: Color(red_bg),
           child: StatefulBuilder(// You need this, notice the parameters below:
               builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -98,7 +99,7 @@ addTaskDialog(BuildContext context) {
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Color(0xFFEB2E2E),
+                            color: Color(red_high),
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(15),
@@ -200,12 +201,12 @@ addTaskDialog(BuildContext context) {
                                         children: [
                                           Icon(
                                             Icons.calendar_today,
-                                            color: Color(0xFFFF5B51),
+                                            color: Color(red_bg),
                                             size: 20,
                                           ),
                                           Text("   " + _date,
                                               style: TextStyle(
-                                                  color: Color(0xFFFF5B51),
+                                                  color: Color(red_bg),
                                                   fontSize: 20)),
                                           ButtonTheme(
                                               minWidth: 0,
@@ -216,7 +217,7 @@ addTaskDialog(BuildContext context) {
                                                 iconSize: 20,
                                                 icon: Icon(
                                                   Icons.edit,
-                                                  color: Color(0xFFFF5B51),
+                                                  color: Color(red_bg),
                                                 ),
                                                 onPressed: () {
                                                   DatePicker.showDatePicker(
@@ -262,7 +263,7 @@ addTaskDialog(BuildContext context) {
                                         iconSize: 30,
                                         elevation: 0,
                                         style: TextStyle(
-                                            color: Color(0xFFFF5B51),
+                                            color: Color(red_bg),
                                             fontSize: 20),
                                         onChanged: (String newValue) {
                                           setState(() {
@@ -315,7 +316,7 @@ addTaskDialog(BuildContext context) {
                             onPressed: () {},
                             child: Text(
                               "Done",
-                              style: TextStyle(color: Color(0xFFFF6E5E)),
+                              style: TextStyle(color: Color(red_bg)),
                             ),
                           )
                         ],
@@ -329,17 +330,17 @@ addTaskDialog(BuildContext context) {
 }
 
 
-class Item extends StatefulWidget {
+class ItemAcademic extends StatefulWidget {
 
   String title, note, module, date;
 
-  Item(this.title, this.note, this.module, this.date);
+  ItemAcademic(this.title, this.note, this.module, this.date);
 
   @override
-  _ItemState createState() => _ItemState();
+  _ItemAcademicState createState() => _ItemAcademicState();
 }
 
-class _ItemState extends State<Item> {
+class _ItemAcademicState extends State<ItemAcademic> {
   var check_icon = Icons.radio_button_unchecked;
   int ctr = 0;
   @override
