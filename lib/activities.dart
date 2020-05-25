@@ -14,6 +14,8 @@ class _ActivitiesState extends State<Activities> {
   List<String> locationList = ["Kingfisher", "Bailey Allen","Kingfisher3","ENG-3004","Art and Science Building"];
   List<String> timeList = ["9:00 AM", "9:00 PM", "11:00 AM", "5:00 PM", "10:00 AM"];
   List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb"];
+
+  bool completed = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,15 +54,93 @@ class _ActivitiesState extends State<Activities> {
               ),
             ],
           ),
-      body: new Container(
-      padding: EdgeInsets.all(5),
-      child: new ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (_, int index) => ItemActivity(titleList[index], locationList[index], timeList[index], dateList[index]),
-        itemCount: titleList.length,
+        body: new Container(
+           padding: EdgeInsets.all(5),
+           child: new ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (_, int index) => ItemActivity(titleList[index], locationList[index], timeList[index], dateList[index], completed),
+              itemCount: titleList.length,
+           ),
+        ),
       ),
-     ),
+    );
+  }
+}
+
+class ItemActivity extends StatefulWidget {
+
+  String title, note;
+  var time, date;
+  bool completed = false;
+
+  ItemActivity(this.title, this.note, this.time, this.date, this.completed);
+
+ // var check_icon = completed ? Icons.check_circle : Icons.radio_button_unchecked;
+
+  @override
+  _ItemActivityState createState() => _ItemActivityState();
+}
+
+class _ItemActivityState extends State<ItemActivity> {
+
+  @override
+  Widget build(BuildContext context) {
+    return new Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Container(
+          padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
+          height: 75,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: widget.completed ? [Colors.black54,Colors.black54]:[Color(0xFF79C6FF),Color(0xFF0173C7)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.red,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(widget.completed ? Icons.check_circle : Icons.radio_button_unchecked, color: Colors.white,),
+                    onPressed: (){
+                      setState(() {
+                        if(widget.completed) {
+                          widget.completed = false;
+                        }else
+                         widget.completed = true;
+                      });
+                    },
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(widget.title ,style: TextStyle(color: Colors.white, fontSize: 25),),
+                      Text(widget.note,style: TextStyle(color: Colors.white, fontSize: 15),)
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(widget.time ,style: TextStyle(color: Colors.white, fontSize: 16),),
+                  Text(widget.date,style: TextStyle(color: Colors.white, fontSize: 16),)
+                ],
+              )
+            ],
+          )
       ),
+      elevation: 8,
+      //    shadowColor: Colors.red,
+      margin: EdgeInsets.all(10),
+
     );
   }
 }
@@ -334,79 +414,3 @@ addActivityDialog(BuildContext context) {
   );
 }
 
-class ItemActivity extends StatefulWidget {
-
-  String title, note;
-  var time, date;
-
-  ItemActivity(this.title, this.note, this.time, this.date);
-
-  @override
-  _ItemActivityState createState() => _ItemActivityState();
-}
-
-class _ItemActivityState extends State<ItemActivity> {
-  var check_icon = Icons.radio_button_unchecked;
-  int ctr = 0;
-  @override
-  Widget build(BuildContext context) {
-    return new Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
-          height: 75,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF79C6FF),Color(0xFF0173C7)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.red,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(check_icon, color: Colors.white,),
-                    onPressed: (){
-                      setState(() {
-                        if(ctr%2 == 0) {
-                          check_icon = Icons.check_circle;
-                        }else
-                          check_icon = Icons.radio_button_unchecked;
-                        ctr++;
-                      });
-                    },
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(widget.title ,style: TextStyle(color: Colors.white, fontSize: 25),),
-                      Text(widget.note,style: TextStyle(color: Colors.white, fontSize: 15),)
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(widget.time ,style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text(widget.date,style: TextStyle(color: Colors.white, fontSize: 16),)
-                ],
-              )
-            ],
-          )
-      ),
-      elevation: 8,
-      //    shadowColor: Colors.red,
-      margin: EdgeInsets.all(10),
-
-    );
-  }
-}

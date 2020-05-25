@@ -16,6 +16,8 @@ class _AcademicState extends State<Academic> {
   List<String> noteList = ["Based on Lecture 2", "Based on Lecture 10","Based on Lecture 2 and 3","Study all concepts","Based on Lecture 4 and 5"];
   List<String> moduleList = ["Maths", "Programming", "Analog Devices", "Microprocessor", "Electrical"];
   List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb"];
+  bool completed = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,7 +63,7 @@ class _AcademicState extends State<Academic> {
             padding: EdgeInsets.all(5),
             child: new ListView.builder(
               physics: BouncingScrollPhysics(),
-                itemBuilder: (_, int index) => ItemAcademic(titleList[index], noteList[index], moduleList[index], dateList[index]),
+                itemBuilder: (_, int index) => ItemAcademic(titleList[index], noteList[index], moduleList[index], dateList[index], completed),
               itemCount: titleList.length,
             ),
           ),
@@ -333,16 +335,16 @@ addTaskDialog(BuildContext context) {
 class ItemAcademic extends StatefulWidget {
 
   String title, note, module, date;
+  bool completed = false;
 
-  ItemAcademic(this.title, this.note, this.module, this.date);
+  ItemAcademic(this.title, this.note, this.module, this.date, this.completed);
 
   @override
   _ItemAcademicState createState() => _ItemAcademicState();
 }
 
 class _ItemAcademicState extends State<ItemAcademic> {
-  var check_icon = Icons.radio_button_unchecked;
-  int ctr = 0;
+
   @override
   Widget build(BuildContext context) {
     return new Card(
@@ -352,7 +354,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
         height: 75,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFFff9d7e),Color(0xFFff403d)],
+              colors: widget.completed ? [Colors.black54,Colors.black54]:[Color(0xFFff9d7e),Color(0xFFff403d)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -366,14 +368,13 @@ class _ItemAcademicState extends State<ItemAcademic> {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(check_icon, color: Colors.white,),
+                    icon: Icon(widget.completed ? Icons.check_circle : Icons.radio_button_unchecked, color: Colors.white,),
                     onPressed: (){
                       setState(() {
-                        if(ctr%2 == 0) {
-                          check_icon = Icons.check_circle;
+                        if(widget.completed) {
+                          widget.completed = false;
                         }else
-                          check_icon = Icons.radio_button_unchecked;
-                          ctr++;
+                          widget.completed = true;
                       });
                     },
                   ),
