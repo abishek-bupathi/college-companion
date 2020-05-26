@@ -63,7 +63,12 @@ class _AcademicState extends State<Academic> {
             padding: EdgeInsets.all(5),
             child: new ListView.builder(
               physics: BouncingScrollPhysics(),
-                itemBuilder: (_, int index) => ItemAcademic(titleList[index], noteList[index], moduleList[index], dateList[index], completed),
+                itemBuilder: (_, int index) {
+                return GestureDetector(
+                  child:  ItemAcademic(titleList[index], noteList[index], moduleList[index], dateList[index], completed),
+                  onTap: () => editTaskDialog(context,titleList[index], noteList[index], moduleList[index], dateList[index],)
+                );
+                },
               itemCount: titleList.length,
             ),
           ),
@@ -260,7 +265,7 @@ addTaskDialog(BuildContext context) {
                                         value: _module,
                                         icon: Icon(
                                           Icons.arrow_drop_down,
-                                          color: Color(0xFFFF5B51),
+                                          color: Color(red_bg),
                                         ),
                                         iconSize: 30,
                                         elevation: 0,
@@ -405,4 +410,231 @@ class _ItemAcademicState extends State<ItemAcademic> {
 
     );
   }
+}
+
+editTaskDialog(BuildContext context, String title, String note, String module, var date ) {
+
+  int red_bg = 0xFFFF6659, red_high = 0xFFEC4343, label_clr = 0xFFFFACA9;
+  var dateWithoutFormat;
+  var noteController = new TextEditingController();
+  noteController.text = note;
+  var titleController = new TextEditingController();
+  titleController.text = title;
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Color(red_bg),
+          child: StatefulBuilder(// You need this, notice the parameters below:
+              builder: (BuildContext context, StateSetter setState) {
+                return Container(
+                  padding: EdgeInsets.fromLTRB(20,10,20,10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                     children: [
+                     // TODO: Make the title Centred
+                          TextField(
+                                  controller: titleController,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
+                                  decoration: InputDecoration(
+                                    focusColor: Colors.white,
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide.none
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  onSubmitted: (String title_new) {
+                                    setState(() {
+                                      title =title_new;
+                                    });
+                                  }
+                                  ),
+
+                          SizedBox(height: 15),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Note", style: TextStyle(fontSize: 18, color: Color(label_clr)),),
+                              TextField(
+                                controller: noteController,
+
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                  decoration: InputDecoration(
+                                    focusColor: Colors.white,
+
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide.none
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                        BorderSide(color: Colors.white),
+                                       ),
+                                  ),
+                                  onSubmitted: (String note_new) {
+                                    setState(() {
+                                     note = note_new;
+                                    });
+                                  }
+                                  ),
+                              ]
+                          ),
+
+
+                          SizedBox(height: 20,),
+                          Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white),
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_today,
+                                    color: Color(red_bg),
+                                    size: 20,
+                                  ),
+                                  Text("   " + date,
+                                      style: TextStyle(
+                                          color: Color(red_bg),
+                                          fontSize: 20)),
+                                  ButtonTheme(
+                                      minWidth: 0,
+                                      child: IconButton(
+                                        focusColor: Colors.black12,
+                                        highlightColor:
+                                        Colors.transparent,
+                                        iconSize: 20,
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Color(red_bg),
+                                        ),
+                                        onPressed: () {
+                                          DatePicker.showDatePicker(
+                                              context,
+                                              showTitleActions: true,
+                                              minTime:
+                                              DateTime(2020, 1, 1),
+                                              maxTime:
+                                              DateTime(2025, 6, 7),
+                                              onConfirm: (date1) {
+                                                setState(() {
+                                                  dateWithoutFormat = date1;
+                                                  date = DateFormat(
+                                                      "EEE, dd MMM")
+                                                      .format(
+                                                      dateWithoutFormat);
+                                                });
+                                              },
+                                              currentTime:
+                                              DateTime.now(),
+                                              locale: LocaleType.en);
+                                        },
+                                      )),
+                                ]),
+                          ),
+
+                          SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white),
+                            padding:
+                            EdgeInsets.only(left: 10, right: 10),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                dropdownColor: Colors.white,
+                                isExpanded: true,
+                                value: module,
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Color(red_bg),
+                                ),
+                                iconSize: 30,
+                                elevation: 0,
+                                style: TextStyle(
+                                    color: Color(red_bg),
+                                    fontSize: 20),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    module = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Maths',
+                                  'Programming',
+                                  'Electrical',
+                                  'Microprocessor'
+                                ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                          Row(
+                            // TODO: Make the buttons square
+
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                                MaterialButton(
+
+                                    color: Colors.white,
+                                    highlightColor: Colors.white,
+                                    minWidth: 30,
+                                    height: 30,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    onPressed: () {},
+                                    child: Icon(Icons.delete_outline,color: Color(red_high),size: 25,
+                                    ),
+                                ),
+
+
+                              MaterialButton(
+                                color: Colors.white,
+                                highlightColor: Colors.white,
+                                elevation: 0,
+                                minWidth: 30,
+                                height: 30,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.arrow_back_ios,color: Color(red_bg),size: 20,
+                                ),
+                              )
+
+                            ],
+                          )
+
+                        ],
+
+                ));
+              }));
+    },
+  );
 }
