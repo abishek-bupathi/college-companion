@@ -11,6 +11,7 @@ class Activities extends StatefulWidget {
 class _ActivitiesState extends State<Activities> {
  int color_blue = 0xFF0276CB;
   List<String> titleList = ["Badminton", "Photography", "Swimming", "Quiz", "Community work"];
+  List<String> noteList = ["Bring Raquet", "Make Collage", "Don't forget goggles", "General Knowledge qns", "Bring food"];
   List<String> locationList = ["Kingfisher", "Bailey Allen","Kingfisher3","ENG-3004","Art and Science Building"];
   List<String> timeList = ["9:00 AM", "9:00 PM", "11:00 AM", "5:00 PM", "10:00 AM"];
   List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb"];
@@ -58,7 +59,13 @@ class _ActivitiesState extends State<Activities> {
            padding: EdgeInsets.all(5),
            child: new ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemBuilder: (_, int index) => ItemActivity(titleList[index], locationList[index], timeList[index], dateList[index], completed),
+              itemBuilder: (_, int index) {
+                return GestureDetector(
+                    child:  ItemActivity(titleList[index], locationList[index], timeList[index], dateList[index], completed),
+                    onTap: () => editActivityDialog(context,titleList[index], noteList[index], locationList[index], dateList[index], timeList[index])
+                );
+              },
+
               itemCount: titleList.length,
            ),
         ),
@@ -69,11 +76,11 @@ class _ActivitiesState extends State<Activities> {
 
 class ItemActivity extends StatefulWidget {
 
-  String title, note;
+  String title, note, location;
   var time, date;
   bool completed = false;
 
-  ItemActivity(this.title, this.note, this.time, this.date, this.completed);
+  ItemActivity(this.title, this.location, this.time, this.date, this.completed);
 
  // var check_icon = completed ? Icons.check_circle : Icons.radio_button_unchecked;
 
@@ -121,7 +128,7 @@ class _ItemActivityState extends State<ItemActivity> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(widget.title ,style: TextStyle(color: Colors.white, fontSize: 25),),
-                      Text(widget.note,style: TextStyle(color: Colors.white, fontSize: 15),)
+                      Text(widget.location,style: TextStyle(color: Colors.white, fontSize: 15),)
                     ],
                   ),
                 ],
@@ -414,3 +421,263 @@ addActivityDialog(BuildContext context) {
   );
 }
 
+editActivityDialog(BuildContext context, String title, String note, String location, var _date , var _time) {
+
+  int blue_bg = 0xFF3C9CE2, red_high = 0xFFEC4343, label_clr = 0xFF89CDFF;
+  var dateWithoutFormat, timeWithoutFormat;
+  var noteController = new TextEditingController();
+  noteController.text = note;
+  var titleController = new TextEditingController();
+  titleController.text = title;
+  var locationController = new TextEditingController();
+  locationController.text = location;
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Color(blue_bg),
+          child: StatefulBuilder(// You need this, notice the parameters below:
+              builder: (BuildContext context, StateSetter setState) {
+                return Container(
+                    padding: EdgeInsets.fromLTRB(20,10,20,20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+
+                        TextField(
+                            controller: titleController,
+                            cursorColor: Colors.white,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              focusColor: Colors.white,
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide.none
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            onSubmitted: (String title_new) {
+                              setState(() {
+                                title =title_new;
+                              });
+                            }
+                        ),
+
+                        SizedBox(height: 15),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Note", style: TextStyle(fontSize: 18, color: Color(label_clr)),),
+                              TextField(
+                                  controller: noteController,
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                  decoration: InputDecoration(
+                                    focusColor: Colors.white,
+
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide.none
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  onSubmitted: (String note_new) {
+                                    setState(() {
+                                      note = note_new;
+                                    });
+                                  }
+                              ),
+                            ]
+                        ),
+
+
+                        SizedBox(height: 20,),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Location", style: TextStyle(fontSize: 18, color: Color(label_clr)),),
+                              TextField(
+                                  controller: locationController,
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                  decoration: InputDecoration(
+                                    focusColor: Colors.white,
+
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide.none
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  onSubmitted: (String location_new) {
+                                    setState(() {
+                                      location = location_new;
+                                    });
+                                  }
+                              ),
+                            ]
+                        ),
+
+
+
+                        SizedBox(height: 20),
+                        Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                BorderRadius.circular(10),
+                                color: Colors.white),
+                            padding:
+                            EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.schedule,
+                                        color: Color(0xFF3C9CE2),
+                                        size: 15,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(_time,
+                                          style: TextStyle(
+                                              color:
+                                              Color(blue_bg),
+                                              fontSize: 15)),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.calendar_today,
+                                          color: Color(blue_bg),
+                                          size: 15),
+                                      SizedBox(width: 5),
+                                      Text(_date,
+                                          style: TextStyle(
+                                              color:
+                                              Color(blue_bg),
+                                              fontSize: 15)),
+                                    ],
+                                  ),
+                                  ButtonTheme(
+                                      minWidth: 5,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Color(blue_bg),
+                                        ),
+                                        onPressed: () {
+                                          DatePicker.showDatePicker(
+                                              context,
+                                              showTitleActions:
+                                              true,
+                                              minTime: DateTime(
+                                                  2020, 1, 1),
+                                              maxTime: DateTime(
+                                                  2050, 6, 7),
+                                              onConfirm: (date) {
+                                                setState(() {
+                                                  dateWithoutFormat =
+                                                      date;
+                                                  _date = DateFormat(
+                                                      "dd MMM, yyyy")
+                                                      .format(
+                                                      dateWithoutFormat);
+
+                                                  DatePicker
+                                                      .showTime12hPicker(
+                                                      context,
+                                                      showTitleActions:
+                                                      true,
+                                                      onConfirm:
+                                                          (time) {
+                                                        setState(() {
+                                                          timeWithoutFormat =
+                                                              time;
+                                                          _time = DateFormat(
+                                                              "hh:mm a")
+                                                              .format(
+                                                              timeWithoutFormat);
+                                                        });
+                                                      },
+                                                      currentTime:
+                                                      DateTime
+                                                          .now(),
+                                                      locale:
+                                                      LocaleType
+                                                          .en);
+                                                });
+                                              },
+                                              currentTime:
+                                              DateTime.now(),
+                                              locale:
+                                              LocaleType.en);
+                                        },
+                                      )),
+                                ])),
+                        SizedBox(height: 35),
+                        Row(
+
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: RawMaterialButton(
+
+                                highlightColor: Colors.white,
+                                fillColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                onPressed: () {},
+                                child: Icon(Icons.delete_outline,color: Color(red_high),size: 25),
+                              ),
+                            ),
+
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: RawMaterialButton(
+
+                                highlightColor: Colors.white,
+                                fillColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.arrow_back_ios,color: Color(blue_bg),size: 25),
+                              ),
+                            ),
+
+                          ],
+                        )
+
+                      ],
+
+                    ));
+              }));
+    },
+  );
+}

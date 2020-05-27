@@ -12,10 +12,34 @@ class Academic extends StatefulWidget {
 }
 
 class _AcademicState extends State<Academic> {
-  List<String> titleList = ["Assignment 1", "Assignment 3", "Assignment 4", "Class Test", "Assignment 2"];
-  List<String> noteList = ["Based on Lecture 2", "Based on Lecture 10","Based on Lecture 2 and 3","Study all concepts","Based on Lecture 4 and 5"];
-  List<String> moduleList = ["Maths", "Programming", "Analog Devices", "Microprocessor", "Electrical"];
-  List<String> dateList = ["Mon, 23 Feb", "Fri, 28 Feb", "Sat, 21 Feb", "Wed, 24 Feb", "Thu, 25 Feb"];
+  List<String> titleList = [
+    "Assignment 1",
+    "Assignment 3",
+    "Assignment 4",
+    "Class Test",
+    "Assignment 2"
+  ];
+  List<String> noteList = [
+    "Based on Lecture 2",
+    "Based on Lecture 10",
+    "Based on Lecture 2 and 3",
+    "Study all concepts",
+    "Based on Lecture 4 and 5"
+  ];
+  List<String> moduleList = [
+    "Maths",
+    "Programming",
+    "Microprocessor",
+    "Microprocessor",
+    "Electrical"
+  ];
+  List<String> dateList = [
+    "Mon, 23 Feb",
+    "Fri, 28 Feb",
+    "Sat, 21 Feb",
+    "Wed, 24 Feb",
+    "Thu, 25 Feb"
+  ];
   bool completed = false;
 
   @override
@@ -23,7 +47,7 @@ class _AcademicState extends State<Academic> {
     return Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          colors: [Colors.white/*Color(0xFFffebe6)*/, Colors.white],
+          colors: [Colors.white /*Color(0xFFffebe6)*/, Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         )),
@@ -59,16 +83,22 @@ class _AcademicState extends State<Academic> {
               ),
             ],
           ),
-          body:  new Container(
+          body: new Container(
             padding: EdgeInsets.all(5),
             child: new ListView.builder(
               physics: BouncingScrollPhysics(),
-                itemBuilder: (_, int index) {
+              itemBuilder: (_, int index) {
                 return GestureDetector(
-                  child:  ItemAcademic(titleList[index], noteList[index], moduleList[index], dateList[index], completed),
-                  onTap: () => editTaskDialog(context,titleList[index], noteList[index], moduleList[index], dateList[index],)
-                );
-                },
+                    child: ItemAcademic(titleList[index], noteList[index],
+                        moduleList[index], dateList[index], completed),
+                    onTap: () => editTaskDialog(
+                          context,
+                          titleList[index],
+                          noteList[index],
+                          moduleList[index],
+                          dateList[index],
+                        ));
+              },
               itemCount: titleList.length,
             ),
           ),
@@ -77,8 +107,8 @@ class _AcademicState extends State<Academic> {
 }
 
 addTaskDialog(BuildContext context) {
-  String _module = 'Maths',_note = "", _title = "";
-  var dateWithoutFormat,  _date = " - ";
+  String _module = 'Maths', _note = "", _title = "";
+  var dateWithoutFormat, _date = " - ";
   int red_bg = 0xFFFF6659, red_high = 0xFFEC4343;
 
   return showDialog(
@@ -270,8 +300,7 @@ addTaskDialog(BuildContext context) {
                                         iconSize: 30,
                                         elevation: 0,
                                         style: TextStyle(
-                                            color: Color(red_bg),
-                                            fontSize: 20),
+                                            color: Color(red_bg), fontSize: 20),
                                         onChanged: (String newValue) {
                                           setState(() {
                                             _module = newValue;
@@ -336,9 +365,7 @@ addTaskDialog(BuildContext context) {
   );
 }
 
-
 class ItemAcademic extends StatefulWidget {
-
   String title, note, module, date;
   bool completed = false;
 
@@ -349,17 +376,19 @@ class ItemAcademic extends StatefulWidget {
 }
 
 class _ItemAcademicState extends State<ItemAcademic> {
-
   @override
   Widget build(BuildContext context) {
     return new Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
-        height: 75,
+          padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
+          height: 75,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: widget.completed ? [Colors.black54,Colors.black54]:[Color(0xFFff9d7e),Color(0xFFff403d)],
+              colors: widget.completed
+                  ? [Colors.black54, Colors.black54]
+                  : [Color(0xFFff9d7e), Color(0xFFff403d)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -373,12 +402,17 @@ class _ItemAcademicState extends State<ItemAcademic> {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(widget.completed ? Icons.check_circle : Icons.radio_button_unchecked, color: Colors.white,),
-                    onPressed: (){
+                    icon: Icon(
+                      widget.completed
+                          ? Icons.check_circle
+                          : Icons.radio_button_unchecked,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
                       setState(() {
-                        if(widget.completed) {
+                        if (widget.completed) {
                           widget.completed = false;
-                        }else
+                        } else
                           widget.completed = true;
                       });
                     },
@@ -387,8 +421,14 @@ class _ItemAcademicState extends State<ItemAcademic> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(widget.title ,style: TextStyle(color: Colors.white, fontSize: 25),),
-                      Text(widget.note,style: TextStyle(color: Colors.white, fontSize: 15),)
+                      Text(
+                        widget.title,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                      Text(
+                        widget.note,
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      )
                     ],
                   ),
                 ],
@@ -397,23 +437,27 @@ class _ItemAcademicState extends State<ItemAcademic> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(widget.module ,style: TextStyle(color: Colors.white, fontSize: 16),),
-                  Text(widget.date,style: TextStyle(color: Colors.white, fontSize: 16),)
+                  Text(
+                    widget.module,
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  Text(
+                    widget.date,
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  )
                 ],
               )
             ],
-          )
-      ),
+          )),
       elevation: 8,
-  //    shadowColor: Colors.red,
+      //    shadowColor: Colors.red,
       margin: EdgeInsets.all(10),
-
     );
   }
 }
 
-editTaskDialog(BuildContext context, String title, String note, String module, var date ) {
-
+editTaskDialog(
+    BuildContext context, String title, String note, String module, var date) {
   int red_bg = 0xFFFF6659, red_high = 0xFFEC4343, label_clr = 0xFFFFACA9;
   var dateWithoutFormat;
   var noteController = new TextEditingController();
@@ -431,210 +475,188 @@ editTaskDialog(BuildContext context, String title, String note, String module, v
           backgroundColor: Color(red_bg),
           child: StatefulBuilder(// You need this, notice the parameters below:
               builder: (BuildContext context, StateSetter setState) {
-                return Container(
-                  padding: EdgeInsets.fromLTRB(20,10,20,10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                     children: [
-                     // TODO: Make the title Centred
+            return Container(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                        controller: titleController,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                        ),
+                        onSubmitted: (String title_new) {
+                          setState(() {
+                            title = title_new;
+                          });
+                        }),
+                    SizedBox(height: 15),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Note",
+                            style: TextStyle(
+                                fontSize: 18, color: Color(label_clr)),
+                          ),
                           TextField(
-                                  controller: titleController,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
-                                  decoration: InputDecoration(
-                                    focusColor: Colors.white,
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide.none
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.white),
-                                    ),
-                                  ),
-                                  onSubmitted: (String title_new) {
-                                    setState(() {
-                                      title =title_new;
-                                    });
-                                  }
-                                  ),
-
-                          SizedBox(height: 15),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Note", style: TextStyle(fontSize: 18, color: Color(label_clr)),),
-                              TextField(
-                                controller: noteController,
-
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 25),
-                                  decoration: InputDecoration(
-                                    focusColor: Colors.white,
-
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide.none
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                        BorderSide(color: Colors.white),
-                                       ),
-                                  ),
-                                  onSubmitted: (String note_new) {
-                                    setState(() {
-                                     note = note_new;
-                                    });
-                                  }
-                                  ),
-                              ]
-                          ),
-
-
-                          SizedBox(height: 20,),
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white),
-                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today,
-                                    color: Color(red_bg),
-                                    size: 20,
-                                  ),
-                                  Text("   " + date,
-                                      style: TextStyle(
-                                          color: Color(red_bg),
-                                          fontSize: 20)),
-                                  ButtonTheme(
-                                      minWidth: 0,
-                                      child: IconButton(
-                                        focusColor: Colors.black12,
-                                        highlightColor:
-                                        Colors.transparent,
-                                        iconSize: 20,
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color: Color(red_bg),
-                                        ),
-                                        onPressed: () {
-                                          DatePicker.showDatePicker(
-                                              context,
-                                              showTitleActions: true,
-                                              minTime:
-                                              DateTime(2020, 1, 1),
-                                              maxTime:
-                                              DateTime(2025, 6, 7),
-                                              onConfirm: (date1) {
-                                                setState(() {
-                                                  dateWithoutFormat = date1;
-                                                  date = DateFormat(
-                                                      "EEE, dd MMM")
-                                                      .format(
-                                                      dateWithoutFormat);
-                                                });
-                                              },
-                                              currentTime:
-                                              DateTime.now(),
-                                              locale: LocaleType.en);
-                                        },
-                                      )),
-                                ]),
-                          ),
-
-                          SizedBox(height: 20),
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white),
-                            padding:
-                            EdgeInsets.only(left: 10, right: 10),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                dropdownColor: Colors.white,
-                                isExpanded: true,
-                                value: module,
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Color(red_bg),
+                              controller: noteController,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                              decoration: InputDecoration(
+                                focusColor: Colors.white,
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
                                 ),
-                                iconSize: 30,
-                                elevation: 0,
-                                style: TextStyle(
-                                    color: Color(red_bg),
-                                    fontSize: 20),
-                                onChanged: (String newValue) {
-                                  setState(() {
-                                    module = newValue;
-                                  });
-                                },
-                                items: <String>[
-                                  'Maths',
-                                  'Programming',
-                                  'Electrical',
-                                  'Microprocessor'
-                                ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
                               ),
+                              onSubmitted: (String note_new) {
+                                setState(() {
+                                  note = note_new;
+                                });
+                              }),
+                        ]),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.calendar_today,
+                              color: Color(red_bg),
+                              size: 20,
                             ),
+                            Text("   " + date,
+                                style: TextStyle(
+                                    color: Color(red_bg), fontSize: 20)),
+                            ButtonTheme(
+                                minWidth: 0,
+                                child: IconButton(
+                                  focusColor: Colors.black12,
+                                  highlightColor: Colors.transparent,
+                                  iconSize: 20,
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Color(red_bg),
+                                  ),
+                                  onPressed: () {
+                                    DatePicker.showDatePicker(context,
+                                        showTitleActions: true,
+                                        minTime: DateTime(2020, 1, 1),
+                                        maxTime: DateTime(2025, 6, 7),
+                                        onConfirm: (date1) {
+                                      setState(() {
+                                        dateWithoutFormat = date1;
+                                        date = DateFormat("EEE, dd MMM")
+                                            .format(dateWithoutFormat);
+                                      });
+                                    },
+                                        currentTime: DateTime.now(),
+                                        locale: LocaleType.en);
+                                  },
+                                )),
+                          ]),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          dropdownColor: Colors.white,
+                          isExpanded: true,
+                          value: module,
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: Color(red_bg),
                           ),
-                          SizedBox(height: 30),
-                          Row(
-                            // TODO: Make the buttons square
+                          iconSize: 30,
+                          elevation: 0,
+                          style: TextStyle(color: Color(red_bg), fontSize: 20),
+                          onChanged: (String newValue) {
+                            setState(() {
+                              module = newValue;
+                            });
+                          },
+                          items: <String>[
+                            'Maths',
+                            'Programming',
+                            'Electrical',
+                            'Microprocessor'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 35),
+                    Row(
 
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-
-                                MaterialButton(
-
-                                    color: Colors.white,
-                                    highlightColor: Colors.white,
-                                    minWidth: 30,
-                                    height: 30,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    onPressed: () {},
-                                    child: Icon(Icons.delete_outline,color: Color(red_high),size: 25,
-                                    ),
-                                ),
-
-
-                              MaterialButton(
-                                color: Colors.white,
-                                highlightColor: Colors.white,
-                                elevation: 0,
-                                minWidth: 30,
-                                height: 30,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(Icons.arrow_back_ios,color: Color(red_bg),size: 20,
-                                ),
-                              )
-
-                            ],
-                          )
-
-                        ],
-
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: RawMaterialButton(
+                            highlightColor: Colors.white,
+                            fillColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            onPressed: () {},
+                            child: Icon(Icons.delete_outline,
+                                color: Color(red_high), size: 25),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: RawMaterialButton(
+                            highlightColor: Colors.white,
+                            fillColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.arrow_back_ios,
+                                color: Color(red_high), size: 25),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ));
-              }));
+          }));
     },
   );
 }
