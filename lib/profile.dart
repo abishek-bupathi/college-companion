@@ -13,7 +13,7 @@ class _ProfileState extends State<Profile> {
   List<String> modules = ["Maths", "Programming", "Electrical", "Mechanics"];
   List<String> skills = ["Julia","C","Raspberry Pi", "Java", "Python", "Badminton"];
   int light_purple = 0xFFF39CE2,dark_purple = 0xFF8E00B9;
-  String current_avatar = "assets/Avatars/063-batman.png";
+  String current_avatar = "assets/Avatars/0.png";
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,9 @@ class _ProfileState extends State<Profile> {
                     ),
                     IconButton(
                       icon: Icon(CustomIcons.edit, color: Color(dark_purple),size: 25,),
-                      onPressed: (){},
+                      onPressed: (){
+                        editProfileDialog(context,setState,  name, id, course, current_avatar);
+                      },
                     )
                   ],
                 ),
@@ -241,4 +243,94 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+}
+
+editProfileDialog(BuildContext context, StateSetter setState, String name, String id, String course, String current_avatar) {
+  int purple_bg = 0xFFA21FC2;
+
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: Color(purple_bg),
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Container(
+                    height: 400,
+                    child: Column(
+                      children: <Widget>[
+
+                        Container(
+                            height: 150,
+                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(15)
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 110,
+                                  height: 110,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  decoration: BoxDecoration(
+                                    //  borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        image: AssetImage(current_avatar),
+                                        fit: BoxFit.cover),
+
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: GridView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                                    itemCount: 6,
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 15
+                                    ),
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return SizedBox(
+                                          height: 15,
+                                          width: 15,
+                                          child: GestureDetector(
+                                            child: Image(
+                                              image: AssetImage("assets/Avatars/"+index.toString()+".png"),
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                current_avatar =
+                                                "assets/Avatars/"+index.toString()+".png";
+
+                                              });
+                                            },
+                                          )
+                                      );
+                                    },
+                                  ),
+                                ),
+
+                              ],
+
+                            )
+                        )
+
+                      ],
+
+
+                    ),
+                  );
+                }
+            )
+        );
+      }
+  );
 }
