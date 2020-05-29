@@ -653,7 +653,7 @@ editActivityDialog(BuildContext context, String title, String note, String locat
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 onPressed: () {},
-                                child: Icon(Icons.delete_outline,color: Color(red_high),size: 25),
+                                child: Icon(Icons.delete_outline,color: Color(blue_bg),size: 25),
                               ),
                             ),
 
