@@ -1,3 +1,4 @@
+import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,8 @@ class _ProfileState extends State<Profile> {
   List<String> modules = ["Maths", "Programming", "Electrical", "Mechanics"];
   List<String> skills = ["Julia","C","Raspberry Pi", "Java", "Python", "Badminton"];
   int light_purple = 0xFFF39CE2,dark_purple = 0xFF8E00B9;
+  String current_avatar = "assets/Avatars/063-batman.png";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +28,8 @@ class _ProfileState extends State<Profile> {
       child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-            padding: EdgeInsets.fromLTRB(0, 50, 0, 20),
+            padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
+            alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -34,15 +38,26 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.account_box, size: 150,color: Color(dark_purple),),
+                    Container(
+                      width: 105,
+                      height: 105,
+                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      decoration: BoxDecoration(
+                      //  borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: AssetImage(current_avatar), fit: BoxFit.cover),
+
+                      ),
+                    ),
                     IconButton(
-                      icon: Icon(Icons.edit, color: Color(dark_purple),size: 30,),
+                      icon: Icon(CustomIcons.edit, color: Color(dark_purple),size: 25,),
+                      onPressed: (){},
                     )
                   ],
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -50,14 +65,6 @@ class _ProfileState extends State<Profile> {
                     Container(
                       padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
                       decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 15,
-                              offset: Offset(5, 5), // changes position of shadow
-                            ),
-                          ],
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
@@ -72,14 +79,6 @@ class _ProfileState extends State<Profile> {
                     Container(
                         padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 1,
-                                blurRadius: 15,
-                                offset: Offset(5, 5), // changes position of shadow
-                              ),
-                            ],
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(10),
                             gradient: LinearGradient(
@@ -101,14 +100,6 @@ class _ProfileState extends State<Profile> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight
                             ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 15,
-                              offset: Offset(5, 5), // changes position of shadow
-                            ),
-                          ],
                         ),
                         child: Text(course,style: TextStyle(color: Colors.white, fontSize: 20),)
                     ),
@@ -124,15 +115,6 @@ class _ProfileState extends State<Profile> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight
                             ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 15,
-                              offset: Offset(5, 5), // changes position of shadow
-                            ),
-                          ],
-
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -143,7 +125,7 @@ class _ProfileState extends State<Profile> {
                              children: <Widget>[
                                Text("Modules", style: TextStyle(color: Colors.white, fontSize: 25),),
                                IconButton(
-                                 icon: Icon(Icons.edit, color: Colors.white,),
+                                 icon: Icon(CustomIcons.edit, color: Colors.white,size: 20),
                                )
                              ],
                            ),
@@ -166,7 +148,16 @@ class _ProfileState extends State<Profile> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.rectangle,
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white
+                                    color: Colors.white,
+                                /*    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 1,
+                                        blurRadius: 15,
+                                        offset: Offset(5, 5), // changes position of shadow
+                                      ),
+                                    ],*/
+
                                   ),
                                   padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
                                   child: SingleChildScrollView(
@@ -192,14 +183,6 @@ class _ProfileState extends State<Profile> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight
                             ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 15,
-                              offset: Offset(5, 5), // changes position of shadow
-                            ),
-                          ],
                         ),
                         child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -210,7 +193,7 @@ class _ProfileState extends State<Profile> {
                                 children: <Widget>[
                                   Text("Skills", style: TextStyle(color: Colors.white, fontSize: 25),),
                                   IconButton(
-                                    icon: Icon(Icons.edit, color: Colors.white,),
+                                    icon: Icon(CustomIcons.edit, color: Colors.white,size: 20),
                                   )
                                 ],
                               ),
@@ -233,7 +216,8 @@ class _ProfileState extends State<Profile> {
                                         decoration: BoxDecoration(
                                             shape: BoxShape.rectangle,
                                             borderRadius: BorderRadius.circular(10),
-                                            color: Colors.white
+                                            color: Colors.white,
+
                                         ),
                                         padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
                                         child: SingleChildScrollView(
