@@ -156,7 +156,7 @@ addActivityDialog(BuildContext context) {
   String _dateEvent = " - ", _timeEvent = " - ", _note = "", _title = "";
   var dateWithoutFormat, timeWithoutFormat;
   int blue_bg = 0xFF3C9CE2, blue_high = 0xFFF0274C7;
-
+  var scrollController = new ScrollController();
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -211,6 +211,7 @@ addActivityDialog(BuildContext context) {
                       SizedBox(height: 15),
                       Expanded(
                           child: SingleChildScrollView(
+                            controller: scrollController,
                               child: Container(
                                   padding: EdgeInsets.all(20),
                                   child: Column(children: <Widget>[
@@ -256,6 +257,9 @@ addActivityDialog(BuildContext context) {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                       ),
+                                      onTap: (){
+                                        scrollController.jumpTo(2);
+                                      },
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
