@@ -156,6 +156,9 @@ class _ProfileState extends State<Profile> {
                                     IconButton(
                                       icon: Icon(CustomIcons.edit,
                                           color: Colors.white, size: 20),
+                                      onPressed: () {
+                                        editModulesDialog(context, modules);
+                                      },
                                     )
                                   ],
                                 ),
@@ -342,15 +345,23 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
                                         crossAxisSpacing: 15,
                                         mainAxisSpacing: 15),
                                 itemBuilder: (BuildContext context, int index) {
-                                  String grid_avatar = "assets/Avatars/" + index.toString() + ".png";
-                                  selected = current_avatar == grid_avatar ? index : null;
+                                  String grid_avatar = "assets/Avatars/" +
+                                      index.toString() +
+                                      ".png";
+                                  selected = current_avatar == grid_avatar
+                                      ? index
+                                      : null;
                                   return Container(
-                                    padding: EdgeInsets.all(3),
+                                      padding: EdgeInsets.all(3),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(color: selected == index ? Color(purple_bg) : Colors.white , width: 2),
-                                       // color: selected == index ? Colors.black26 : Colors.white
+                                        border: Border.all(
+                                            color: selected == index
+                                                ? Color(purple_bg)
+                                                : Colors.white,
+                                            width: 2),
+                                        // color: selected == index ? Colors.black26 : Colors.white
                                       ),
                                       height: 15,
                                       width: 15,
@@ -362,7 +373,6 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
                                           setState(() {
                                             current_avatar = grid_avatar;
                                             selected = index;
-
                                           });
                                         },
                                       ));
@@ -425,7 +435,6 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                   ),
-
                                   onSubmitted: (String id_new) {
                                     setState(() {
                                       id = id_new;
@@ -433,7 +442,6 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
                                   }),
                               SizedBox(height: 20),
                               TextField(
-
                                   controller: courseController,
                                   cursorColor: Colors.white,
                                   style: TextStyle(
@@ -454,7 +462,7 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                   ),
-                                  onTap: (){
+                                  onTap: () {
                                     scrollController.jumpTo(1);
                                   },
                                   onSubmitted: (String course_new) {
@@ -505,5 +513,86 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
                 ),
               );
             }));
+      });
+}
+
+editModulesDialog(BuildContext context, List modules) {
+  int purple_bg = 0xFFA21FC2;
+  List<TextEditingController> _controllers = new List();
+
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: Color(purple_bg),
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                  height: 600,
+                  width: 300,
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+
+                      children: <Widget>[
+                        Text("Modules", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 20),
+                        Container(
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: modules.length,
+                              itemBuilder: (_, index){
+                                _controllers.add(new TextEditingController());
+                                _controllers[index].text = modules[index];
+
+                                return Card(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    height: 50,
+                                    padding: EdgeInsets.fromLTRB(10, 5, 0, 10),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                          Container(
+                                            child: TextField(
+                                              decoration: InputDecoration(
+                                                focusColor: Colors.white,
+                                                enabledBorder: UnderlineInputBorder(
+                                                    borderSide: BorderSide.none
+                                                ),
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide:
+                                                  BorderSide(color: Colors.white),
+                                                ),
+                                              ),
+                                              controller: _controllers[index],
+                                              style: TextStyle(fontSize: 20, color: Color(purple_bg)),
+                                            ),
+                                            width: 150,
+                                          ),
+                                        IconButton(
+                                        icon: Icon(Icons.delete_outline, color: Colors.red)
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                          ),
+                        )
+                      ]
+
+                  )
+              );
+            }
+            )
+        );
       });
 }
