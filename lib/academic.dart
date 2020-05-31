@@ -12,6 +12,7 @@ class Academic extends StatefulWidget {
 }
 
 class _AcademicState extends State<Academic> {
+
   List<String> titleList = [
     "Assignment 1",
     "Assignment 3",
@@ -45,15 +46,11 @@ class _AcademicState extends State<Academic> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          colors: [Colors.white /*Color(0xFFffebe6)*/, Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        )),
+       color: Colors.white,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            brightness: Brightness.light,
             elevation: 0,
             backgroundColor: Colors.transparent,
             title: Text('Academic',
@@ -84,7 +81,7 @@ class _AcademicState extends State<Academic> {
             ],
           ),
           body: new Container(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
             child: new ListView.builder(
               physics: BouncingScrollPhysics(),
               itemBuilder: (_, int index) {
@@ -449,7 +446,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
               )
             ],
           )),
-      elevation: 8,
+      elevation: 5,
       //    shadowColor: Colors.red,
       margin: EdgeInsets.all(10),
     );

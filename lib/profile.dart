@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,49 +22,53 @@ class _ProfileState extends State<Profile> {
     "Raspberry Pi",
     "Java",
     "Python",
-    "Badminton"
+    "Badminton",
+    "Flutter",
+    "Tensor flow",
+    "Scikit-Learn"
   ];
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   String current_avatar = "assets/Avatars/4.png";
-  double width, height_avatar, height_details, spacing;
+  double width, height_avatar, height_details, spacing, box_height = 200;
   @override
   Widget build(BuildContext context) {
-    width =  (MediaQuery. of(context). size. width)/2 - 20 - 10;
-    height_avatar = (MediaQuery. of(context). size. width)/2 - 20 - 10;
+    width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;
+    height_avatar = width;
     height_details = 40;
-    spacing = (height_avatar - 3*40)/2;
+    spacing = (height_avatar - 3 * 40) / 2;
+
+    print(MediaQuery.of(context).size.height);
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [Colors.white /*Color(0xFFf2e6ff)*/, Colors.white],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+      color: Colors.white,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          brightness: Brightness.light,
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Text('Profile',
               style: TextStyle(fontSize: 50, color: Color(dark_purple))),
           actions: <Widget>[
-
             new IconButton(
               icon: new Icon(Icons.settings),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Settings(name, id, current_avatar, course)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Settings(name, id, current_avatar, course)),
                 );
               },
-              iconSize: 30,
+              iconSize: 40,
               color: Color(dark_purple),
             ),
           ],
         ),
         body: Container(
-            padding: EdgeInsets.all(20),
-            alignment: Alignment.center,
+          //  padding: EdgeInsets.fromLTRB(15, 10, 20, 0),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -70,8 +76,12 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: width,
+
+                   Container(
+                      margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
+
+
+                     width: width,
                       height: height_avatar,
                       decoration: BoxDecoration(
                         //  borderRadius: BorderRadius.circular(10),
@@ -80,246 +90,313 @@ class _ProfileState extends State<Profile> {
                             fit: BoxFit.cover),
                       ),
                     ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    width: width,
-                    height: height_details,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            colors: [
-                              Color(light_purple),
-                              Color(dark_purple)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight)),
-                    child: Text(
-                      id,
-                      style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center,
-                    )),
-                SizedBox(height: spacing),
-                Container(
-                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    width: width,
-                    height: height_details,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            colors: [
-                              Color(light_purple),
-                              Color(dark_purple)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight)),
-                    child: Text(
-                      dob,
-                      style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center,
-                    )),
-                SizedBox(height: spacing),
-                Container(
-                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    width: width,
-                    height: height_details,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            colors: [
-                              Color(light_purple),
-                              Color(dark_purple)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight)),
-                    child: Text(
-                      name,
-                      style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center,
-                    ))
-
-              ])
-          )],
+                    Container(
+                        margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                  padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                                  width: width,
+                                  height: height_details,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          Color(light_purple),
+                                          Color(dark_purple)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius:
+                                            5.0, // has the effect of softening the shadow
+                                        spreadRadius:
+                                            3.0, // has the effect of extending the shadow
+                                        offset: Offset(
+                                          0, // horizontal, move right 10
+                                          0, // vertical, move down 10
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    id,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  )),
+                              SizedBox(height: spacing),
+                              Container(
+                                  padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                                  width: width,
+                                  height: height_details,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          Color(light_purple),
+                                          Color(dark_purple)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius:
+                                            5.0, // has the effect of softening the shadow
+                                        spreadRadius:
+                                            3.0, // has the effect of extending the shadow
+                                        offset: Offset(
+                                          0, // horizontal, move right 10
+                                          0, // vertical, move down 10
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    dob,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  )),
+                              SizedBox(height: spacing),
+                              Container(
+                                  padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                                  width: width,
+                                  height: height_details,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          Color(light_purple),
+                                          Color(dark_purple)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius:
+                                            5.0, // has the effect of softening the shadow
+                                        spreadRadius:
+                                            3.0, // has the effect of extending the shadow
+                                        offset: Offset(
+                                          0, // horizontal, move right 10
+                                          0, // vertical, move down 10
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    name,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  ))
+                            ]))
+                  ],
                 ),
                 SizedBox(height: spacing),
-
-                      Container(
-                          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color(light_purple),
-                                  Color(dark_purple)
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
+                Container(
+                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    width: double.infinity,
+                    height: height_details,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                          colors: [Color(light_purple), Color(dark_purple)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius:
+                              5.0, // has the effect of softening the shadow
+                          spreadRadius:
+                              3.0, // has the effect of extending the shadow
+                          offset: Offset(
+                            0, // horizontal, move right 10
+                            0, // vertical, move down 10
                           ),
-                          child: Text(
-                            course,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                            textAlign: TextAlign.center,
-                          )),
-                      SizedBox(height: spacing),
-                      Container(
-                          height: 150,
-                          padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color(light_purple),
-                                  Color(dark_purple)
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
+                        )
+                      ],
+                    ),
+                    child: Text(
+                      course,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      textAlign: TextAlign.center,
+                    )),
+                SizedBox(height: spacing),
+                Container(
+                    height: box_height,
+                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                          colors: [Color(light_purple), Color(dark_purple)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius:
+                              5.0, // has the effect of softening the shadow
+                          spreadRadius:
+                              3.0, // has the effect of extending the shadow
+                          offset: Offset(
+                            0, // horizontal, move right 10
+                            0, // vertical, move down 10
                           ),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      "Modules",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
+                        )
+                      ],
+                    ),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Modules",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                              IconButton(
+                                icon: Icon(CustomIcons.edit,
+                                    color: Colors.white, size: 20),
+                                onPressed: () {
+                                  editModulesDialog(context, modules);
+                                },
+                              )
+                            ],
+                          ),
+                          Expanded(
+                            child: GridView.builder(
+                              padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
+                              scrollDirection: Axis.vertical,
+                              itemCount: modules.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      childAspectRatio: 3.25,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 15),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                    alignment: Alignment.center,
+                                    //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
                                     ),
-                                    IconButton(
-                                      icon: Icon(CustomIcons.edit,
-                                          color: Colors.white, size: 20),
-                                      onPressed: () {
-                                        editModulesDialog(context, modules);
-                                      },
-                                    )
-                                  ],
-                                ),
-                                Expanded(
-                                  child: GridView.builder(
-                                    padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: modules.length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            childAspectRatio: 3.25,
-                                            crossAxisSpacing: 8,
-                                            mainAxisSpacing: 8),
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                          alignment: Alignment.center,
-                                          //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white,
-                                            /*    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 1,
-                                        blurRadius: 15,
-                                        offset: Offset(5, 5), // changes position of shadow
-                                      ),
-                                    ],*/
-                                          ),
-                                          padding:
-                                              EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                          child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Text(
-                                                modules[index],
-                                                style: TextStyle(
-                                                    color: Color(dark_purple),
-                                                    fontSize: 15),
-                                              )));
-                                    },
-                                  ),
-                                ),
-                              ])),
-                      SizedBox(height: spacing),
-                      Container(
-                          height: 140,
-                          padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color(light_purple),
-                                  Color(dark_purple)
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
+                                    padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                                    child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Text(
+                                          modules[index],
+                                          style: TextStyle(
+                                              color: Color(dark_purple),
+                                              fontSize: 15),
+                                        )));
+                              },
+                            ),
                           ),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      "Skills",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 25),
+                        ])),
+                SizedBox(height: spacing),
+                Container(
+                    height: box_height,
+                    margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                          colors: [Color(light_purple), Color(dark_purple)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius:
+                              5.0, // has the effect of softening the shadow
+                          spreadRadius:
+                              3.0, // has the effect of extending the shadow
+                          offset: Offset(
+                            0, // horizontal, move right 10
+                            0, // vertical, move down 10
+                          ),
+                        )
+                      ],
+                    ),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Skills",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                              IconButton(
+                                icon: Icon(CustomIcons.edit,
+                                    color: Colors.white, size: 20),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                          Expanded(
+                            child: GridView.builder(
+                              padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
+                              scrollDirection: Axis.vertical,
+                              itemCount: skills.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 3.25,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 15,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                    alignment: Alignment.center,
+                                    //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
                                     ),
-                                    IconButton(
-                                      icon: Icon(CustomIcons.edit,
-                                          color: Colors.white, size: 20),
-                                    )
-                                  ],
-                                ),
-                                Expanded(
-                                  child: GridView.builder(
-                                    padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: skills.length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            childAspectRatio: 3.25,
-                                            crossAxisSpacing: 8,
-                                            mainAxisSpacing: 8),
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                          alignment: Alignment.center,
-                                          //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white,
-                                          ),
-                                          padding:
-                                              EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                          child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Text(
-                                                skills[index],
-                                                style: TextStyle(
-                                                    color: Color(dark_purple),
-                                                    fontSize: 15),
-                                              )));
-                                    },
-                                  ),
-                                ),
-                              ])),
-                    ],
-                  ),
-                )
-
+                                    padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                                    child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Text(
+                                          skills[index],
+                                          style: TextStyle(
+                                              color: Color(dark_purple),
+                                              fontSize: 15),
+                                        )));
+                              },
+                            ),
+                          ),
+                        ])),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -575,63 +652,68 @@ editModulesDialog(BuildContext context, List modules) {
                   width: 300,
                   padding: EdgeInsets.all(10),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text("Modules", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                        Text("Modules",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         Container(
                           height: 300,
                           child: ListView.builder(
-                            itemCount: modules.length,
-                              itemBuilder: (_, index){
+                              itemCount: modules.length,
+                              itemBuilder: (_, index) {
                                 _controllers.add(new TextEditingController());
                                 _controllers[index].text = modules[index];
 
                                 return Card(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)
-                                    ),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     height: 50,
                                     padding: EdgeInsets.fromLTRB(10, 5, 0, 10),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: <Widget>[
-                                          Container(
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                focusColor: Colors.white,
-                                                enabledBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide.none
-                                                ),
-                                                focusedBorder: UnderlineInputBorder(
-                                                  borderSide:
-                                                  BorderSide(color: Colors.white),
-                                                ),
+                                        Container(
+                                          child: TextField(
+                                            decoration: InputDecoration(
+                                              focusColor: Colors.white,
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
                                               ),
-                                              controller: _controllers[index],
-                                              style: TextStyle(fontSize: 20, color: Color(purple_bg)),
                                             ),
-                                            width: 150,
+                                            controller: _controllers[index],
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color(purple_bg)),
                                           ),
+                                          width: 150,
+                                        ),
                                         IconButton(
-                                        icon: Icon(Icons.delete_outline, color: Colors.red)
+                                          icon: Icon(Icons.delete_outline,
+                                              color: Colors.red),
+                                          onPressed: () {},
                                         )
                                       ],
                                     ),
                                   ),
                                 );
-                              }
-                          ),
+                              }),
                         )
-                      ]
-
-                  )
-              );
-            }
-            )
-        );
+                      ]));
+            }));
       });
 }

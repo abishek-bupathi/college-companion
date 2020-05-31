@@ -4,15 +4,11 @@ class Classes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [Color(0xFFfff2e6), Colors.white],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+      color: Colors.white,
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            brightness: Brightness.light,
             elevation: 0,
             backgroundColor: Colors.transparent,
             title: Text('Classes',

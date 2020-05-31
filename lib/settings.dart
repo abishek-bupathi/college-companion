@@ -1,7 +1,6 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -30,6 +29,7 @@ class _SettingsState extends State<Settings> {
 
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            brightness: Brightness.light,
             automaticallyImplyLeading: false,
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -48,12 +48,13 @@ class _SettingsState extends State<Settings> {
           ),
 
         body: Container(
-          padding:EdgeInsets.all(0),
+
           child: ListView(
+            physics: BouncingScrollPhysics(),
             children: <Widget>[
             Card(
               margin: EdgeInsets.all(15),
-              elevation: 15,
+              elevation: 8,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),              child: Container(
               height: 470,
                   decoration: BoxDecoration(
@@ -82,6 +83,7 @@ class _SettingsState extends State<Settings> {
                         children: <Widget>[
                           Expanded(
                             child: GridView.builder(
+                              physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                               itemCount: 10,
@@ -226,7 +228,7 @@ class _SettingsState extends State<Settings> {
 
           Card(
             margin: EdgeInsets.all(15),
-            elevation: 15,
+            elevation: 8,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),              child: Container(
               height: 150,
               decoration: BoxDecoration(

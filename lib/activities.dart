@@ -20,15 +20,11 @@ class _ActivitiesState extends State<Activities> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [Colors.white/*Color(0xFFe6f2ff)*/, Colors.white],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+      color: Colors.white,
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            brightness: Brightness.light,
             elevation: 0,
             backgroundColor: Colors.transparent,
             title: Text('Activities',
@@ -56,8 +52,8 @@ class _ActivitiesState extends State<Activities> {
             ],
           ),
         body: new Container(
-           padding: EdgeInsets.all(5),
-           child: new ListView.builder(
+          padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
+          child: new ListView.builder(
               physics: BouncingScrollPhysics(),
               itemBuilder: (_, int index) {
                 return GestureDetector(
@@ -144,7 +140,7 @@ class _ItemActivityState extends State<ItemActivity> {
             ],
           )
       ),
-      elevation: 8,
+      elevation: 5,
       //    shadowColor: Colors.red,
       margin: EdgeInsets.all(10),
 
@@ -427,7 +423,7 @@ addActivityDialog(BuildContext context) {
 
 editActivityDialog(BuildContext context, String title, String note, String location, var _date , var _time) {
 
-  int blue_bg = 0xFF3C9CE2, red_high = 0xFFEC4343, label_clr = 0xFF89CDFF;
+  int blue_bg = 0xFF3C9CE2, label_clr = 0xFF89CDFF;
   var dateWithoutFormat, timeWithoutFormat;
   var noteController = new TextEditingController();
   noteController.text = note;

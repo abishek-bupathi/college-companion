@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './academic.dart';
 import './activities.dart';
 import './exams.dart';
@@ -7,7 +8,16 @@ import './classes.dart';
 import './profile.dart';
 import './custom_icons.dart';
 
-void main() => runApp(MyApp());
+
+void main() {
+  runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Color(0xFFF8F8F8),
+    statusBarColor: Colors.white, // status bar color
+  ));
+}
 
 class MyApp extends StatefulWidget {
 
