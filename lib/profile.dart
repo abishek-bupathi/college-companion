@@ -1,6 +1,7 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './settings.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,7 +11,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   String id = "18280072",
       name = "Abishek Bupathi",
-      course = "Electronic and Computer";
+      course = "Electronic and Computer",
+      dob = "08/12/2000";
   List<String> modules = ["Maths", "Programming", "Electrical", "Mechanics"];
   List<String> skills = [
     "Julia",
@@ -22,9 +24,13 @@ class _ProfileState extends State<Profile> {
   ];
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   String current_avatar = "assets/Avatars/4.png";
-
+  double width, height_avatar, height_details, spacing;
   @override
   Widget build(BuildContext context) {
+    width =  (MediaQuery. of(context). size. width)/2 - 20 - 10;
+    height_avatar = (MediaQuery. of(context). size. width)/2 - 20 - 10;
+    height_details = 40;
+    spacing = (height_avatar - 3*40)/2;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -34,8 +40,28 @@ class _ProfileState extends State<Profile> {
       )),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Text('Profile',
+              style: TextStyle(fontSize: 50, color: Color(dark_purple))),
+          actions: <Widget>[
+
+            new IconButton(
+              icon: new Icon(Icons.settings),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Settings(name, id, current_avatar, course)),
+                );
+              },
+              iconSize: 30,
+              color: Color(dark_purple),
+            ),
+          ],
+        ),
         body: Container(
-            padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
+            padding: EdgeInsets.all(20),
             alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,9 +71,8 @@ class _ProfileState extends State<Profile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      width: 105,
-                      height: 105,
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      width: width,
+                      height: height_avatar,
                       decoration: BoxDecoration(
                         //  borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
@@ -55,61 +80,75 @@ class _ProfileState extends State<Profile> {
                             fit: BoxFit.cover),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        CustomIcons.edit,
-                        color: Color(dark_purple),
-                        size: 25,
-                      ),
-                      onPressed: () {
-                        editProfileDialog(context, setState, name, id, course,
-                            current_avatar);
-                      },
-                    )
-                  ],
-                ),
-                SizedBox(height: 20),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    width: width,
+                    height: height_details,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(light_purple),
+                              Color(dark_purple)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight)),
+                    child: Text(
+                      id,
+                      style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center,
+                    )),
+                SizedBox(height: spacing),
+                Container(
+                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    width: width,
+                    height: height_details,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(light_purple),
+                              Color(dark_purple)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight)),
+                    child: Text(
+                      dob,
+                      style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center,
+                    )),
+                SizedBox(height: spacing),
+                Container(
+                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    width: width,
+                    height: height_details,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(light_purple),
+                              Color(dark_purple)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight)),
+                    child: Text(
+                      name,
+                      style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center,
+                    ))
+
+              ])
+          )],
+                ),
+                SizedBox(height: spacing),
+
                       Container(
                           padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color(light_purple),
-                                    Color(dark_purple)
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight)),
-                          child: Text(
-                            id,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          )),
-                      SizedBox(height: 20),
-                      Container(
-                          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color(light_purple),
-                                    Color(dark_purple)
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight)),
-                          child: Text(
-                            name,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          )),
-                      SizedBox(height: 20),
-                      Container(
-                          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(10),
@@ -124,8 +163,9 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             course,
                             style: TextStyle(color: Colors.white, fontSize: 20),
+                            textAlign: TextAlign.center,
                           )),
-                      SizedBox(height: 20),
+                      SizedBox(height: spacing),
                       Container(
                           height: 150,
                           padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
@@ -206,9 +246,9 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ])),
-                      SizedBox(height: 20),
+                      SizedBox(height: spacing),
                       Container(
-                          height: 150,
+                          height: 140,
                           padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
@@ -279,8 +319,7 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                 )
-              ],
-            )),
+
       ),
     );
   }
