@@ -50,7 +50,10 @@ class _ProfileState extends State<Profile> {
               style: TextStyle(fontSize: 50, color: Color(dark_purple))),
           actions: <Widget>[
             new IconButton(
-              icon: new Icon(Icons.settings),
+              icon: Hero(
+                  child: new Icon(Icons.settings),
+                  tag: "setting",
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -272,12 +275,19 @@ class _ProfileState extends State<Profile> {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
                               ),
-                              IconButton(
-                                icon: Icon(CustomIcons.edit,
+                              Container(
+                                width: 40,
+                                height: 40,
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 3),
+                                child: RawMaterialButton(
+                                  highlightColor: Colors.white10,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  child :Icon(CustomIcons.edit,
                                     color: Colors.white, size: 20),
                                 onPressed: () {
-                                  editModulesDialog(context,setState, modules);
+                                  editListDialog(context,setState, modules, "Modules");
                                 },
+                              )
                               )
                             ],
                           ),
@@ -318,7 +328,7 @@ class _ProfileState extends State<Profile> {
                 Container(
                     height: 190,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
+                    padding: EdgeInsets.fromLTRB(12, 0, 0, 5),
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(10),
@@ -352,18 +362,25 @@ class _ProfileState extends State<Profile> {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
                               ),
-                              IconButton(
-                                icon: Icon(CustomIcons.edit,
-                                    color: Colors.white, size: 20),
-                                onPressed: () {
-                                  editSkillDialog(context, setState, skills);
-                                },
+                              Container(
+                                width: 40,
+                                height: 40,
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 3),
+                                child: RawMaterialButton(
+                                  highlightColor: Colors.white10,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  child : Icon(CustomIcons.edit,
+                                      color: Colors.white, size: 20),
+                                  onPressed: () {
+                                    editListDialog(context,setState, skills, "Skills");
+                                  },
+                                ),
                               )
                             ],
                           ),
                           Expanded(
                             child: GridView.builder(
-                              padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
+                              padding: EdgeInsets.fromLTRB(0, 4, 12, 5),
                               scrollDirection: Axis.vertical,
                               itemCount: skills.length,
                               gridDelegate:
@@ -404,11 +421,11 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-editModulesDialog(BuildContext context,StateSetter setState, List modules) {
+editListDialog(BuildContext context,StateSetter setState, List list, String title) {
   int purple_bg = 0xFFA21FC2;
   List<TextEditingController> _controllers = new List();
-  String add_module;
-  TextEditingController _add_modules_controller = new TextEditingController();
+  String add_item;
+  TextEditingController _add_item_controller = new TextEditingController();
   return showDialog(
       context: context,
       useRootNavigator: true,
@@ -447,7 +464,7 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
                                 child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 25),
                               ),
                             ),
-                            Text("Modules",
+                            Text(title,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -462,13 +479,13 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
                         Container(
                           height: 265,
                           child: ListView.builder(
-                              itemCount: modules.length,
+                              itemCount: list.length,
                               itemBuilder: (_, index) {
                                 _controllers.add(new TextEditingController());
-                                _controllers[index].text = modules[index];
+                                _controllers[index].text = list[index];
 
                                 return Card(
-                                  elevation: 5,
+                                  elevation: 2,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -508,7 +525,7 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
                                             child: Icon(Icons.delete_outline,
                                                 color: Colors.red,size: 20),
                                             onPressed: () {
-                                              setState((){ modules.removeAt(index);});
+                                              setState((){ list.removeAt(index);});
 
                                             },
                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -529,7 +546,7 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
                             height: 50,
                             padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
                             child:  TextField(
-                              controller: _add_modules_controller,
+                              controller: _add_item_controller,
                                 cursorColor: Colors.white,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20),
@@ -553,15 +570,10 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
 
                                 onChanged: (String new_add_module) {
                                   setState(() {
-                                    add_module = new_add_module;
+                                    add_item = new_add_module;
                                   });
                                 },
 
-                                onSubmitted: (String new_add_module) {
-                                  setState(() {
-                                    add_module = new_add_module;
-                                  });
-                                }
                             ),
                           ),
                           Container(
@@ -576,8 +588,8 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
                                   color: Color(purple_bg),size: 30),
                               onPressed: () {
                                 setState(() {
-                                  modules.add(add_module);
-                                  _add_modules_controller.text = "";
+                                  list.add(add_item);
+                                  _add_item_controller.text = "";
                                 });
                               },
                             ),
@@ -590,192 +602,6 @@ editModulesDialog(BuildContext context,StateSetter setState, List modules) {
                       )
                       ]));
             }));
-      });
-}
-
-editSkillDialog(BuildContext context,StateSetter setState, List skills) {
-  int purple_bg = 0xFFA21FC2;
-  List<TextEditingController> _controllers = new List();
-  String add_skill;
-  TextEditingController _add_skills_controller = new TextEditingController();
-  return showDialog(
-      context: context,
-      useRootNavigator: true,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Color(purple_bg),
-            child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-                  return Container(
-                      height: 395,
-                      width: 300,
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 35,
-                                  height: 35,
-                                  child: RawMaterialButton(
-
-                                    highlightColor: Colors.white10,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 25),
-                                  ),
-                                ),
-                                Text("Skills",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold)),
-                                SizedBox(
-                                  width: 35,
-                                  height: 35,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            Container(
-                              height: 265,
-                              child: ListView.builder(
-                                  itemCount: skills.length,
-                                  itemBuilder: (_, index) {
-                                    _controllers.add(new TextEditingController());
-                                    _controllers[index].text = skills[index];
-
-                                    return Card(
-                                      elevation: 5,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      child: Container(
-                                        height: 40,
-                                        padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Container(
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  focusColor: Colors.white,
-                                                  enabledBorder:
-                                                  UnderlineInputBorder(
-                                                      borderSide:
-                                                      BorderSide.none),
-                                                  focusedBorder:
-                                                  UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                                controller: _controllers[index],
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Color(purple_bg)),
-                                              ),
-                                              width: 150,
-                                            ),
-                                            SizedBox(
-                                              child: RawMaterialButton(
-                                                child: Icon(Icons.delete_outline,
-                                                    color: Colors.red,size: 20),
-                                                onPressed: () {
-                                                  setState((){ skills.removeAt(index);});
-
-                                                },
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                              ),
-                                              height: 40,
-                                              width: 30,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  width: 230,
-                                  height: 50,
-                                  padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                                  child:  TextField(
-                                      controller: _add_skills_controller,
-                                      cursorColor: Colors.white,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                      decoration: InputDecoration(
-                                        hintText: "Add new Skill",
-                                        hintStyle: TextStyle(color: Colors.white60),
-                                        contentPadding: EdgeInsets.all(10),
-                                        focusColor: Colors.white,
-
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                            BorderSide(color: Colors.white),
-                                            borderRadius:
-                                            BorderRadius.circular(10)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                            BorderSide(color: Colors.white),
-                                            borderRadius:
-                                            BorderRadius.circular(10)),
-                                      ),
-
-                                      onChanged: (String new_add_skill) {
-                                        setState(() {
-                                          add_skill = new_add_skill;
-                                        });
-                                      },
-
-                                      onSubmitted: (String new_add_skill) {
-                                        setState(() {
-                                          add_skill = new_add_skill;
-                                        });
-                                      }
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(5, 10,0, 0),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)
-                                  ),
-                                  child: RawMaterialButton(
-                                    elevation: 10,
-                                    child: Icon(Icons.add,
-                                        color: Color(purple_bg),size: 30),
-                                    onPressed: () {
-                                      setState(() {
-                                        skills.add(add_skill);
-                                        _add_skills_controller.text = "";
-                                      });
-                                    },
-                                  ),
-                                  height: 40,
-                                  width: 40,
-                                )
-
-                              ],
-
-                            )
-                          ]));
-                }));
       });
 }
 

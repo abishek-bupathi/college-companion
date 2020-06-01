@@ -188,6 +188,12 @@ addTaskDialog(BuildContext context) {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                     ),
+                                    onChanged: (String title) {
+                                      setState(() {
+                                        _title = title;
+                                      });
+                                    },
+
                                     onSubmitted: (String title) {
                                       setState(() {
                                         _title = title;
@@ -215,7 +221,7 @@ addTaskDialog(BuildContext context) {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                     ),
-                                    onSubmitted: (String note) {
+                                    onChanged: (String note) {
                                       setState(() {
                                         _note = note;
                                       });
@@ -493,7 +499,7 @@ editTaskDialog(
                             borderSide: BorderSide(color: Colors.white),
                           ),
                         ),
-                        onSubmitted: (String title_new) {
+                        onChanged: (String title_new) {
                           setState(() {
                             title = title_new;
                           });
@@ -519,7 +525,7 @@ editTaskDialog(
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
                               ),
-                              onSubmitted: (String note_new) {
+                              onChanged: (String note_new) {
                                 setState(() {
                                   note = note_new;
                                 });

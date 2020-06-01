@@ -149,7 +149,7 @@ class _ItemActivityState extends State<ItemActivity> {
 }
 
 addActivityDialog(BuildContext context) {
-  String _dateEvent = " - ", _timeEvent = " - ", _note = "", _title = "";
+  String _dateEvent = " - ", _timeEvent = " - ", _note = "", _title = "",_location = "";
   var dateWithoutFormat, timeWithoutFormat;
   int blue_bg = 0xFF3C9CE2, blue_high = 0xFFF0274C7;
   var scrollController = new ScrollController();
@@ -231,6 +231,11 @@ addActivityDialog(BuildContext context) {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                       ),
+                                      onChanged: (String new_title){
+                                        setState((){
+                                          _title = new_title;
+                                        });
+                                      },
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
@@ -256,6 +261,11 @@ addActivityDialog(BuildContext context) {
                                       onTap: (){
                                         scrollController.jumpTo(2);
                                       },
+                                      onChanged: (String new_note){
+                                        setState((){
+                                          _note = new_note;
+                                        });
+                                      },
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
@@ -278,6 +288,11 @@ addActivityDialog(BuildContext context) {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                       ),
+                                      onChanged: (String new_location){
+                                        setState((){
+                                          _location = new_location;
+                                        });
+                                      },
                                     ),
                                     SizedBox(height: 20),
                                     Container(
@@ -465,7 +480,7 @@ editActivityDialog(BuildContext context, String title, String note, String locat
                                 BorderSide(color: Colors.white),
                               ),
                             ),
-                            onSubmitted: (String title_new) {
+                            onChanged: (String title_new) {
                               setState(() {
                                 title =title_new;
                               });
@@ -493,7 +508,7 @@ editActivityDialog(BuildContext context, String title, String note, String locat
                                       BorderSide(color: Colors.white),
                                     ),
                                   ),
-                                  onSubmitted: (String note_new) {
+                                  onChanged: (String note_new) {
                                     setState(() {
                                       note = note_new;
                                     });
@@ -524,7 +539,7 @@ editActivityDialog(BuildContext context, String title, String note, String locat
                                       BorderSide(color: Colors.white),
                                     ),
                                   ),
-                                  onSubmitted: (String location_new) {
+                                  onChanged: (String location_new) {
                                     setState(() {
                                       location = location_new;
                                     });
@@ -648,8 +663,11 @@ editActivityDialog(BuildContext context, String title, String note, String locat
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+
+                                },
                                 child: Icon(Icons.delete_outline,color: Color(blue_bg),size: 25),
+
                               ),
                             ),
 

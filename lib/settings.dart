@@ -37,7 +37,8 @@ class _SettingsState extends State<Settings> {
                 style: TextStyle(fontSize: 50, color: Color(dark_grey))),
             actions: <Widget>[
               new IconButton(
-                icon: new Icon(Icons.close),
+                icon: Hero(child: new Icon(Icons.close),
+                tag: "setting",),
                 onPressed: () {
                   Navigator.pop(context);
                 },
