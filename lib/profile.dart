@@ -15,7 +15,7 @@ class _ProfileState extends State<Profile> {
       name = "Abishek Bupathi",
       course = "Electronic and Computer",
       dob = "08/12/2000";
-  List<String> modules = ["Maths", "Programming", "Electrical", "Mechanics"];
+  List<String> modules = ["Maths", "Programming", "Electrical", "Mechanics", "Analog", "Physics"];
   List<String> skills = [
     "Julia",
     "C",
@@ -29,7 +29,7 @@ class _ProfileState extends State<Profile> {
   ];
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   String current_avatar = "assets/Avatars/4.png";
-  double width, height_avatar, height_details, spacing, box_height = 200;
+  double width, height_avatar, height_details, spacing, box_height = 190;
   @override
   Widget build(BuildContext context) {
     width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;
@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         body: Container(
-          //  padding: EdgeInsets.fromLTRB(15, 10, 20, 0),
+           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           alignment: Alignment.center,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -236,7 +236,7 @@ class _ProfileState extends State<Profile> {
                     )),
                 SizedBox(height: spacing),
                 Container(
-                    height: box_height,
+                    height: 145,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
                     decoration: BoxDecoration(
@@ -276,7 +276,7 @@ class _ProfileState extends State<Profile> {
                                 icon: Icon(CustomIcons.edit,
                                     color: Colors.white, size: 20),
                                 onPressed: () {
-                                  editModulesDialog(context, modules);
+                                  editModulesDialog(context,setState, modules);
                                 },
                               )
                             ],
@@ -291,7 +291,7 @@ class _ProfileState extends State<Profile> {
                                       crossAxisCount: 3,
                                       childAspectRatio: 3.25,
                                       crossAxisSpacing: 10,
-                                      mainAxisSpacing: 15),
+                                      mainAxisSpacing: 10),
                               itemBuilder: (BuildContext context, int index) {
                                 return Container(
                                     alignment: Alignment.center,
@@ -316,9 +316,9 @@ class _ProfileState extends State<Profile> {
                         ])),
                 SizedBox(height: spacing),
                 Container(
-                    height: box_height,
+                    height: 190,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
+                    padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(10),
@@ -355,7 +355,9 @@ class _ProfileState extends State<Profile> {
                               IconButton(
                                 icon: Icon(CustomIcons.edit,
                                     color: Colors.white, size: 20),
-                                onPressed: () {},
+                                onPressed: () {
+                                  editSkillDialog(context, setState, skills);
+                                },
                               )
                             ],
                           ),
@@ -369,7 +371,7 @@ class _ProfileState extends State<Profile> {
                                 crossAxisCount: 3,
                                 childAspectRatio: 3.25,
                                 crossAxisSpacing: 10,
-                                mainAxisSpacing: 15,
+                                mainAxisSpacing: 10,
                               ),
                               itemBuilder: (BuildContext context, int index) {
                                 return Container(
@@ -402,6 +404,383 @@ class _ProfileState extends State<Profile> {
   }
 }
 
+editModulesDialog(BuildContext context,StateSetter setState, List modules) {
+  int purple_bg = 0xFFA21FC2;
+  List<TextEditingController> _controllers = new List();
+  String add_module;
+  TextEditingController _add_modules_controller = new TextEditingController();
+  return showDialog(
+      context: context,
+      useRootNavigator: true,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: Color(purple_bg),
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                  height: 395,
+                  width: 300,
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: RawMaterialButton(
+
+                                highlightColor: Colors.white10,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 25),
+                              ),
+                            ),
+                            Text("Modules",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          height: 265,
+                          child: ListView.builder(
+                              itemCount: modules.length,
+                              itemBuilder: (_, index) {
+                                _controllers.add(new TextEditingController());
+                                _controllers[index].text = modules[index];
+
+                                return Card(
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    height: 40,
+                                    padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          child: TextField(
+                                            decoration: InputDecoration(
+                                              focusColor: Colors.white,
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            controller: _controllers[index],
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color(purple_bg)),
+                                          ),
+                                          width: 150,
+                                        ),
+                                        SizedBox(
+                                          child: RawMaterialButton(
+                                            child: Icon(Icons.delete_outline,
+                                                color: Colors.red,size: 20),
+                                            onPressed: () {
+                                              setState((){ modules.removeAt(index);});
+
+                                            },
+                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                          ),
+                                          height: 40,
+                                          width: 30,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 230,
+                            height: 50,
+                            padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                            child:  TextField(
+                              controller: _add_modules_controller,
+                                cursorColor: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                decoration: InputDecoration(
+                                 hintText: "Add new Module",
+                                  hintStyle: TextStyle(color: Colors.white60),
+                                  contentPadding: EdgeInsets.all(10),
+                                  focusColor: Colors.white,
+
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.white),
+                                      borderRadius:
+                                      BorderRadius.circular(10)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.white),
+                                      borderRadius:
+                                      BorderRadius.circular(10)),
+                                ),
+
+                                onChanged: (String new_add_module) {
+                                  setState(() {
+                                    add_module = new_add_module;
+                                  });
+                                },
+
+                                onSubmitted: (String new_add_module) {
+                                  setState(() {
+                                    add_module = new_add_module;
+                                  });
+                                }
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(5, 10,0, 0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: RawMaterialButton(
+                              elevation: 10,
+                              child: Icon(Icons.add,
+                                  color: Color(purple_bg),size: 30),
+                              onPressed: () {
+                                setState(() {
+                                  modules.add(add_module);
+                                  _add_modules_controller.text = "";
+                                });
+                              },
+                            ),
+                            height: 40,
+                            width: 40,
+                          )
+
+                        ],
+
+                      )
+                      ]));
+            }));
+      });
+}
+
+editSkillDialog(BuildContext context,StateSetter setState, List skills) {
+  int purple_bg = 0xFFA21FC2;
+  List<TextEditingController> _controllers = new List();
+  String add_skill;
+  TextEditingController _add_skills_controller = new TextEditingController();
+  return showDialog(
+      context: context,
+      useRootNavigator: true,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: Color(purple_bg),
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Container(
+                      height: 395,
+                      width: 300,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SizedBox(
+                                  width: 35,
+                                  height: 35,
+                                  child: RawMaterialButton(
+
+                                    highlightColor: Colors.white10,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 25),
+                                  ),
+                                ),
+                                Text("Skills",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  width: 35,
+                                  height: 35,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              height: 265,
+                              child: ListView.builder(
+                                  itemCount: skills.length,
+                                  itemBuilder: (_, index) {
+                                    _controllers.add(new TextEditingController());
+                                    _controllers[index].text = skills[index];
+
+                                    return Card(
+                                      elevation: 5,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      child: Container(
+                                        height: 40,
+                                        padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              child: TextField(
+                                                decoration: InputDecoration(
+                                                  focusColor: Colors.white,
+                                                  enabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                      BorderSide.none),
+                                                  focusedBorder:
+                                                  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                                controller: _controllers[index],
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color(purple_bg)),
+                                              ),
+                                              width: 150,
+                                            ),
+                                            SizedBox(
+                                              child: RawMaterialButton(
+                                                child: Icon(Icons.delete_outline,
+                                                    color: Colors.red,size: 20),
+                                                onPressed: () {
+                                                  setState((){ skills.removeAt(index);});
+
+                                                },
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                              ),
+                                              height: 40,
+                                              width: 30,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 230,
+                                  height: 50,
+                                  padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                                  child:  TextField(
+                                      controller: _add_skills_controller,
+                                      cursorColor: Colors.white,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                      decoration: InputDecoration(
+                                        hintText: "Add new Skill",
+                                        hintStyle: TextStyle(color: Colors.white60),
+                                        contentPadding: EdgeInsets.all(10),
+                                        focusColor: Colors.white,
+
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                            BorderSide(color: Colors.white),
+                                            borderRadius:
+                                            BorderRadius.circular(10)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                            BorderSide(color: Colors.white),
+                                            borderRadius:
+                                            BorderRadius.circular(10)),
+                                      ),
+
+                                      onChanged: (String new_add_skill) {
+                                        setState(() {
+                                          add_skill = new_add_skill;
+                                        });
+                                      },
+
+                                      onSubmitted: (String new_add_skill) {
+                                        setState(() {
+                                          add_skill = new_add_skill;
+                                        });
+                                      }
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 10,0, 0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: RawMaterialButton(
+                                    elevation: 10,
+                                    child: Icon(Icons.add,
+                                        color: Color(purple_bg),size: 30),
+                                    onPressed: () {
+                                      setState(() {
+                                        skills.add(add_skill);
+                                        _add_skills_controller.text = "";
+                                      });
+                                    },
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                )
+
+                              ],
+
+                            )
+                          ]));
+                }));
+      });
+}
+
+
+/*
 editProfileDialog(BuildContext context, StateSetter setState, String name,
     String id, String course, String current_avatar) {
   int purple_bg = 0xFFA21FC2;
@@ -631,89 +1010,4 @@ editProfileDialog(BuildContext context, StateSetter setState, String name,
             }));
       });
 }
-
-editModulesDialog(BuildContext context, List modules) {
-  int purple_bg = 0xFFA21FC2;
-  List<TextEditingController> _controllers = new List();
-
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Color(purple_bg),
-            child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                  height: 600,
-                  width: 300,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Modules",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold)),
-                        SizedBox(height: 20),
-                        Container(
-                          height: 300,
-                          child: ListView.builder(
-                              itemCount: modules.length,
-                              itemBuilder: (_, index) {
-                                _controllers.add(new TextEditingController());
-                                _controllers[index].text = modules[index];
-
-                                return Card(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    height: 50,
-                                    padding: EdgeInsets.fromLTRB(10, 5, 0, 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              focusColor: Colors.white,
-                                              enabledBorder:
-                                                  UnderlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none),
-                                              focusedBorder:
-                                                  UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                            controller: _controllers[index],
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Color(purple_bg)),
-                                          ),
-                                          width: 150,
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.delete_outline,
-                                              color: Colors.red),
-                                          onPressed: () {},
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }),
-                        )
-                      ]));
-            }));
-      });
-}
+*/
