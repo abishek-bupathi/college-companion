@@ -574,7 +574,7 @@ editListDialog(
                           style: TextStyle(color: Colors.white, fontSize: 20),
                           decoration: InputDecoration(
                             counterText: "",
-                            hintText: "Add new Module",
+                            hintText: "Add new "+title,
                             hintStyle: TextStyle(color: Colors.white60),
                             contentPadding: EdgeInsets.all(10),
                             focusColor: Colors.white,
