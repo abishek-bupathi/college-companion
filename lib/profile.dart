@@ -1,28 +1,18 @@
-import 'dart:ui';
-
 import 'package:college_companion/custom_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './settings.dart';
 
 class Profile extends StatefulWidget {
+  String id, name, course, dob, current_avatar;
+  List<String> modules;
+  Profile(this.id, this.name, this.course, this.dob, this.modules, this.current_avatar);
+
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  String id = "18280072",
-      name = "Abishek Bupathi",
-      course = "Electronic and Computer",
-      dob = "08/12/2000";
-  List<String> modules = [
-    "Maths",
-    "Programming",
-    "Electrical",
-    "Mechanics",
-    "Analog",
-    "Physics"
-  ];
+
   List<String> skills = [
     "Julia",
     "C",
@@ -35,7 +25,6 @@ class _ProfileState extends State<Profile> {
     "Scikit-Learn"
   ];
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
-  String current_avatar = "assets/Avatars/4.png";
   double width, height_avatar, height_details, spacing, box_height = 190;
   @override
   Widget build(BuildContext context) {
@@ -65,8 +54,8 @@ class _ProfileState extends State<Profile> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Settings(name, id, current_avatar, course)),
-                );
+                          Settings()),
+                ).then((_) => setState(() {}));
               },
               iconSize: 40,
               color: Color(dark_purple),
@@ -92,7 +81,7 @@ class _ProfileState extends State<Profile> {
                       decoration: BoxDecoration(
                         //  borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                            image: AssetImage(current_avatar),
+                            image: AssetImage(widget.current_avatar),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -130,7 +119,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                   child: Text(
-                                    id,
+                                    widget.id,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.center,
@@ -165,7 +154,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                   child: Text(
-                                    dob,
+                                    widget.dob,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.center,
@@ -200,7 +189,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                   child: Text(
-                                    name,
+                                    widget.name,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.center,
@@ -236,7 +225,7 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                     child: Text(
-                      course,
+                      widget.course,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.center,
                     )),
@@ -298,7 +287,7 @@ class _ProfileState extends State<Profile> {
                                                   editListDialog(
                                                       context,
                                                       setState,
-                                                      modules,
+                                                      widget.modules,
                                                       "Modules"))
                                           .then((_) => setState(() {}));
                                     },
@@ -309,7 +298,7 @@ class _ProfileState extends State<Profile> {
                             child: GridView.builder(
                               padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
                               scrollDirection: Axis.vertical,
-                              itemCount: modules.length,
+                              itemCount: widget.modules.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3,
@@ -329,7 +318,7 @@ class _ProfileState extends State<Profile> {
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Text(
-                                          modules[index],
+                                          widget.modules[index],
                                           style: TextStyle(
                                               color: Color(dark_purple),
                                               fontSize: 15),
@@ -533,12 +522,13 @@ editListDialog(
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Color(purple_bg)),
-                                        onSubmitted: (String modified_list_item){
+                                       onSubmitted: (String modified_list_item){
                                           setState((){
                                            list[index] = modified_list_item;
                                           });
                                         },
-                                        autofocus: true,
+
+
                                         maxLength: 20,
                                         maxLengthEnforced: true,
                                       ),
@@ -566,7 +556,9 @@ editListDialog(
                                 ],
                               ),
                             ),
+
                           );
+
                         }),
                   ),
                   Row(
@@ -597,11 +589,12 @@ editListDialog(
                               add_item = new_add_module;
                             });
                           },
-                          autofocus: true,
+
                           maxLength: 20,
                           maxLengthEnforced: true,
                         ),
                       ),
+
                       Container(
                         margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
                         decoration: BoxDecoration(

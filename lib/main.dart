@@ -20,6 +20,19 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  String id = "18280072",
+      name = "Abishek Bupathi",
+      course = "Electronic and Computer",
+      dob = "08/12/2000",
+      current_avatar = "assets/Avatars/4.png";
+  List<String> modules = [
+    "Maths",
+    "Programming",
+    "Electrical",
+    "Mechanics",
+    "Analog",
+    "Physics"
+  ];
 
   @override
     State<StatefulWidget> createState() {
@@ -37,7 +50,7 @@ class MyAppState extends State<MyApp>{
     Classes(),
     Academic(),
     Activities(),
-    Profile(),
+    Profile(MyApp().id, MyApp().name, MyApp().course, MyApp().dob, MyApp().modules, MyApp().current_avatar)
   ];
 
   int index = 2;

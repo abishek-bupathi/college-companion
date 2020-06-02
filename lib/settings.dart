@@ -1,12 +1,12 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './main.dart';
 
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
-  String name, id, course, current_avatar;
-  Settings(this.name, this.id, this.current_avatar, this.course);
+  String name = MyApp().name, id = MyApp().id, course = MyApp().course, current_avatar = MyApp().current_avatar;
 }
 
 class _SettingsState extends State<Settings> {
