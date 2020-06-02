@@ -15,7 +15,14 @@ class _ProfileState extends State<Profile> {
       name = "Abishek Bupathi",
       course = "Electronic and Computer",
       dob = "08/12/2000";
-  List<String> modules = ["Maths", "Programming", "Electrical", "Mechanics", "Analog", "Physics"];
+  List<String> modules = [
+    "Maths",
+    "Programming",
+    "Electrical",
+    "Mechanics",
+    "Analog",
+    "Physics"
+  ];
   List<String> skills = [
     "Julia",
     "C",
@@ -37,7 +44,6 @@ class _ProfileState extends State<Profile> {
     height_details = 40;
     spacing = (height_avatar - 3 * 40) / 2;
 
-    print(MediaQuery.of(context).size.height);
     return Container(
       color: Colors.white,
       child: Scaffold(
@@ -51,8 +57,8 @@ class _ProfileState extends State<Profile> {
           actions: <Widget>[
             new IconButton(
               icon: Hero(
-                  child: new Icon(Icons.settings),
-                  tag: "setting",
+                child: new Icon(Icons.settings),
+                tag: "setting",
               ),
               onPressed: () {
                 Navigator.push(
@@ -68,7 +74,7 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         body: Container(
-           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           alignment: Alignment.center,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -79,12 +85,9 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
-                   Container(
+                    Container(
                       margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
-
-
-                     width: width,
+                      width: width,
                       height: height_avatar,
                       decoration: BoxDecoration(
                         //  borderRadius: BorderRadius.circular(10),
@@ -276,19 +279,30 @@ class _ProfileState extends State<Profile> {
                                     color: Colors.white, fontSize: 25),
                               ),
                               Container(
-                                width: 40,
-                                height: 40,
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 3),
-                                child: RawMaterialButton(
-                                  highlightColor: Colors.white10,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  child :Icon(CustomIcons.edit,
-                                    color: Colors.white, size: 20),
-                                onPressed: () {
-                                  editListDialog(context,setState, modules, "Modules");
-                                },
-                              )
-                              )
+                                  width: 40,
+                                  height: 40,
+                                  margin: EdgeInsets.fromLTRB(5, 5, 5, 3),
+                                  child: RawMaterialButton(
+                                    highlightColor: Colors.white10,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Icon(CustomIcons.edit,
+                                        color: Colors.white, size: 20),
+                                    onPressed: () {
+                                      showDialog(
+                                              context: context,
+                                              useRootNavigator: true,
+                                              barrierDismissible: false,
+                                              builder: (context) =>
+                                                  editListDialog(
+                                                      context,
+                                                      setState,
+                                                      modules,
+                                                      "Modules"))
+                                          .then((_) => setState(() {}));
+                                    },
+                                  ))
                             ],
                           ),
                           Expanded(
@@ -368,11 +382,19 @@ class _ProfileState extends State<Profile> {
                                 margin: EdgeInsets.fromLTRB(5, 5, 5, 3),
                                 child: RawMaterialButton(
                                   highlightColor: Colors.white10,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  child : Icon(CustomIcons.edit,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Icon(CustomIcons.edit,
                                       color: Colors.white, size: 20),
                                   onPressed: () {
-                                    editListDialog(context,setState, skills, "Skills");
+                                    showDialog(
+                                            context: context,
+                                            useRootNavigator: true,
+                                            barrierDismissible: false,
+                                            builder: (context) =>
+                                                editListDialog(context,
+                                                    setState, skills, "Skills"))
+                                        .then((_) => setState(() {}));
                                   },
                                 ),
                               )
@@ -421,190 +443,189 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-editListDialog(BuildContext context,StateSetter setState, List list, String title) {
+editListDialog(
+    BuildContext context, StateSetter setState, List list, String title) {
   int purple_bg = 0xFFA21FC2;
   List<TextEditingController> _controllers = new List();
   String add_item;
   TextEditingController _add_item_controller = new TextEditingController();
-  return showDialog(
-      context: context,
-      useRootNavigator: true,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Color(purple_bg),
-            child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                  height: 395,
-                  width: 300,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 35,
-                              height: 35,
-                              child: RawMaterialButton(
-
-                                highlightColor: Colors.white10,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 25),
-                              ),
-                            ),
-                            Text(title,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              width: 35,
-                              height: 35,
-                            ),
-                          ],
+  return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      backgroundColor: Color(purple_bg),
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+        return Container(
+            height: 395,
+            width: 300,
+            padding: EdgeInsets.all(10),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: RawMaterialButton(
+                          highlightColor: Colors.white10,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(Icons.arrow_back_ios,
+                              color: Colors.white, size: 25),
                         ),
-                        SizedBox(height: 20),
-                        Container(
-                          height: 265,
-                          child: ListView.builder(
-                              itemCount: list.length,
-                              itemBuilder: (_, index) {
-                                _controllers.add(new TextEditingController());
-                                _controllers[index].text = list[index];
+                      ),
+                      Text(title,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 265,
+                    child: ListView.builder(
+                        itemCount: list.length,
+                        itemBuilder: (_, index) {
+                          _controllers.add(new TextEditingController());
+                          _controllers[index].text = list[index];
 
-                                return Card(
-                                  elevation: 2,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    height: 40,
-                                    padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              focusColor: Colors.white,
-                                              enabledBorder:
-                                                  UnderlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide.none),
-                                              focusedBorder:
-                                                  UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                            controller: _controllers[index],
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Color(purple_bg)),
+                          return Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              height: 40,
+                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          counterText: "",
+                                          focusColor: Colors.white,
+                                          enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
                                           ),
-                                          width: 150,
                                         ),
-                                        SizedBox(
-                                          child: RawMaterialButton(
-                                            child: Icon(Icons.delete_outline,
-                                                color: Colors.red,size: 20),
-                                            onPressed: () {
-                                              setState((){ list.removeAt(index);});
+                                        controller: _controllers[index],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(purple_bg)),
+                                        onSubmitted: (String modified_list_item){
+                                          setState((){
+                                           list[index] = modified_list_item;
+                                          });
+                                        },
+                                        autofocus: true,
+                                        maxLength: 20,
+                                        maxLengthEnforced: true,
+                                      ),
 
-                                            },
-                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                          ),
-                                          height: 40,
-                                          width: 30,
-                                        )
-                                      ],
+                                      width: 150,
+
                                     ),
                                   ),
-                                );
-                              }),
-                        ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 230,
-                            height: 50,
-                            padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-                            child:  TextField(
-                              controller: _add_item_controller,
-                                cursorColor: Colors.white,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                                decoration: InputDecoration(
-                                 hintText: "Add new Module",
-                                  hintStyle: TextStyle(color: Colors.white60),
-                                  contentPadding: EdgeInsets.all(10),
-                                  focusColor: Colors.white,
-
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.white),
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.white),
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                ),
-
-                                onChanged: (String new_add_module) {
-                                  setState(() {
-                                    add_item = new_add_module;
-                                  });
-                                },
-
+                                  SizedBox(
+                                    child: RawMaterialButton(
+                                      child: Icon(Icons.delete_outline,
+                                          color: Colors.red, size: 20),
+                                      onPressed: () {
+                                        setState(() {
+                                          list.removeAt(index);
+                                        });
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                    height: 40,
+                                    width: 30,
+                                  )
+                                ],
+                              ),
                             ),
+                          );
+                        }),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 230,
+                        height: 50,
+                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                        child: TextField(
+                          controller: _add_item_controller,
+                          cursorColor: Colors.white,
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          decoration: InputDecoration(
+                            counterText: "",
+                            hintText: "Add new Module",
+                            hintStyle: TextStyle(color: Colors.white60),
+                            contentPadding: EdgeInsets.all(10),
+                            focusColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)),
                           ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(5, 10,0, 0),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: RawMaterialButton(
-                              elevation: 10,
-                              child: Icon(Icons.add,
-                                  color: Color(purple_bg),size: 30),
-                              onPressed: () {
-                                setState(() {
-                                  list.add(add_item);
-                                  _add_item_controller.text = "";
-                                });
-                              },
-                            ),
-                            height: 40,
-                            width: 40,
-                          )
-
-                        ],
-
+                          onChanged: (String new_add_module) {
+                            setState(() {
+                              add_item = new_add_module;
+                            });
+                          },
+                          autofocus: true,
+                          maxLength: 20,
+                          maxLengthEnforced: true,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: RawMaterialButton(
+                          elevation: 10,
+                          child: Icon(Icons.add,
+                              color: Color(purple_bg), size: 30),
+                          onPressed: () {
+                            setState(() {
+                              list.add(add_item);
+                              _add_item_controller.text = "";
+                            });
+                          },
+                        ),
+                        height: 40,
+                        width: 40,
                       )
-                      ]));
-            }));
-      });
+                    ],
+                  )
+                ]));
+      }));
 }
-
 
 /*
 editProfileDialog(BuildContext context, StateSetter setState, String name,
