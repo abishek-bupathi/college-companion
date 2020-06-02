@@ -48,7 +48,7 @@ class MyAppState extends State<MyApp>{
   final _pageOptions = [
     Exams(),
     Classes(),
-    Academic(),
+    Academic(MyApp().modules),
     Activities(),
     Profile(MyApp().id, MyApp().name, MyApp().course, MyApp().dob, MyApp().modules, MyApp().current_avatar)
   ];

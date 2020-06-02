@@ -7,6 +7,9 @@ import 'package:intl/intl.dart';
 import './calendar.dart';
 
 class Academic extends StatefulWidget {
+  List<String> moduleList;
+
+  Academic(this.moduleList);
   @override
   _AcademicState createState() => _AcademicState();
 }
@@ -26,13 +29,7 @@ class _AcademicState extends State<Academic> {
     "Study all concepts",
     "Based on Lecture 4 and 5"
   ];
-  List<String> moduleList = [
-    "Maths",
-    "Programming",
-    "Microprocessor",
-    "Microprocessor",
-    "Electrical"
-  ];
+
   List<String> dateList = [
     "Mon, 23 Feb",
     "Fri, 28 Feb",
@@ -75,7 +72,7 @@ class _AcademicState extends State<Academic> {
                   showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) =>  addTaskDialog(context));
+                      builder: (context) =>  addTaskDialog(context, widget.moduleList));
                 },
                 iconSize: 40,
                 color: Colors.red,
@@ -89,7 +86,7 @@ class _AcademicState extends State<Academic> {
               itemBuilder: (_, int index) {
                 return GestureDetector(
                   child: ItemAcademic(titleList[index], noteList[index],
-                      moduleList[index], dateList[index], completed),
+                      widget.moduleList[index], dateList[index], completed),
                   onTap: () {
                     showDialog(
                         context: context,
@@ -98,8 +95,9 @@ class _AcademicState extends State<Academic> {
                               context,
                               titleList[index],
                               noteList[index],
-                              moduleList[index],
+                              widget.moduleList[index],
                               dateList[index],
+                              widget.moduleList
                             ));
                   },
                 );
@@ -111,8 +109,8 @@ class _AcademicState extends State<Academic> {
   }
 }
 
-addTaskDialog(BuildContext context) {
-  String _module = 'Maths', _note = "", _title = "";
+addTaskDialog(BuildContext context, List modulesList) {
+  String _module = modulesList[0], _note = "", _title = "";
   var dateWithoutFormat, _date = " - ";
   int red_bg = 0xFFFF6659, red_high = 0xFFEC4343;
 
@@ -285,7 +283,7 @@ addTaskDialog(BuildContext context) {
                                     color: Colors.white),
                                 padding: EdgeInsets.only(left: 10, right: 10),
                                 child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
+                                  child: DropdownButton(
                                     dropdownColor: Colors.white,
                                     isExpanded: true,
                                     value: _module,
@@ -297,19 +295,13 @@ addTaskDialog(BuildContext context) {
                                     elevation: 0,
                                     style: TextStyle(
                                         color: Color(red_bg), fontSize: 20),
-                                    onChanged: (String newValue) {
+                                    onChanged: (newValue) {
                                       setState(() {
                                         _module = newValue;
                                       });
                                     },
-                                    items: <String>[
-                                      'Maths',
-                                      'Programming',
-                                      'Electrical',
-                                      'Microprocessor'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
+                                    items: modulesList.map((value) {
+                                      return DropdownMenuItem(
                                         value: value,
                                         child: Text(value),
                                       );
@@ -450,8 +442,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
   }
 }
 
-editTaskDialog(
-    BuildContext context, String title, String note, String module, var date) {
+editTaskDialog(BuildContext context, String title, String note, String module, var date, List modulesList) {
   int red_bg = 0xFFFF6659, red_high = 0xFFEC4343, label_clr = 0xFFFFACA9;
   var dateWithoutFormat;
   var noteController = new TextEditingController();
@@ -474,6 +465,7 @@ editTaskDialog(
               children: [
                 TextField(
                     controller: titleController,
+                    cursorColor: Colors.white,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 35,
@@ -501,6 +493,7 @@ editTaskDialog(
                         style: TextStyle(fontSize: 18, color: Color(label_clr)),
                       ),
                       TextField(
+                        cursorColor: Colors.white,
                           controller: noteController,
                           style: TextStyle(color: Colors.white, fontSize: 25),
                           decoration: InputDecoration(
@@ -574,7 +567,7 @@ editTaskDialog(
                       color: Colors.white),
                   padding: EdgeInsets.only(left: 10, right: 10),
                   child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
+                    child: DropdownButton(
                       dropdownColor: Colors.white,
                       isExpanded: true,
                       value: module,
@@ -585,18 +578,13 @@ editTaskDialog(
                       iconSize: 30,
                       elevation: 0,
                       style: TextStyle(color: Color(red_bg), fontSize: 20),
-                      onChanged: (String newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           module = newValue;
                         });
                       },
-                      items: <String>[
-                        'Maths',
-                        'Programming',
-                        'Electrical',
-                        'Microprocessor'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
+                      items: modulesList.map((value) {
+                        return DropdownMenuItem(
                           value: value,
                           child: Text(value),
                         );

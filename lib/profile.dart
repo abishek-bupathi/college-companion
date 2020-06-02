@@ -1,6 +1,7 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/material.dart';
 import './settings.dart';
+import './main.dart';
 
 class Profile extends StatefulWidget {
   String id, name, course, dob, current_avatar;
