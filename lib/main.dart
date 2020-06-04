@@ -92,7 +92,7 @@ class MyAppState extends State<MyApp>{
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
                   CustomIcons.test,
-                  color: Color(0xFFFF9B38),
+                  color: Color(0xFF05989B),
                   size: 30,
                 ),
                 title: Text('Exam'),
@@ -101,7 +101,7 @@ class MyAppState extends State<MyApp>{
                 icon: Icon(CustomIcons.calendar),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.calendar, color: Color(0xFF409F78), size: 30,),
+                  CustomIcons.calendar, color: Color(0xFFE97052), size: 30,),
                 title: Text('Classes'),
               ),
               BottomNavigationBarItem(

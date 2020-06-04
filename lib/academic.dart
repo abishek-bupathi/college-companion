@@ -443,7 +443,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
 }
 
 editTaskDialog(BuildContext context, String title, String note, String module, var date, List modulesList) {
-  int red_bg = 0xFFFF6659, red_high = 0xFFEC4343, label_clr = 0xFFFFACA9;
+  int red_bg = 0xFFFF6C5F/*0xFFFF6659*/, red_high = 0xFFEC4343, label_clr = 0xFFFFACA9;
   var dateWithoutFormat;
   var noteController = new TextEditingController();
   noteController.text = note;
