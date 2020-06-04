@@ -98,7 +98,7 @@ class _AcademicState extends State<Academic> {
                               widget.moduleList[index],
                               dateList[index],
                               widget.moduleList
-                            ));
+                            )).then((_) => setState(() {}));
                   },
                 );
               },
