@@ -70,6 +70,7 @@ class MyAppState extends State<MyApp>{
               });
             },
             controller: _pageController,
+            physics: BouncingScrollPhysics()
           ),
 
           bottomNavigationBar: BottomNavigationBar(
