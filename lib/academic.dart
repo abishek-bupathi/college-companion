@@ -50,7 +50,7 @@ class _AcademicState extends State<Academic> {
             title: Text('Academic',
                 style: TextStyle(
                     fontSize: 50,
-                    color: Colors.red,
+                    color: Color(0xFFc71831),
                     fontWeight: FontWeight.bold)),
             actions: <Widget>[
               new IconButton(
@@ -62,7 +62,7 @@ class _AcademicState extends State<Academic> {
                   );
                 },
                 iconSize: 40,
-                color: Colors.red,
+                color: Color(0xFFc71831)
               ),
               new IconButton(
                 icon: new Icon(Icons.add),
@@ -73,7 +73,7 @@ class _AcademicState extends State<Academic> {
                       builder: (context) =>  addTaskDialog(context, widget.moduleList));
                 },
                 iconSize: 40,
-                color: Colors.red,
+                color: Color(0xFFc71831)
               ),
             ],
           ),
@@ -110,7 +110,7 @@ class _AcademicState extends State<Academic> {
 addTaskDialog(BuildContext context, List modulesList) {
   String _module = modulesList[0], _note = "", _title = "";
   var dateWithoutFormat, _date = " - ";
-  int red_bg = 0xFFFF6659, red_high = 0xFFEC4343;
+  int red_bg = 0xFFe1323b, red_high = 0xFFb6152b;
 
   return Dialog(
       shape: RoundedRectangleBorder(
@@ -314,7 +314,7 @@ addTaskDialog(BuildContext context, List modulesList) {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       MaterialButton(
-                        highlightColor: Colors.red,
+                        highlightColor: Color(red_high),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -372,7 +372,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
             gradient: LinearGradient(
               colors: widget.completed
                   ? [Colors.black54, Colors.black54]
-                  : [Color(0xFFf45c43), Color(0xFFeb3349)],
+                  : [Color(0xFFf45033), Color(0xFFc71831)],
 
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -442,7 +442,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
 }
 
 editTaskDialog(BuildContext context, String title, String note, String module, var date, List modulesList) {
-  int red_bg = 0xFFFF6C5F/*0xFFFF6659*/, red_high = 0xFFEC4343, label_clr = 0xFFFFACA9;
+  int red_bg = 0xFFe1323b, red_high = 0xFFb6152b, label_clr = 0xFFFFACA9;
   var dateWithoutFormat;
   var noteController = new TextEditingController();
   noteController.text = note;

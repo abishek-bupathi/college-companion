@@ -6,7 +6,7 @@ class Classes extends StatefulWidget {
 }
 
 class _ClassesState extends State<Classes> {
-  int orange_dark = 0xFFf46b45, orange_light = 0xFFeea849;
+  int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
   int _selectedPage = 2;
 
 
@@ -34,7 +34,7 @@ class _ClassesState extends State<Classes> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Text('Classes',
-              style: TextStyle(fontSize: 50, color: Color(orange_dark))),
+              style: TextStyle(fontSize: 50, color: Color(magenta_dark))),
         ),
         body: Container(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -48,7 +48,7 @@ class _ClassesState extends State<Classes> {
                   child: Column(
                     children: <Widget>[
                       Card(
-                        color: Color(orange_dark),
+                        color: Color(magenta_dark),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -108,7 +108,7 @@ class _ClassesState extends State<Classes> {
               bottomNavigationBar: Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Color(orange_dark),
+                  color: Color(magenta_dark),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -128,7 +128,7 @@ class _ClassesState extends State<Classes> {
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.white,
                   indicator: BoxDecoration(
-                    color: Color(orange_light),
+                    color: Color(magenta_light),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
@@ -243,7 +243,7 @@ class _ItemClassesState extends State<ItemClasses> {
           gradient: LinearGradient(
             //   colors: [Color(0xFF04B46D), Color(0xFF119DA4)],
 
-            colors: [Color(_ClassesState().orange_light), Color(_ClassesState().orange_dark)],
+            colors: [Color(_ClassesState().magenta_light), Color(_ClassesState().magenta_dark)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

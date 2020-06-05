@@ -90,14 +90,14 @@ class MyAppState extends State<MyApp>{
                 icon: Icon(CustomIcons.calendar),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.calendar, color: Color(0xFFE97052), size: 30,),
+                  CustomIcons.calendar, color: Color(0xFF861657), size: 30,),
                 title: Text('Classes'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.list),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.list, color: Color(0xFFd2341b), size: 30,),
+                  CustomIcons.list, color: Color(0xFFc71831), size: 30,),
                 title: Text('Academic'),
               ),
               BottomNavigationBarItem(
