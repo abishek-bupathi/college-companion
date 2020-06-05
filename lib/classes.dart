@@ -37,7 +37,7 @@ class _ClassesState extends State<Classes> {
               style: TextStyle(fontSize: 50, color: Color(orange_dark))),
         ),
         body: Container(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: DefaultTabController(
             length: 5,
             child: Scaffold(
@@ -54,7 +54,7 @@ class _ClassesState extends State<Classes> {
                         ),
                         elevation: 5,
                         child: Container(
-                          height: 35,
+                          height: (MediaQuery.of(context).size.height-425)/10,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
@@ -201,7 +201,7 @@ class _timeTableState extends State<timeTable> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height - 300;
+    double height = MediaQuery.of(context).size.height - 305;
     if (widget.day.compareTo("tue") == 0)
     {
       modules = widget.modules_tue;
