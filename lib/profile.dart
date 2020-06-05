@@ -1,12 +1,17 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/material.dart';
 import './settings.dart';
-import './main.dart';
+import './user_details.dart';
 
 class Profile extends StatefulWidget {
-  String id, name, course, dob, current_avatar;
-  List<String> modules;
-  Profile(this.id, this.name, this.course, this.dob, this.modules, this.current_avatar);
+  String id = UserDetails().id,
+      name = UserDetails().name,
+      course = UserDetails().course,
+      university = UserDetails().university,
+      dob = UserDetails().dob,
+      current_avatar = UserDetails().current_avatar;
+
+  List<String> modules = UserDetails().modules, skills = UserDetails().skills;
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -14,21 +19,13 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
-  List<String> skills = [
-    "Julia",
-    "C",
-    "Raspberry Pi",
-    "Java",
-    "Python",
-    "Badminton",
-    "Flutter",
-    "Tensor flow",
-    "Scikit-Learn"
-  ];
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   double width, height_avatar, height_details, spacing, box_height = 190;
   @override
   Widget build(BuildContext context) {
+
+
+
     width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;
     height_avatar = width;
     height_details = 40;
@@ -232,6 +229,38 @@ class _ProfileState extends State<Profile> {
                     )),
                 SizedBox(height: spacing),
                 Container(
+                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    width: double.infinity,
+                    height: height_details,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                          colors: [Color(light_purple), Color(dark_purple)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius:
+                          5.0, // has the effect of softening the shadow
+                          spreadRadius:
+                          3.0, // has the effect of extending the shadow
+                          offset: Offset(
+                            0, // horizontal, move right 10
+                            0, // vertical, move down 10
+                          ),
+                        )
+                      ],
+                    ),
+                    child: Text(
+                      widget.university,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      textAlign: TextAlign.center,
+                    )),
+                SizedBox(height: spacing),
+                Container(
                     height: 145,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
@@ -330,7 +359,7 @@ class _ProfileState extends State<Profile> {
                         ])),
                 SizedBox(height: spacing),
                 Container(
-                    height: 190,
+                    height: 145,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 5),
                     decoration: BoxDecoration(
@@ -383,7 +412,7 @@ class _ProfileState extends State<Profile> {
                                             barrierDismissible: false,
                                             builder: (context) =>
                                                 editListDialog(context,
-                                                    setState, skills, "Skills"))
+                                                    setState, widget.skills, "Skills"))
                                         .then((_) => setState(() {}));
                                   },
                                 ),
@@ -394,7 +423,7 @@ class _ProfileState extends State<Profile> {
                             child: GridView.builder(
                               padding: EdgeInsets.fromLTRB(0, 4, 12, 5),
                               scrollDirection: Axis.vertical,
-                              itemCount: skills.length,
+                              itemCount: widget.skills.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
@@ -415,7 +444,7 @@ class _ProfileState extends State<Profile> {
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Text(
-                                          skills[index],
+                                          widget.skills[index],
                                           style: TextStyle(
                                               color: Color(dark_purple),
                                               fontSize: 15),

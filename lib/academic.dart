@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import './calendar.dart';
-
+import './user_details.dart';
 class Academic extends StatefulWidget {
-  List<String> moduleList;
+  List<String> moduleList = UserDetails().modules;
 
-  Academic(this.moduleList);
   @override
   _AcademicState createState() => _AcademicState();
 }
@@ -374,7 +372,8 @@ class _ItemAcademicState extends State<ItemAcademic> {
             gradient: LinearGradient(
               colors: widget.completed
                   ? [Colors.black54, Colors.black54]
-                  : [Color(0xFFff9d7e), Color(0xFFff403d)],
+                  : [Color(0xFFf45c43), Color(0xFFeb3349)],
+
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

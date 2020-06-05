@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './main.dart';
+import './user_details.dart';
 import './calendar.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -15,8 +15,8 @@ class _ExamsState extends State<Exams> {
   @override
   Widget build(BuildContext context) {
     int teal_dark = 0xFF05989B;
-    List<String> examList = MyApp().modules;
-    List<String> moduleList = MyApp().modules;
+    List<String> examList = UserDetails().modules;
+    List<String> moduleList = UserDetails().modules;
     List<String> locationList = ["Kingfisher","Kingfisher","Kingfisher","Kingfisher","Kingfisher","Kingfisher"];
     List<String> dateList = ["Mon, 24 Feb","Tue, 25 Feb","Wed, 26 Feb","Thu, 27 Feb","Fri, 28 Feb","Mon, 1 Mar"];
     List<String> timeList = ["9:00 AM","9:00 AM","9:00 AM","9:00 AM","9:00 AM","9:00 AM"];

@@ -6,7 +6,7 @@ class Classes extends StatefulWidget {
 }
 
 class _ClassesState extends State<Classes> {
-  int orange_dark = 0xFFE97052, orange_light = 0xFFFEB37B;
+  int orange_dark = 0xFFf46b45, orange_light = 0xFFeea849;
   int _selectedPage = 2;
 
 
@@ -243,7 +243,7 @@ class _ItemClassesState extends State<ItemClasses> {
           gradient: LinearGradient(
             //   colors: [Color(0xFF04B46D), Color(0xFF119DA4)],
 
-            colors: [Color(0xFFFEB47B), Color(0xFFFF7E5F)],
+            colors: [Color(_ClassesState().orange_light), Color(_ClassesState().orange_dark)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
