@@ -104,7 +104,7 @@ class _ExamsState extends State<Exams> {
                             showDialog(
                                 context: context,
                                 barrierDismissible: false,
-                                builder: (context) => editExamDialog(
+                                builder: (context) => viewExamDialog(
                                     context,
                                   moduleList[index],
                                   moduleList,
@@ -454,7 +454,7 @@ addExamDialog(BuildContext context, List modulesList) {
           }));
 }
 
-editExamDialog(BuildContext context, String module,List modulesList, String location, var _date, var _time) {
+viewExamDialog(BuildContext context, String module,List modulesList, String location, var _date, var _time) {
   int teal_bg = 0xFF02aab0, label_clr = 0xFF4ED4D8, teal_dark = 0xFF05989B;
   var dateWithoutFormat, timeWithoutFormat;
 
@@ -469,49 +469,21 @@ editExamDialog(BuildContext context, String module,List modulesList, String loca
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
             return Container(
-              height: 385,
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(teal_dark),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(15),
-                              topLeft: Radius.circular(15)),
-                        ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 35,
-                        ),
-                      ),
-                      Text(
-                        "Edit Exam",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.edit,
-                        color: Colors.transparent,
-                        size: 35,
-                      )
-                    ],
-                  ),
-                  Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+              height: 375,
+
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(height: 20,),
+                          Text(
+                            "Exam",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 25),
                           Container(
                             decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
@@ -587,22 +559,22 @@ editExamDialog(BuildContext context, String module,List modulesList, String loca
                                         Icon(
                                           Icons.schedule,
                                           color: Color(teal_bg),
-                                          size: 15,
+                                          size: 16,
                                         ),
                                         SizedBox(width: 5),
                                         Text(_time,
                                             style: TextStyle(
-                                                color: Color(teal_bg), fontSize: 15)),
+                                                color: Color(teal_bg), fontSize: 16)),
                                       ],
                                     ),
                                     Row(
                                       children: <Widget>[
                                         Icon(Icons.calendar_today,
-                                            color: Color(teal_bg), size: 15),
+                                            color: Color(teal_bg), size: 16),
                                         SizedBox(width: 5),
                                         Text(_date,
                                             style: TextStyle(
-                                                color: Color(teal_bg), fontSize: 15)),
+                                                color: Color(teal_bg), fontSize:16)),
                                       ],
                                     ),
                                     ButtonTheme(
@@ -682,8 +654,7 @@ editExamDialog(BuildContext context, String module,List modulesList, String loca
                             ],
                           )
                         ],
-                      )),
-                ],
+
               ),
             );
           }));
