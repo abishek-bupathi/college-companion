@@ -301,7 +301,7 @@ addExamDialog(BuildContext context, List modulesList) {
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20),
                                       decoration: InputDecoration(
-                                        labelText: 'Location',
+                                        labelText: 'Venue',
                                         focusColor: Colors.white,
                                         labelStyle: new TextStyle(
                                             color: Colors.white, fontSize: 20),
@@ -455,7 +455,7 @@ addExamDialog(BuildContext context, List modulesList) {
 }
 
 viewExamDialog(BuildContext context, String module,List modulesList, String location, var _date, var _time) {
-  int teal_bg = 0xFF02aab0, label_clr = 0xFF4ED4D8, teal_dark = 0xFF05989B;
+  int teal_bg = 0xFF02aab0, label_clr = 0xFF4ED4D8;
   var dateWithoutFormat, timeWithoutFormat;
 
   var locationController = new TextEditingController();
@@ -523,7 +523,7 @@ viewExamDialog(BuildContext context, String module,List modulesList, String loca
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  "Location",
+                                  "Venue",
                                   style: TextStyle(fontSize: 18, color: Color(label_clr)),
                                 ),
                                 TextField(

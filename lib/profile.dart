@@ -636,7 +636,7 @@ editListDialog(
                               color: Color(purple_bg), size: 30),
                           onPressed: () {
                             setState(() {
-                              list.add(add_item);
+                              list.insert(0, add_item) ;
                               _add_item_controller.text = "";
                             });
                           },

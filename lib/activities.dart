@@ -334,7 +334,7 @@ addActivityDialog(BuildContext context) {
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                   decoration: InputDecoration(
-                                    labelText: 'Location',
+                                    labelText: 'Venue',
                                     focusColor: Colors.white,
                                     labelStyle: new TextStyle(
                                         color: Colors.white, fontSize: 20),
@@ -565,7 +565,7 @@ editActivityDialog(BuildContext context, String title, String note,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Location",
+                        "Venue",
                         style: TextStyle(fontSize: 18, color: Color(label_clr)),
                       ),
                       TextField(
