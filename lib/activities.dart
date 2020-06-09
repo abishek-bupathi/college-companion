@@ -85,6 +85,7 @@ class _ActivitiesState extends State<Activities> {
             ),
           ],
         ),
+
         body: new Container(
           padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
           child: new ListView.builder(
@@ -215,6 +216,7 @@ addActivityDialog(BuildContext context) {
       _note = "",
       _title = "",
       _location = "";
+
   var dateWithoutFormat, timeWithoutFormat;
   int blue_bg = 0xFF3C9CE2, blue_high = 0xFFF0274C7;
   var scrollController = new ScrollController();

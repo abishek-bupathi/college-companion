@@ -5,6 +5,9 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import './calendar.dart';
 import './user_details.dart';
+import './welcome_details.dart';
+
+
 class Academic extends StatefulWidget {
   List<String> moduleList = UserDetails().modules;
 
@@ -67,10 +70,11 @@ class _AcademicState extends State<Academic> {
               new IconButton(
                 icon: new Icon(Icons.add),
                 onPressed: () {
-                  showDialog(
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> PersonalDetails()));
+             /*     showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) =>  addTaskDialog(context, widget.moduleList));
+                      builder: (context) =>  addTaskDialog(context, widget.moduleList));*/
                 },
                 iconSize: 40,
                 color: Color(0xFFc71831)
@@ -631,5 +635,6 @@ editTaskDialog(BuildContext context, String title, String note, String module, v
                 )
               ],
             ));
-      }));
+      })
+  );
 }
