@@ -70,11 +70,10 @@ class _AcademicState extends State<Academic> {
               new IconButton(
                 icon: new Icon(Icons.add),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> PersonalDetails()));
-             /*     showDialog(
+            showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) =>  addTaskDialog(context, widget.moduleList));*/
+                      builder: (context) =>  addTaskDialog(context, widget.moduleList));
                 },
                 iconSize: 40,
                 color: Color(0xFFc71831)

@@ -8,15 +8,16 @@ import './classes.dart';
 import './profile.dart';
 import './custom_icons.dart';
 import './user_details.dart';
+import './welcome_details.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(WelcomePage());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,
     systemNavigationBarColor: Color(0xFFF8F8F8),
-    statusBarColor: Colors.white, // status bar color
+    statusBarColor: Colors.transparent, // status bar color
   ));
 }
 
@@ -117,6 +118,28 @@ class MyAppState extends State<MyApp>{
             ],
           ),
       )
+    );
+  }
+}
+
+class WelcomePage extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return WelcomePageState();
+  }
+}
+
+class WelcomePageState extends State<WelcomePage>{
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "College Companion",
+        home:Builder(
+        builder: (context) => Welcome(context)
+        )
     );
   }
 }
