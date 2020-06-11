@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './calendar.dart';
 import './user_details.dart';
 
 class Classes extends StatefulWidget {
@@ -36,6 +37,19 @@ class _ClassesState extends State<Classes> {
           backgroundColor: Colors.transparent,
           title: Text('Classes',
               style: TextStyle(fontSize: 50, color: Color(magenta_dark))),
+          actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.event),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => Calendar_dialog(),
+                );
+              },
+              iconSize: 40,
+              color: Color(magenta_dark),
+            ),
+          ],
         ),
         body: Container(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 10),

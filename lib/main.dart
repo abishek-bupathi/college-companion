@@ -12,7 +12,7 @@ import './welcome_details.dart';
 
 
 void main() {
-  runApp(WelcomePage());
+  runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,

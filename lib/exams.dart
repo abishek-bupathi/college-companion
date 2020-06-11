@@ -39,7 +39,7 @@ class _ExamsState extends State<Exams> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context) => Calendar(),
+                    builder: (BuildContext context) => Calendar_dialog(),
                   );
                 },
                 iconSize: 40,

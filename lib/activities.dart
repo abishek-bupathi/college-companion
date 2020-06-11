@@ -65,7 +65,7 @@ class _ActivitiesState extends State<Activities> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) => Calendar(),
+                  builder: (BuildContext context) => Calendar_dialog(),
                 );
               },
               iconSize: 40,
