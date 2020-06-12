@@ -9,7 +9,6 @@ class Calendar_dialog extends StatefulWidget {
 }
 
 class _Calendar_dialogState extends State<Calendar_dialog> {
-
   List _selectedEvents;
   DateTime _selectedDay;
   final Map<DateTime, List> _events = {
@@ -45,10 +44,8 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
     _selectedEvents = _events[_selectedDay] ?? [];
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -60,65 +57,62 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   }
 
   dialogContent(BuildContext context) {
-
     return Container(
-        height: 550,
-                child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                child: Calendar(
-                  startOnMonday: true,
-            weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            events: _events,
-            onRangeSelected: (range) =>
-                print("Range is ${range.from}, ${range.to}"),
-            onDateSelected: (date) => _handleNewDate(date),
-            isExpanded: true,
-            isExpandable: true,
-            hideTodayIcon: true,
-            eventDoneColor: Colors.green,
-            selectedColor: Colors.black,
-            todayColor: Colors.red,
-            eventColor: Colors.grey,
-            dayOfWeekStyle: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w800,
-                fontSize: 11),
-                ),
-              ),
-              _buildEventList(),
-              Container(
-                padding: EdgeInsets.all(5),
-                child: Row(
+      height: 550,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            child: Calendar(
+              startOnMonday: true,
+              weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+              events: _events,
+              onRangeSelected: (range) =>
+                  print("Range is ${range.from}, ${range.to}"),
+              onDateSelected: (date) => _handleNewDate(date),
+              isExpanded: true,
+              isExpandable: true,
+              hideTodayIcon: true,
+              eventDoneColor: Colors.green,
+              selectedColor: Colors.black,
+              todayColor: Colors.red,
+              eventColor: Colors.grey,
+              dayOfWeekStyle: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 12),
+            ),
+          ),
+          _buildEventList(),
+          Container(
+            padding: EdgeInsets.all(5),
+            child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                SizedBox(
-                width: 35,
-                height: 35,
-                child: RawMaterialButton(
-                highlightColor: Colors.black87,
-                fillColor: Colors.black,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close,
-                color: Colors.white, size: 25),
-    ),
-    ),]),
-              )
-              ],
-          ),
-
+                  SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: RawMaterialButton(
+                      highlightColor: Colors.black87,
+                      fillColor: Colors.black,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.close, color: Colors.white, size: 25),
+                    ),
+                  ),
+                ]),
+          )
+        ],
+      ),
     );
-
-
   }
+
   void _handleNewDate(date) {
     setState(() {
       _selectedDay = date;
@@ -130,26 +124,26 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) => Container(
-          height: 45,
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-          child: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              elevation: 2,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-                ),
-
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text(_selectedEvents[index]['name'].toString(), style: TextStyle(fontSize: 20, color: Colors.white),)))),
-
-
+            height: 45,
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+            child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                elevation: 2,
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Text(
+                      _selectedEvents[index]['name'].toString(),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    )))),
         itemCount: _selectedEvents.length,
       ),
     );
   }
-
 }

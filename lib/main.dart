@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:splashscreen/splashscreen.dart';
 import './academic.dart';
 import './activities.dart';
 import './exams.dart';
@@ -10,9 +10,13 @@ import './custom_icons.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
+bool data_exist = true;
 
 void main() {
-  runApp(WelcomePage());
+
+  runApp(new MaterialApp(
+    home: data_exist? new WelcomePage(): MyApp(),
+  ));
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,
@@ -24,13 +28,36 @@ void main() {
 class MyApp extends StatefulWidget {
 
   @override
-    State<StatefulWidget> createState() {
-      return MyAppState();
-    }
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
 }
 
 class MyAppState extends State<MyApp>{
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: new SplashScreen(
+        seconds: 2,
+        photoSize: 50.0,
+        loaderColor: data_exist? Colors.red: Colors.white,
+        navigateAfterSeconds: new AfterSplash(),
+        image: new Image.asset("assets/Avatars/1.png"),
+        backgroundColor: Colors.white,
+      ),
+    );
+  }
+}
 
+class AfterSplash extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return AfterSplashState();
+  }
+}
+
+
+class AfterSplashState extends State<AfterSplash> {
   int _selectedPage = 2;
   var _pageController = PageController(initialPage: 2);
 
@@ -50,18 +77,15 @@ class MyAppState extends State<MyApp>{
         debugShowCheckedModeBanner: false,
         title: "College Companion",
         home: Scaffold(
-
           body: PageView(
-            children: _pageOptions,
-            onPageChanged: (index){
-              setState(() {
-                _selectedPage = index;
-              });
-            },
-            controller: _pageController,
-            physics: BouncingScrollPhysics()
-          ),
-
+              children: _pageOptions,
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedPage = index;
+                });
+              },
+              controller: _pageController,
+              physics: BouncingScrollPhysics()),
           bottomNavigationBar: BottomNavigationBar(
             // setting attributes for the bar
             unselectedItemColor: Colors.black38,
@@ -91,56 +115,61 @@ class MyAppState extends State<MyApp>{
                 icon: Icon(CustomIcons.calendar),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.calendar, color: Color(0xFF861657), size: 30,),
+                  CustomIcons.calendar,
+                  color: Color(0xFF861657),
+                  size: 30,
+                ),
                 title: Text('Classes'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.list),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.list, color: Color(0xFFc71831), size: 30,),
+                  CustomIcons.list,
+                  color: Color(0xFFc71831),
+                  size: 30,
+                ),
                 title: Text('Academic'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.scout),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.scout, color: Color(0xFF0488e3), size: 30,),
+                  CustomIcons.scout,
+                  color: Color(0xFF0488e3),
+                  size: 30,
+                ),
                 title: Text('Activities'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(CustomIcons.man_avatar),
                 backgroundColor: Colors.white,
                 activeIcon: Icon(
-                  CustomIcons.man_avatar, color: Color(0xFF9e1bd6), size: 30,),
+                  CustomIcons.man_avatar,
+                  color: Color(0xFF9e1bd6),
+                  size: 30,
+                ),
                 title: Text('Profile'),
               ),
             ],
           ),
-      )
-    );
+        ));
   }
 }
 
 class WelcomePage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return WelcomePageState();
   }
 }
 
-class WelcomePageState extends State<WelcomePage>{
-
+class WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "College Companion",
-        home:Builder(
-        builder: (context) => Welcome(context)
-        )
-    );
+        home: Builder(builder: (context) => Welcome(context)));
   }
 }
-
