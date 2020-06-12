@@ -235,25 +235,28 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: RawMaterialButton(
-                          highlightColor: Color(color_grey),
-                          fillColor: Color(color_grey),
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Hero(
+                        child: SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: RawMaterialButton(
+                            highlightColor: Color(color_grey),
+                            fillColor: Color(color_grey),
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UniversityDetails()));
+                            },
+                            child: Icon(Icons.arrow_forward_ios,
+                                color: Colors.white, size: 25),
                           ),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UniversityDetails()));
-                          },
-                          child: Icon(Icons.arrow_forward_ios,
-                              color: Colors.white, size: 25),
                         ),
+                        tag: "1",
                       ),
                     ],
                   ),
@@ -390,25 +393,28 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            SizedBox(
-                              width: 35,
-                              height: 35,
-                              child: RawMaterialButton(
-                                highlightColor: Color(color_grey),
-                                fillColor: Color(color_grey),
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                            Hero(
+                              child: SizedBox(
+                                width: 35,
+                                height: 35,
+                                child: RawMaterialButton(
+                                  highlightColor: Color(color_grey),
+                                  fillColor: Color(color_grey),
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MyApp()));
+                                  },
+                                  child: Icon(Icons.check,
+                                      color: Colors.white, size: 25),
                                 ),
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MyApp()));
-                                },
-                                child: Icon(Icons.check,
-                                    color: Colors.white, size: 25),
                               ),
+                              tag: "1",
                             ),
                           ],
                         ),
