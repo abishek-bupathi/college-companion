@@ -75,7 +75,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     int selected;
     int color_grey = 0xFF3F3D56;
     double height =
-        AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
+        AppBar().preferredSize.height + MediaQuery.of(context).padding.top + MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
       appBar: AppBar(
@@ -181,6 +181,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ]),
                 ),
                 Container(
+                  height: 55,
                   padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
                   child: TextField(
                       cursorColor: Color(color_grey),
@@ -206,6 +207,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       }),
                 ),
                 Container(
+                  height: 55,
                   padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
                   child: TextField(
                       cursorColor: Color(color_grey),
@@ -231,7 +233,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       }),
                 ),
                 Container(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.fromLTRB(15, 10, 15, 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
