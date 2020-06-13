@@ -76,9 +76,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   Widget build(BuildContext context) {
     int selected;
     int color_grey = 0xFF3F3D56;
-    double height =
+    double scrn_height = MediaQuery.of(context).size.height;
+    double reducable_height =
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top + MediaQuery.of(context).padding.bottom;
-
 
     return Scaffold(
       key: scaffold_key,
@@ -95,12 +95,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         child: SingleChildScrollView(
           physics: ClampingScrollPhysics(),
           child: Container(
-            height: MediaQuery.of(context).size.height - height,
+            height: scrn_height - reducable_height,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Image.asset("assets/backgrounds/details_bg.png"),
+                (scrn_height < 750) ? Container(): Image.asset("assets/backgrounds/details_bg.png"),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
                   decoration: BoxDecoration(
@@ -296,6 +296,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
   Widget build(BuildContext context) {
     int selected;
     int color_grey = 0xFF3F3D56;
+    double scrn_height = MediaQuery.of(context).size.height;
     double height =
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
 
@@ -320,7 +321,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      Image.asset("assets/backgrounds/uni_details_bg.png"),
+                      (scrn_height < 750) ? Container(): Image.asset("assets/backgrounds/uni_details_bg.png"),
                       SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 5, 15, 5),

@@ -107,7 +107,7 @@ classes_body(BuildContext context, StateSetter setState){
                   ),
                   elevation: 5,
                   child: Container(
-                    height: (MediaQuery.of(context).size.height-425)/10,
+                    height: 40,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -250,7 +250,7 @@ class _timeTableState extends State<timeTable> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height - 305;
+    double height = MediaQuery.of(context).size.height - 278;
     if (widget.day.compareTo("tue") == 0)
     {
       modules = widget.modules_tue;
@@ -305,7 +305,7 @@ class _ItemClassesState extends State<ItemClasses> {
   @override
   Widget build(BuildContext context) {
     int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
-    double item_height = (widget.height- 180)/9;
+    double item_height = 35;
     return new Card(
       elevation: 5,
       margin: EdgeInsets.fromLTRB(5, 10, 5, 10),

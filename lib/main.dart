@@ -23,6 +23,9 @@ void main() {
     systemNavigationBarColor: Color(0xFFF8F8F8),
     statusBarColor: Colors.transparent, // status bar color
   ));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp
+  ]);
 }
 
 class MyApp extends StatefulWidget {
