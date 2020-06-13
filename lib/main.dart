@@ -15,7 +15,7 @@ bool data_exist = true;
 void main() {
 
   runApp(new MaterialApp(
-    home: data_exist? new WelcomePage(): MyApp(),
+    home: data_exist ? MyApp() : new WelcomePage(),
   ));
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarIconBrightness: Brightness.dark,
@@ -40,7 +40,7 @@ class MyAppState extends State<MyApp>{
       child: new SplashScreen(
         seconds: 2,
         photoSize: 50.0,
-        loaderColor: data_exist? Colors.red: Colors.white,
+        loaderColor: data_exist ?  Colors.white : Colors.red,
         navigateAfterSeconds: new AfterSplash(),
         image: new Image.asset("assets/Avatars/1.png"),
         backgroundColor: Colors.white,

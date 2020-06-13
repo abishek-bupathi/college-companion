@@ -2,30 +2,19 @@ import 'package:flutter/material.dart';
 import './calendar.dart';
 import './user_details.dart';
 
+bool data_present = false;
+
 class Classes extends StatefulWidget {
   @override
   _ClassesState createState() => _ClassesState();
 }
 
 class _ClassesState extends State<Classes> {
-  int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
-  int _selectedPage = 2;
 
+ int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
 
-  int index = 2;
-  @override
+ @override
   Widget build(BuildContext context) {
-    double width = (MediaQuery.of(context).size.width - 50) / 3;
-
-    final _pageOptions = [
-      timeTable(width, "mon"),
-      timeTable(width, "tue"),
-      timeTable(width, "wed"),
-      timeTable(width, "thu"),
-      timeTable(width, "fri"),
-    ];
-
-
 
     return Container(
       color: Colors.white,
@@ -51,146 +40,191 @@ class _ClassesState extends State<Classes> {
             ),
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-          child: DefaultTabController(
-            length: 5,
-            child: Scaffold(
-              body: Container(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                color: Colors.white,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Card(
-                        color: Color(magenta_dark),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 5,
-                        child: Container(
-                          height: (MediaQuery.of(context).size.height-425)/10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              SizedBox(
-                                width: width,
-                                child: Text(
-                                  "Time",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Container(
-                                color: Colors.white54,
-                                width: 2.5,
-                              ),
-                              SizedBox(
-                                width: width,
-                                child: Text(
-                                  "Module",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Container(
-                                color: Colors.white54,
-                                width: 2.5,
-                              ),
-                              SizedBox(
-                                width: width,
-                                child: Text(
-                                  "Venue",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(child: _pageOptions[_selectedPage]),
-                    ],
-                  ),
-                ),
-              ),
-              bottomNavigationBar: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Color(magenta_dark),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 5.0, // has the effect of softening the shadow
-                      spreadRadius:
-                          2.0, // has the effect of extending the shadow
-                      offset: Offset(
-                        0, // horizontal, move right 10
-                        0, // vertical, move down 10
-                      ),
-                    )
-                  ],
-                ),
-                child: TabBar(
-                  // setting attributes for the bar
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.white,
-                  indicator: BoxDecoration(
-                    color: Color(magenta_light),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius:
-                            5.0, // has the effect of softening the shadow
-                        spreadRadius:
-                            3.0, // has the effect of extending the shadow
-                        offset: Offset(
-                          0, // horizontal, move right 10
-                          0, // vertical, move down 10
-                        ),
-                      )
-                    ],
-                  ),
-
-                  onTap: (index) {
-                    setState(() {
-                      _selectedPage = index;
-                    });
-                  },
-
-                  tabs: [
-                    Tab(
-                      text: 'MON',
-                    ),
-                    Tab(
-                      text: 'TUE',
-                    ),
-                    Tab(
-                      text: 'WED',
-                    ),
-                    Tab(
-                      text: 'THU',
-                    ),
-                    Tab(
-                      text: 'FRI',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        body: data_present ? classes_body(context, setState): empty_classes_body(setState),
       ),
     );
   }
+}
+
+empty_classes_body(StateSetter setState){
+  return Center(
+    child: GestureDetector(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.add,
+            size: 50,
+            color: Colors.grey,
+          ),
+          SizedBox(height: 20,),
+          Text(
+            "Tap to add new Timetable",
+            style: TextStyle(color: Colors.grey),
+          )
+        ],
+      ),
+
+      onTap: (){
+        setState((){
+          data_present = true;
+        });
+      }
+    ),
+  );
+}
+
+classes_body(BuildContext context, StateSetter setState){
+  int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
+  int _selectedPage = 2;
+  int index = 2;
+
+  double width = (MediaQuery.of(context).size.width - 50) / 3;
+
+  final _pageOptions = [
+    timeTable(width, "mon"),
+    timeTable(width, "tue"),
+    timeTable(width, "wed"),
+    timeTable(width, "thu"),
+    timeTable(width, "fri"),
+  ];
+  return Container(
+    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+    child: DefaultTabController(
+      length: 5,
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          color: Colors.white,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Card(
+                  color: Color(magenta_dark),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 5,
+                  child: Container(
+                    height: (MediaQuery.of(context).size.height-425)/10,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            "Time",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white54,
+                          width: 2.5,
+                        ),
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            "Module",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white54,
+                          width: 2.5,
+                        ),
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            "Venue",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(child: _pageOptions[_selectedPage]),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: Color(magenta_dark),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 5.0, // has the effect of softening the shadow
+                spreadRadius:
+                2.0, // has the effect of extending the shadow
+                offset: Offset(
+                  0, // horizontal, move right 10
+                  0, // vertical, move down 10
+                ),
+              )
+            ],
+          ),
+          child: TabBar(
+            // setting attributes for the bar
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white,
+            indicator: BoxDecoration(
+              color: Color(magenta_light),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius:
+                  5.0, // has the effect of softening the shadow
+                  spreadRadius:
+                  3.0, // has the effect of extending the shadow
+                  offset: Offset(
+                    0, // horizontal, move right 10
+                    0, // vertical, move down 10
+                  ),
+                )
+              ],
+            ),
+
+            onTap: (index) {
+              setState(() {
+                _selectedPage = index;
+              });
+            },
+
+            tabs: [
+              Tab(
+                text: 'MON',
+              ),
+              Tab(
+                text: 'TUE',
+              ),
+              Tab(
+                text: 'WED',
+              ),
+              Tab(
+                text: 'THU',
+              ),
+              Tab(
+                text: 'FRI',
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class timeTable extends StatefulWidget {
@@ -269,6 +303,7 @@ class ItemClasses extends StatefulWidget {
 class _ItemClassesState extends State<ItemClasses> {
   @override
   Widget build(BuildContext context) {
+    int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
     double item_height = (widget.height- 180)/9;
     return new Card(
       elevation: 5,
@@ -282,7 +317,7 @@ class _ItemClassesState extends State<ItemClasses> {
           gradient: LinearGradient(
             //   colors: [Color(0xFF04B46D), Color(0xFF119DA4)],
 
-            colors: [Color(_ClassesState().magenta_light), Color(_ClassesState().magenta_dark)],
+            colors: [Color(magenta_light), Color(magenta_dark)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
