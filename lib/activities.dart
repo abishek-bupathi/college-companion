@@ -3,6 +3,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import './calendar.dart';
 
+bool data_exists = false;
+
 class Activities extends StatefulWidget {
   @override
   _ActivitiesState createState() => _ActivitiesState();
@@ -86,7 +88,11 @@ class _ActivitiesState extends State<Activities> {
           ],
         ),
 
-        body: new Container(
+        body: !data_exists ?
+         Center(
+            child: Text("No Activites !", style: TextStyle(fontSize: 20, color: Colors.grey),),
+         )
+            :  new Container(
           padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
           child: new ListView.builder(
             physics: BouncingScrollPhysics(),

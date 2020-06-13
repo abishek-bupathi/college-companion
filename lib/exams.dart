@@ -4,6 +4,7 @@ import './calendar.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
+bool data_exists = false;
 
 class Exams extends StatefulWidget{
 
@@ -58,7 +59,11 @@ class _ExamsState extends State<Exams> {
               ),
             ],
           ),
-          body: Container(
+          body:  !data_exists ?
+          Center(
+            child: Text("No Exams !", style: TextStyle(fontSize: 20,color: Colors.grey),),
+          )
+              : Container(
             padding: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
@@ -216,11 +221,11 @@ addExamDialog(BuildContext context, List modulesList) {
       child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
-                height: 392,
+                height: 390,
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -415,7 +420,7 @@ addExamDialog(BuildContext context, List modulesList) {
                                     // SizedBox(height: 10),
                                   ])))),
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.fromLTRB(15, 15, 15, 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

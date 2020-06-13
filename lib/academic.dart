@@ -7,6 +7,7 @@ import './calendar.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
+bool data_exists = false;
 
 class Academic extends StatefulWidget {
   List<String> moduleList = UserDetails().modules;
@@ -80,7 +81,11 @@ class _AcademicState extends State<Academic> {
               ),
             ],
           ),
-          body: new Container(
+          body: !data_exists ?
+            Center(
+              child: Text("No Tasks Pending !", style: TextStyle(fontSize: 20,color: Colors.grey),),
+            )
+          : new Container(
             padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
             child: new ListView.builder(
               physics: BouncingScrollPhysics(),

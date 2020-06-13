@@ -261,7 +261,7 @@ class _ProfileState extends State<Profile> {
                     )),
                 SizedBox(height: spacing),
                 Container(
-                    height: 145,
+                    height: (widget.modules.length > 3) ? 145 : 100,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
                     decoration: BoxDecoration(
@@ -324,7 +324,11 @@ class _ProfileState extends State<Profile> {
                                   ))
                             ],
                           ),
-                          Expanded(
+                          (widget.modules.length == 0) ?
+                              Center(
+                                child: Text("No modules Present", style: TextStyle(color: Colors.white)),
+                              )
+                              : Expanded(
                             child: GridView.builder(
                               padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
                               scrollDirection: Axis.vertical,
@@ -359,7 +363,7 @@ class _ProfileState extends State<Profile> {
                         ])),
                 SizedBox(height: spacing),
                 Container(
-                    height: 145,
+                    height: (widget.skills.length > 3) ? 145 : 100,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 5),
                     decoration: BoxDecoration(
@@ -419,7 +423,11 @@ class _ProfileState extends State<Profile> {
                               )
                             ],
                           ),
-                          Expanded(
+                          (widget.skills.length == 0) ?
+                          Center(
+                            child: Text("No Skills present", style: TextStyle(color: Colors.white),),
+                          )
+                              : Expanded(
                             child: GridView.builder(
                               padding: EdgeInsets.fromLTRB(0, 4, 12, 5),
                               scrollDirection: Axis.vertical,

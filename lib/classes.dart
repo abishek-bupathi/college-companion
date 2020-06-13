@@ -3,6 +3,8 @@ import './calendar.dart';
 import './user_details.dart';
 
 bool data_present = false;
+int _selectedPage = 2;
+int index = 2;
 
 class Classes extends StatefulWidget {
   @override
@@ -76,8 +78,7 @@ empty_classes_body(StateSetter setState){
 
 classes_body(BuildContext context, StateSetter setState){
   int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
-  int _selectedPage = 2;
-  int index = 2;
+
 
   double width = (MediaQuery.of(context).size.width - 50) / 3;
 
@@ -678,7 +679,7 @@ addClassDialog(BuildContext context, List modulesList) {
                                     // SizedBox(height: 10),
                                   ])))),
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.fromLTRB(15, 15, 15, 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
