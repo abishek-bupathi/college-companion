@@ -204,7 +204,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 BorderSide(color: Color(color_grey), width: 2),
                             borderRadius: BorderRadius.circular(10)),
                       ),
-                      onSubmitted: (String name_new) {
+                      onChanged: (String name_new) {
                         setState(() {
                           widget.name = name_new;
                         });
@@ -230,7 +230,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 BorderSide(color: Color(color_grey), width: 2),
                             borderRadius: BorderRadius.circular(10)),
                       ),
-                      onSubmitted: (String dob_new) {
+                      onChanged: (String dob_new) {
                         setState(() {
                           widget.dob = dob_new;
                         });
@@ -343,7 +343,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                       color: Color(color_grey), width: 2),
                                   borderRadius: BorderRadius.circular(10)),
                             ),
-                            onSubmitted: (String id_new) {
+                            onChanged: (String id_new) {
                               setState(() {
                                 widget.id = id_new;
                               });
@@ -369,7 +369,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                       color: Color(color_grey), width: 2),
                                   borderRadius: BorderRadius.circular(10)),
                             ),
-                            onSubmitted: (String course_new) {
+                            onChanged: (String course_new) {
                               setState(() {
                                 widget.course = course_new;
                               });
@@ -395,7 +395,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                       color: Color(color_grey), width: 2),
                                   borderRadius: BorderRadius.circular(10)),
                             ),
-                            onSubmitted: (String uni_new) {
+                            onChanged: (String uni_new) {
                               setState(() {
                                 widget.university = uni_new;
                               });

@@ -107,7 +107,7 @@ classes_body(BuildContext context, StateSetter setState){
                   ),
                   elevation: 5,
                   child: Container(
-                    height: 40,
+                    height: 45,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -305,7 +305,7 @@ class _ItemClassesState extends State<ItemClasses> {
   @override
   Widget build(BuildContext context) {
     int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
-    double item_height = 35;
+    double item_height = 40;
     return new Card(
       elevation: 5,
       margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
