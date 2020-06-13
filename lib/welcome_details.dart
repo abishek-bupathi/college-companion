@@ -64,12 +64,14 @@ Welcome(BuildContext context) {
 
 class PersonalDetails extends StatefulWidget {
   String name = "", dob = "";
-  String current_avatar = UserDetails().current_avatar;
+  String current_avatar = "assets/Avatars/0.png";
   @override
   _PersonalDetailsState createState() => _PersonalDetailsState();
 }
 
 class _PersonalDetailsState extends State<PersonalDetails> {
+  final scaffold_key = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     int selected;
@@ -77,7 +79,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     double height =
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top + MediaQuery.of(context).padding.bottom;
 
+
     return Scaffold(
+      key: scaffold_key,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         brightness: Brightness.light,
@@ -190,7 +194,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         labelText: 'Name',
                         focusColor: Color(color_grey),
                         labelStyle: new TextStyle(
-                            color: Color(color_grey), fontSize: 20),
+                            color: Color(color_grey), fontSize: 15),
                         enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Color(color_grey), width: 2),
@@ -213,10 +217,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       cursorColor: Color(color_grey),
                       style: TextStyle(color: Color(color_grey), fontSize: 20),
                       decoration: InputDecoration(
-                        labelText: 'Date of Birth',
+                        labelText: 'Date of Birth (dd/mm/yyyy)',
                         focusColor: Color(color_grey),
                         labelStyle: new TextStyle(
-                            color: Color(color_grey), fontSize: 20),
+                            color: Color(color_grey), fontSize: 15),
                         enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Color(color_grey), width: 2),
@@ -249,10 +253,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             onPressed: () {
+                              if(widget.dob == "" || widget.name == ""){
+                                scaffold_key.currentState.showSnackBar(new SnackBar(
+                                  content: new Text("Please fill all the details"),
+                                 ));
+                              }else{
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => UniversityDetails()));
+                              }
                             },
                             child: Icon(Icons.arrow_forward_ios,
                                 color: Colors.white, size: 25),
@@ -280,6 +290,8 @@ class UniversityDetails extends StatefulWidget {
 }
 
 class _UniversityDetailsState extends State<UniversityDetails> {
+  final scaffold_key = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     int selected;
@@ -288,6 +300,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
 
     return Scaffold(
+      key: scaffold_key,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           brightness: Brightness.dark,
@@ -407,11 +420,16 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   onPressed: () {
+                                    if(widget.university == "" || widget.course == "" || widget.id == ""){
+                                      scaffold_key.currentState.showSnackBar(new SnackBar(
+                                        content: new Text("Please fill all the details"),
+                                      ));
+                                    }else{
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => MyApp()));
-                                  },
+                                  }},
                                   child: Icon(Icons.check,
                                       color: Colors.white, size: 25),
                                 ),
