@@ -1,3 +1,4 @@
+import 'package:hive/hive.dart';
 
 class UserDetails {
 
@@ -29,46 +30,60 @@ class UserDetails {
     "Scikit-Learn"
   ];
 
+  final user_details = Hive.box('user_details');
+
   String getId(){
-    return id;
+   // return id;
+    return user_details.get(0);
   }
   void setId(String id_new){
-    id = id_new;
+    // id = id_new;
+    user_details.put(0, id_new);
   }
 
   String getName(){
-    return name;
+  //  return name;
+    return user_details.get(1);
   }
   void setName(String name_new){
-    name = name_new;
+  //  name = name_new;
+    user_details.put(1, name_new);
   }
 
   String getDob(){
-    return dob;
+   // return dob;
+    return user_details.get(2);
   }
   void setDob(String dob_new){
-    dob = dob_new;
+  //  dob = dob_new;
+    user_details.put(2, dob_new);
   }
 
   String getCourse(){
-    return course;
+   // return course;
+    return user_details.get(3);
   }
   void setCourse(String course_new){
-    course = course_new;
+  //  course = course_new;
+    user_details.put(3, course_new);
   }
 
   String getUniversity(){
-    return university;
+  // return university;
+    return user_details.get(4);
   }
   void setUniversity(String university_new){
-    university = university_new;
+ //   university = university_new;
+    user_details.put(4, university_new);
   }
 
   String getCurrentAvatar(){
-    return current_avatar;
+   // return current_avatar;
+    return user_details.get(5);
   }
   void setCurrentAvatar(String avatar_new){
     current_avatar = avatar_new;
+    user_details.put(5, current_avatar);
   }
 
   List<String> getModules(){
@@ -88,4 +103,6 @@ class UserDetails {
   void modifyItem(List list, int index, String modified_item){
     list[index] = modified_item;
   }
+
+
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import './academic.dart';
 import './activities.dart';
 import './exams.dart';
@@ -10,13 +12,28 @@ import './custom_icons.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
-bool data_exist = true;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // getting app directory to store profile details
+  final appDirectory = await path_provider.getApplicationDocumentsDirectory();
+  // initalizing hive db to store profile details
+  Hive.init(appDirectory.path);
 
-void main() {
-
-  runApp(new MaterialApp(
-    home: data_exist ? MyApp() : new WelcomePage(),
-  ));
+  runApp(
+      new MaterialApp(
+    home: FutureBuilder(
+      future: Hive.openBox('user_details'),
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasError)
+            return Text(snapshot.error.toString());
+          else
+            return  !Hive.box('user_details').isEmpty ? MyApp() : new WelcomePage();
+        }
+        else
+          return Scaffold();
+      },
+  )));
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,
@@ -27,6 +44,7 @@ void main() {
     DeviceOrientation.portraitUp
   ]);
 }
+
 
 class MyApp extends StatefulWidget {
 
@@ -43,7 +61,7 @@ class MyAppState extends State<MyApp>{
       child: new SplashScreen(
         seconds: 2,
         photoSize: 50.0,
-        loaderColor: data_exist ?  Colors.white : Colors.red,
+        loaderColor: Colors.white,
         navigateAfterSeconds: new AfterSplash(),
         image: new Image.asset("assets/Avatars/1.png"),
         backgroundColor: Colors.white,
@@ -173,6 +191,8 @@ class WelcomePageState extends State<WelcomePage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "College Companion",
-        home: Builder(builder: (context) => Welcome(context)));
+        home: Welcome(context)
+
+    );
   }
 }

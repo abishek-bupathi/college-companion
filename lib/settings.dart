@@ -45,6 +45,10 @@ class _SettingsState extends State<Settings> {
                 icon: Hero(child: new Icon(Icons.close),
                 tag: "setting",),
                 onPressed: () {
+                  UserDetails().setCourse(course);
+                  UserDetails().setName(name);
+                  UserDetails().setId(id);
+                  UserDetails().setCurrentAvatar(current_avatar);
                   Navigator.pop(context);
                 },
                 iconSize: 40,
@@ -164,7 +168,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 onSubmitted: (String name_new) {
                                   setState(() {
-                                    UserDetails().setName(name_new);
+                                    name = name_new;
                                   });
                                 }),
                             SizedBox(height: 20),
@@ -191,7 +195,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 onSubmitted: (String id_new) {
                                   setState(() {
-                                    UserDetails().setId(id_new);
+                                    id = id_new;
                                   });
                                 }),
                             SizedBox(height: 20),
@@ -221,7 +225,7 @@ class _SettingsState extends State<Settings> {
                                 },
                                 onSubmitted: (String course_new) {
                                   setState(() {
-                                    UserDetails().setCourse(course_new);
+                                   course = course_new;
                                   });
                                 }),
                           ])),

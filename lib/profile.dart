@@ -4,6 +4,11 @@ import './settings.dart';
 import './user_details.dart';
 
 class Profile extends StatefulWidget {
+   @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   String id = UserDetails().getId(),
       name = UserDetails().getName(),
       course = UserDetails().getCourse(),
@@ -12,12 +17,6 @@ class Profile extends StatefulWidget {
       current_avatar = UserDetails().getCurrentAvatar();
 
   List<String> modules = UserDetails().getModules(), skills = UserDetails().getSkills();
-
-  @override
-  _ProfileState createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
 
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   double width, height_avatar, height_details, spacing, box_height = 190;
@@ -79,7 +78,7 @@ class _ProfileState extends State<Profile> {
                       decoration: BoxDecoration(
                         //  borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                            image: AssetImage(widget.current_avatar),
+                            image: AssetImage(current_avatar),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -117,7 +116,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                   child: Text(
-                                    widget.id,
+                                    id,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.center,
@@ -152,7 +151,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                   child: Text(
-                                    widget.dob,
+                                    dob,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.center,
@@ -187,7 +186,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   ),
                                   child: Text(
-                                    widget.name,
+                                    name,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                     textAlign: TextAlign.center,
@@ -223,7 +222,7 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                     child: Text(
-                      widget.course,
+                      course,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.center,
                     )),
@@ -255,13 +254,13 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                     child: Text(
-                      widget.university,
+                      university,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.center,
                     )),
                 SizedBox(height: spacing),
                 Container(
-                    height: (widget.modules.length > 3) ? 145 : 100,
+                    height: (modules.length > 3) ? 145 : 100,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
                     decoration: BoxDecoration(
@@ -317,14 +316,14 @@ class _ProfileState extends State<Profile> {
                                                   editListDialog(
                                                       context,
                                                       setState,
-                                                      widget.modules,
+                                                      modules,
                                                       "Modules"))
                                           .then((_) => setState(() {}));
                                     },
                                   ))
                             ],
                           ),
-                          (widget.modules.length == 0) ?
+                          (modules.length == 0) ?
                               Center(
                                 child: Text("No modules Present", style: TextStyle(color: Colors.white)),
                               )
@@ -332,7 +331,7 @@ class _ProfileState extends State<Profile> {
                             child: GridView.builder(
                               padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
                               scrollDirection: Axis.vertical,
-                              itemCount: widget.modules.length,
+                              itemCount: modules.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3,
@@ -352,7 +351,7 @@ class _ProfileState extends State<Profile> {
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Text(
-                                          widget.modules[index],
+                                          modules[index],
                                           style: TextStyle(
                                               color: Color(dark_purple),
                                               fontSize: 15),
@@ -363,7 +362,7 @@ class _ProfileState extends State<Profile> {
                         ])),
                 SizedBox(height: spacing),
                 Container(
-                    height: (widget.skills.length > 3) ? 145 : 100,
+                    height: (skills.length > 3) ? 145 : 100,
                     margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
                     padding: EdgeInsets.fromLTRB(12, 0, 0, 5),
                     decoration: BoxDecoration(
@@ -416,14 +415,14 @@ class _ProfileState extends State<Profile> {
                                             barrierDismissible: false,
                                             builder: (context) =>
                                                 editListDialog(context,
-                                                    setState, widget.skills, "Skills"))
+                                                    setState, skills, "Skills"))
                                         .then((_) => setState(() {}));
                                   },
                                 ),
                               )
                             ],
                           ),
-                          (widget.skills.length == 0) ?
+                          (skills.length == 0) ?
                           Center(
                             child: Text("No Skills present", style: TextStyle(color: Colors.white),),
                           )
@@ -431,7 +430,7 @@ class _ProfileState extends State<Profile> {
                             child: GridView.builder(
                               padding: EdgeInsets.fromLTRB(0, 4, 12, 5),
                               scrollDirection: Axis.vertical,
-                              itemCount: widget.skills.length,
+                              itemCount: skills.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
@@ -452,7 +451,7 @@ class _ProfileState extends State<Profile> {
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Text(
-                                          widget.skills[index],
+                                          skills[index],
                                           style: TextStyle(
                                               color: Color(dark_purple),
                                               fontSize: 15),

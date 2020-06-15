@@ -258,6 +258,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                   content: new Text("Please fill all the details"),
                                  ));
                               }else{
+                                UserDetails().setCurrentAvatar(widget.current_avatar);
+                                UserDetails().setName(widget.name);
+                                UserDetails().setDob(widget.dob);
+
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -426,6 +430,11 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                         content: new Text("Please fill all the details"),
                                       ));
                                     }else{
+
+                                      UserDetails().setId(widget.id);
+                                      UserDetails().setCourse(widget.course);
+                                      UserDetails().setUniversity(widget.university);
+
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
