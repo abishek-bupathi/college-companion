@@ -6,24 +6,26 @@ import './user_details.dart';
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
-  String name = UserDetails().name,
-         id = UserDetails().id,
-         course = UserDetails().course,
-         current_avatar = UserDetails().current_avatar;
+
 }
 
 class _SettingsState extends State<Settings> {
   int dark_grey = 0xFF252733, light_grey = 0xFF373A4B;
   int selected;
+  String id = UserDetails().getId(),
+      name = UserDetails().getName(),
+      course = UserDetails().getCourse(),
+      dob = UserDetails().getDob(),
+      current_avatar = UserDetails().getCurrentAvatar();
 
   @override
   Widget build(BuildContext context) {
     var nameController = new TextEditingController();
-    nameController.text = widget.name;
+    nameController.text = name;
     var idController = new TextEditingController();
-    idController.text = widget.id;
+    idController.text = id;
     var courseController = new TextEditingController();
-    courseController.text = widget.course;
+    courseController.text = course;
     var scrollController = new ScrollController();
 
     return Container(
@@ -100,7 +102,7 @@ class _SettingsState extends State<Settings> {
                                 String grid_avatar = "assets/Avatars/" +
                                     index.toString() +
                                     ".png";
-                                selected = widget.current_avatar == grid_avatar
+                                selected = current_avatar == grid_avatar
                                     ? index
                                     : null;
                                 return Container(
@@ -123,7 +125,7 @@ class _SettingsState extends State<Settings> {
                                       ),
                                       onTap: () {
                                         setState(() {
-                                          widget.current_avatar = grid_avatar;
+                                          current_avatar = grid_avatar;
                                           selected = index;
                                         });
                                       },
@@ -162,7 +164,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 onSubmitted: (String name_new) {
                                   setState(() {
-                                    widget.name = name_new;
+                                    UserDetails().setName(name_new);
                                   });
                                 }),
                             SizedBox(height: 20),
@@ -189,7 +191,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 onSubmitted: (String id_new) {
                                   setState(() {
-                                    widget.id = id_new;
+                                    UserDetails().setId(id_new);
                                   });
                                 }),
                             SizedBox(height: 20),
@@ -219,7 +221,7 @@ class _SettingsState extends State<Settings> {
                                 },
                                 onSubmitted: (String course_new) {
                                   setState(() {
-                                    widget.course = course_new;
+                                    UserDetails().setCourse(course_new);
                                   });
                                 }),
                           ])),

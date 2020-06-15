@@ -10,7 +10,7 @@ import './custom_icons.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
-bool data_exist = false;
+bool data_exist = true;
 
 void main() {
 

@@ -4,14 +4,14 @@ import './settings.dart';
 import './user_details.dart';
 
 class Profile extends StatefulWidget {
-  String id = UserDetails().id,
-      name = UserDetails().name,
-      course = UserDetails().course,
-      university = UserDetails().university,
-      dob = UserDetails().dob,
-      current_avatar = UserDetails().current_avatar;
+  String id = UserDetails().getId(),
+      name = UserDetails().getName(),
+      course = UserDetails().getCourse(),
+      university = UserDetails().getUniversity(),
+      dob = UserDetails().getDob(),
+      current_avatar = UserDetails().getCurrentAvatar();
 
-  List<String> modules = UserDetails().modules, skills = UserDetails().skills;
+  List<String> modules = UserDetails().getModules(), skills = UserDetails().getSkills();
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -562,7 +562,7 @@ editListDialog(
                                             color: Color(purple_bg)),
                                        onSubmitted: (String modified_list_item){
                                           setState((){
-                                           list[index] = modified_list_item;
+                                            UserDetails().modifyItem(list, index, modified_list_item);
                                           });
                                         },
 
@@ -581,7 +581,7 @@ editListDialog(
                                           color: Colors.red, size: 20),
                                       onPressed: () {
                                         setState(() {
-                                          list.removeAt(index);
+                                          UserDetails().deleteItem(list, index);
                                         });
                                       },
                                       shape: RoundedRectangleBorder(
@@ -644,7 +644,7 @@ editListDialog(
                               color: Color(purple_bg), size: 30),
                           onPressed: () {
                             setState(() {
-                              list.insert(0, add_item) ;
+                              UserDetails().addItem(list, add_item);
                               _add_item_controller.text = "";
                             });
                           },
