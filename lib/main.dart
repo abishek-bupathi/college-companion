@@ -9,14 +9,7 @@ import './exams.dart';
 import './classes.dart';
 import './profile.dart';
 import './custom_icons.dart';
-import './user_details.dart';
 import './welcome_details.dart';
-
-Future<List<Box>> _openBox() async {
-  Hive.openBox('user_details');
-  Hive.openBox('modules');
-  Hive.openBox('skills');
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
