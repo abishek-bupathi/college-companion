@@ -76,7 +76,7 @@ class MyAppState extends State<MyApp>{
         loaderColor: Colors.white,
         navigateAfterSeconds: new AfterSplash(),
         image: new Image.asset("assets/Avatars/1.png"),
-        backgroundColor: Colors.white,
+        backgroundColor: !Hive.box('user_details').isEmpty ? Colors.red : Colors.white ,
       ),
     );
   }
