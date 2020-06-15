@@ -7,7 +7,7 @@ import './calendar.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
-bool data_exists = false;
+bool data_exists = true;
 
 class Academic extends StatefulWidget {
   List<String> moduleList = UserDetails().modules;
@@ -486,11 +486,11 @@ editTaskDialog(BuildContext context, String title, String note, String module, v
                         borderSide: BorderSide(color: Colors.white),
                       ),
                     ),
-                    onChanged: (String title_new) {
-                      setState(() {
-                        title = title_new;
-                      });
-                    }),
+                  onTap: (){
+                    titleController.addListener((){
+                      title = titleController.text;
+                    });
+                  },),
                 SizedBox(height: 15),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -511,11 +511,11 @@ editTaskDialog(BuildContext context, String title, String note, String module, v
                               borderSide: BorderSide(color: Colors.white),
                             ),
                           ),
-                          onChanged: (String note_new) {
-                            setState(() {
-                              note = note_new;
-                            });
-                          }),
+                        onTap: (){
+                          noteController.addListener((){
+                            note = noteController.text;
+                          });
+                        },),
                     ]),
                 SizedBox(
                   height: 20,

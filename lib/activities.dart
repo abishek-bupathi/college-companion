@@ -3,7 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import './calendar.dart';
 
-bool data_exists = false;
+bool data_exists = true;
 
 class Activities extends StatefulWidget {
   @override
@@ -535,11 +535,11 @@ editActivityDialog(BuildContext context, String title, String note,
                         borderSide: BorderSide(color: Colors.white),
                       ),
                     ),
-                    onChanged: (String title_new) {
-                      setState(() {
-                        title = title_new;
-                      });
-                    }),
+                  onTap: (){
+                    titleController.addListener((){
+                      title = titleController.text;
+                    });
+                  },),
                 SizedBox(height: 15),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -560,11 +560,11 @@ editActivityDialog(BuildContext context, String title, String note,
                               borderSide: BorderSide(color: Colors.white),
                             ),
                           ),
-                          onChanged: (String note_new) {
-                            setState(() {
-                              note = note_new;
-                            });
-                          }),
+                        onTap: (){
+                          noteController.addListener((){
+                            note = noteController.text;
+                          });
+                        },),
                     ]),
                 SizedBox(
                   height: 20,
@@ -588,11 +588,11 @@ editActivityDialog(BuildContext context, String title, String note,
                               borderSide: BorderSide(color: Colors.white),
                             ),
                           ),
-                          onChanged: (String location_new) {
-                            setState(() {
-                              location = location_new;
-                            });
-                          }),
+                        onTap: (){
+                          locationController.addListener((){
+                            location = locationController.text;
+                          });
+                        },),
                     ]),
                 SizedBox(height: 20),
                 Container(
