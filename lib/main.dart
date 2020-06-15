@@ -47,7 +47,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp
   ]);
-
+  Hive.close();
 }
 
 
@@ -64,12 +64,12 @@ class MyAppState extends State<MyApp>{
   Widget build(BuildContext context) {
     return Container(
       child: new SplashScreen(
-        seconds: 2,
+        seconds: 1,
         photoSize: 50.0,
-        loaderColor: Colors.white,
+        loaderColor: !Hive.box('user_details').isEmpty ? Colors.red : Colors.white,
         navigateAfterSeconds: new AfterSplash(),
         image: new Image.asset("assets/Avatars/1.png"),
-        backgroundColor: !Hive.box('user_details').isEmpty ? Colors.red : Colors.white ,
+        backgroundColor: Colors.white ,
       ),
     );
   }

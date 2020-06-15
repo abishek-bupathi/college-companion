@@ -1,4 +1,3 @@
-import 'package:college_companion/academic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './user_details.dart';
@@ -298,7 +297,6 @@ class _UniversityDetailsState extends State<UniversityDetails> {
 
   @override
   Widget build(BuildContext context) {
-    int selected;
     int color_grey = 0xFF3F3D56;
     double scrn_height = MediaQuery.of(context).size.height;
     double height =

@@ -1,4 +1,3 @@
-import 'package:college_companion/classes.dart';
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/material.dart';
 import './settings.dart';
