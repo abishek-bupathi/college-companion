@@ -9,20 +9,21 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String id = UserDetails().getId(),
-      name = UserDetails().getName(),
-      course = UserDetails().getCourse(),
-      university = UserDetails().getUniversity(),
-      dob = UserDetails().getDob(),
-      current_avatar = UserDetails().getCurrentAvatar();
+
 
   List<String> modules = UserDetails().getModules(), skills = UserDetails().getSkills();
-
+  String id, name, course, university, dob, current_avatar;
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   double width, height_avatar, height_details, spacing, box_height = 190;
   @override
   Widget build(BuildContext context) {
 
+        id = UserDetails().getId();
+        name = UserDetails().getName();
+        course = UserDetails().getCourse();
+        university = UserDetails().getUniversity();
+        dob = UserDetails().getDob();
+        current_avatar = UserDetails().getCurrentAvatar();
 
 
     width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;
