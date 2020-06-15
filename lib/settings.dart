@@ -12,6 +12,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   int dark_grey = 0xFF252733, light_grey = 0xFF373A4B;
   int selected;
+  String edited_name;
   String id = UserDetails().getId(),
       name = UserDetails().getName(),
       course = UserDetails().getCourse(),
@@ -153,7 +154,7 @@ class _SettingsState extends State<Settings> {
                         child: Container(
                             padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                             child: Column(children: [
-                              TextField(
+                                TextField(
                                   controller: nameController,
                                   cursorColor: Colors.white,
                                   style: TextStyle(
@@ -174,11 +175,12 @@ class _SettingsState extends State<Settings> {
                                         borderRadius:
                                         BorderRadius.circular(10)),
                                   ),
-                                  onSubmitted: (String name_new) {
-                                    setState(() {
-                                      name = name_new;
+                                onTap: (){
+                                    nameController.addListener((){
+                                      name = nameController.text;
                                     });
-                                  }),
+                                },
+                              ),
                               SizedBox(height: 20),
                               TextField(
                                   controller: idController,
@@ -201,11 +203,11 @@ class _SettingsState extends State<Settings> {
                                         borderRadius:
                                         BorderRadius.circular(10)),
                                   ),
-                                  onSubmitted: (String id_new) {
-                                    setState(() {
-                                      id = id_new;
-                                    });
-                                  }),
+                                onTap: (){
+                                  idController.addListener((){
+                                    id = idController.text;
+                                  });
+                                },),
                               SizedBox(height: 20),
                               TextField(
                                   controller: courseController,
@@ -229,13 +231,12 @@ class _SettingsState extends State<Settings> {
                                         BorderRadius.circular(10)),
                                   ),
                                   onTap: () {
+                                    courseController.addListener((){
+                                      course = courseController.text;
                                     scrollController.jumpTo(1);
                                   },
-                                  onSubmitted: (String course_new) {
-                                    setState(() {
-                                     course = course_new;
-                                    });
-                                  }),
+                                    );})
+
                             ])),
                       ),
                     ),

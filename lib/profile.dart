@@ -560,13 +560,12 @@ editListDialog(
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Color(purple_bg)),
-                                       onSubmitted: (String modified_list_item){
-                                          setState((){
-                                            UserDetails().modifyItem(list, index, modified_list_item);
+
+                                        onTap: (){
+                                          _controllers[index].addListener((){
+                                            UserDetails().modifyItem(list, index, _controllers[index].text);
                                           });
                                         },
-
-
                                         maxLength: 20,
                                         maxLengthEnforced: true,
                                       ),
