@@ -5,7 +5,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import './calendar.dart';
 import './user_details.dart';
-import './welcome_details.dart';
 
 bool data_exists = false;
 

@@ -1,4 +1,3 @@
-import 'package:college_companion/classes.dart';
 import 'package:hive/hive.dart';
 
 class UserDetails {
