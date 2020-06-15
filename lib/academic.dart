@@ -7,16 +7,16 @@ import './calendar.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
-bool data_exists = true;
+bool data_exists = false;
 
 class Academic extends StatefulWidget {
-  List<String> moduleList = UserDetails().modules;
-
   @override
   _AcademicState createState() => _AcademicState();
 }
 
 class _AcademicState extends State<Academic> {
+  List<String> moduleList = UserDetails().getModules();
+
   List<String> titleList = [
     "Assignment 1",
     "Assignment 3",
@@ -74,7 +74,7 @@ class _AcademicState extends State<Academic> {
             showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) =>  addTaskDialog(context, widget.moduleList));
+                      builder: (context) =>  addTaskDialog(context, moduleList));
                 },
                 iconSize: 40,
                 color: Color(0xFFc71831)
@@ -92,7 +92,7 @@ class _AcademicState extends State<Academic> {
               itemBuilder: (_, int index) {
                 return GestureDetector(
                   child: ItemAcademic(titleList[index], noteList[index],
-                      widget.moduleList[index], dateList[index], completed),
+                      moduleList[index], dateList[index], completed),
                   onTap: () {
                     showDialog(
                         context: context,
@@ -101,9 +101,9 @@ class _AcademicState extends State<Academic> {
                               context,
                               titleList[index],
                               noteList[index],
-                              widget.moduleList[index],
+                              moduleList[index],
                               dateList[index],
-                              widget.moduleList
+                              moduleList
                             )).then((_) => setState(() {}));
                   },
                 );

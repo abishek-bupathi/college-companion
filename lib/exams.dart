@@ -16,8 +16,8 @@ class _ExamsState extends State<Exams> {
   @override
   Widget build(BuildContext context) {
     int teal_dark = 0xFF05989B;
-    List<String> examList = UserDetails().modules;
-    List<String> moduleList = UserDetails().modules;
+    List<String> examList = UserDetails().getModules();
+    List<String> moduleList = UserDetails().getModules();
     List<String> locationList = ["Kingfisher","Kingfisher","Kingfisher","Kingfisher","Kingfisher","Kingfisher"];
     List<String> dateList = ["Mon, 24 Feb","Tue, 25 Feb","Wed, 26 Feb","Thu, 27 Feb","Fri, 28 Feb","Mon, 1 Mar"];
     List<String> timeList = ["9:00 AM","9:00 AM","9:00 AM","9:00 AM","9:00 AM","9:00 AM"];

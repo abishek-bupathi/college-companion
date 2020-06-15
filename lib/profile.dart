@@ -1,3 +1,4 @@
+import 'package:college_companion/classes.dart';
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/material.dart';
 import './settings.dart';
@@ -11,14 +12,17 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
 
 
-  List<String> modules = UserDetails().getModules(), skills = UserDetails().getSkills();
+  List<String> modules, skills;
   String id, name, course, university, dob, current_avatar;
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   double width, height_avatar, height_details, spacing, box_height = 190;
   @override
   Widget build(BuildContext context) {
+    
+    modules = UserDetails().getModules();
+    skills = UserDetails().getSkills();
 
-        id = UserDetails().getId();
+    id = UserDetails().getId();
         name = UserDetails().getName();
         course = UserDetails().getCourse();
         university = UserDetails().getUniversity();
@@ -563,7 +567,7 @@ editListDialog(
 
                                         onTap: (){
                                           _controllers[index].addListener((){
-                                            UserDetails().modifyItem(list, index, _controllers[index].text);
+                                            UserDetails().modifyItem(title, index, _controllers[index].text);
                                           });
                                         },
                                         maxLength: 20,
@@ -580,7 +584,8 @@ editListDialog(
                                           color: Colors.red, size: 20),
                                       onPressed: () {
                                         setState(() {
-                                          UserDetails().deleteItem(list, index);
+                                          UserDetails().deleteItem(title, index);
+                                          list.removeAt(index);
                                         });
                                       },
                                       shape: RoundedRectangleBorder(
@@ -643,7 +648,8 @@ editListDialog(
                               color: Color(purple_bg), size: 30),
                           onPressed: () {
                             setState(() {
-                              UserDetails().addItem(list, add_item);
+                              UserDetails().addItem(title, add_item);
+                              list.insert(0, add_item);
                               _add_item_controller.text = "";
                             });
                           },

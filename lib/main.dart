@@ -12,17 +12,28 @@ import './custom_icons.dart';
 import './user_details.dart';
 import './welcome_details.dart';
 
+Future<List<Box>> _openBox() async {
+  Hive.openBox('user_details');
+  Hive.openBox('modules');
+  Hive.openBox('skills');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // getting app directory to store profile details
   final appDirectory = await path_provider.getApplicationDocumentsDirectory();
   // initalizing hive db to store profile details
   Hive.init(appDirectory.path);
+  Future<List<Box>> _openBox() async {
+    await Hive.openBox('user_details');
+    await Hive.openBox('modules');
+    await Hive.openBox('skills');
+  }
 
   runApp(
       new MaterialApp(
     home: FutureBuilder(
-      future: Hive.openBox('user_details'),
+      future: _openBox(),
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasError)
@@ -43,6 +54,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp
   ]);
+
 }
 
 
