@@ -209,10 +209,14 @@ addExamDialog(BuildContext context, List modulesList) {
   String _dateExam = " - ",
       _timeExam = " - ",
       _location = "",
-      _module = modulesList[0];
+      _module;
   var dateWithoutFormat, timeWithoutFormat;
   int teal_bg = 0xFF02aab0, teal_dark = 0xFF05989B;
   var scrollController = new ScrollController();
+
+  if(modulesList.isNotEmpty)
+    _module =  modulesList[0];
+
   return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -273,7 +277,12 @@ addExamDialog(BuildContext context, List modulesList) {
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white),
                                       padding: EdgeInsets.only(left: 10, right: 10),
-                                      child: DropdownButtonHideUnderline(
+                                      child: modulesList.isEmpty?
+                                      SizedBox(
+                                          width: double.infinity,
+                                          height: 45,
+                                          child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(teal_bg)),textAlign: TextAlign.center,)))
+                                          : DropdownButtonHideUnderline(
                                         child: DropdownButton(
                                           dropdownColor: Colors.white,
                                           isExpanded: true,

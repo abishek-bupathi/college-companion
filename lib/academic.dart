@@ -115,9 +115,12 @@ class _AcademicState extends State<Academic> {
 }
 
 addTaskDialog(BuildContext context, List modulesList) {
-  String _module = modulesList[0], _note = "", _title = "";
+  String _module, _note = "", _title = "";
   var dateWithoutFormat, _date = " - ";
   int red_bg = 0xFFe1323b, red_high = 0xFFb6152b;
+
+  if(modulesList.isNotEmpty)
+  _module= modulesList[0];
 
   return Dialog(
       shape: RoundedRectangleBorder(
@@ -287,7 +290,12 @@ addTaskDialog(BuildContext context, List modulesList) {
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white),
                                 padding: EdgeInsets.only(left: 10, right: 10),
-                                child: DropdownButtonHideUnderline(
+                                child: modulesList.isEmpty?
+                                SizedBox(
+                                  width: double.infinity,
+                                    height: 45,
+                                    child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(red_bg)),textAlign: TextAlign.center,)))
+                                    : DropdownButtonHideUnderline(
                                   child: DropdownButton(
                                     dropdownColor: Colors.white,
                                     isExpanded: true,
@@ -572,7 +580,9 @@ editTaskDialog(BuildContext context, String title, String note, String module, v
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
                   padding: EdgeInsets.only(left: 10, right: 10),
-                  child: DropdownButtonHideUnderline(
+                  child: modulesList.isEmpty?
+                      Text("No modules found")
+                      : DropdownButtonHideUnderline(
                     child: DropdownButton(
                       dropdownColor: Colors.white,
                       isExpanded: true,

@@ -330,7 +330,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           (modules.length == 0) ?
                               Center(
-                                child: Text("No modules Present", style: TextStyle(color: Colors.white)),
+                                child: Text("No modules Present", style: TextStyle(color: Colors.white54)),
                               )
                               : Expanded(
                             child: GridView.builder(
@@ -429,7 +429,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           (skills.length == 0) ?
                           Center(
-                            child: Text("No Skills present", style: TextStyle(color: Colors.white),),
+                            child: Text("No Skills present", style: TextStyle(color: Colors.white54),),
                           )
                               : Expanded(
                             child: GridView.builder(
