@@ -21,6 +21,7 @@ void main() async {
     await Hive.openBox('user_details');
     await Hive.openBox('modules');
     await Hive.openBox('skills');
+    await Hive.openBox('profile_complete');
   }
 
   runApp(
@@ -32,7 +33,7 @@ void main() async {
           if(snapshot.hasError)
             return Text(snapshot.error.toString());
           else
-            return  !Hive.box('user_details').isEmpty ? MyApp() : new WelcomePage();
+            return  Hive.box('profile_complete').isNotEmpty ? MyApp() : new WelcomePage(); // !Hive.box('user_details').isEmpty ? MyApp() : new WelcomePage();
         }
         else
           return Scaffold();

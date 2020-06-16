@@ -33,6 +33,7 @@ class UserDetails {
   final user_details = Hive.box('user_details');
   final modules_box = Hive.box('modules');
   final skills_box = Hive.box('skills');
+  final profile_complete_box = Hive.box('profile_complete');
 
   String getId(){
    // return id;
@@ -127,24 +128,8 @@ class UserDetails {
       skills_box.put(index, modified_item);
   }
 
-  /*
-  List<String> getModules(){
-    return modules;
+  void profile_complete(){
+    profile_complete_box.add(true);
   }
-
-  List<String> getSkills(){
-    return skills;
-  }
-
-  void addItem(List list, String item_new){
-    list.insert(0, item_new);
-  }
-  void deleteItem(List list, int index){
-    list.removeAt(index);
-  }
-  void modifyItem(List list, int index, String modified_item){
-    list[index] = modified_item;
-  }
-*/
 
 }

@@ -1,22 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import './calendar.dart';
 import './user_details.dart';
 
-bool data_present = false;
-int _selectedPage = 2;
-int index = 2;
+bool data_present = true;
+
+
+
+List<String> daysOfWeek = ["Mon", "Tue", "Wed", "Thu","Fri"];
+DateTime date = DateTime.now();
+String current_day = DateFormat('EEE').format(date);
+
+int index = daysOfWeek.indexOf(current_day) < 5 ? daysOfWeek.indexOf(current_day): 0;
+int _selectedPage = index;
+
+
 
 class Classes extends StatefulWidget {
+
   @override
   _ClassesState createState() => _ClassesState();
 }
 
-class _ClassesState extends State<Classes> {
+class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin{
 
  int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
+ TabController _tabController;
+
+ @override
+ void initState() {
+   super.initState();
+   _tabController = new TabController(vsync: this, length: 5, initialIndex: index);
+ }
 
  @override
   Widget build(BuildContext context) {
+
+
 
     return Container(
       color: Colors.white,
@@ -42,7 +62,7 @@ class _ClassesState extends State<Classes> {
             ),
           ],
         ),
-        body: data_present ? classes_body(context, setState): empty_classes_body(setState),
+        body: data_present ? classes_body(context, setState, _tabController): empty_classes_body(setState),
       ),
     );
   }
@@ -76,7 +96,7 @@ empty_classes_body(StateSetter setState){
   );
 }
 
-classes_body(BuildContext context, StateSetter setState){
+classes_body(BuildContext context, StateSetter setState, TabController _tabController){
   int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
 
 
@@ -89,86 +109,107 @@ classes_body(BuildContext context, StateSetter setState){
     timeTable(width, "thu"),
     timeTable(width, "fri"),
   ];
+
   return Container(
     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-    child: DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-          color: Colors.white,
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Card(
-                  color: Color(magenta_dark),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 5,
-                  child: Container(
-                    height: 45,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        SizedBox(
-                          width: width,
-                          child: Text(
-                            "Time",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                            textAlign: TextAlign.center,
+    child: Scaffold(
+      body: Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        color: Colors.white,
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Card(
+                color: Color(magenta_dark),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                elevation: 5,
+                child: Container(
+                  height: 45,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox(
+                        width: width,
+                        child: Text(
+                          "Time",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        Container(
-                          color: Colors.white54,
-                          width: 2.5,
+                      ),
+                      Container(
+                        color: Colors.white54,
+                        width: 2.5,
+                      ),
+                      SizedBox(
+                        width: width,
+                        child: Text(
+                          "Module",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 18),
+                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(
-                          width: width,
-                          child: Text(
-                            "Module",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 18),
-                            textAlign: TextAlign.center,
-                          ),
+                      ),
+                      Container(
+                        color: Colors.white54,
+                        width: 2.5,
+                      ),
+                      SizedBox(
+                        width: width,
+                        child: Text(
+                          "Venue",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 18),
+                          textAlign: TextAlign.center,
                         ),
-                        Container(
-                          color: Colors.white54,
-                          width: 2.5,
-                        ),
-                        SizedBox(
-                          width: width,
-                          child: Text(
-                            "Venue",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 18),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 10),
-                Container(child: _pageOptions[_selectedPage]),
-              ],
-            ),
+              ),
+              SizedBox(height: 10),
+              Container(child: _pageOptions[_selectedPage]),
+            ],
           ),
         ),
-        bottomNavigationBar: Container(
-          height: 40,
-          decoration: BoxDecoration(
-            color: Color(magenta_dark),
+      ),
+      bottomNavigationBar: Container(
+        height: 40,
+        decoration: BoxDecoration(
+          color: Color(magenta_dark),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 5.0, // has the effect of softening the shadow
+              spreadRadius:
+              2.0, // has the effect of extending the shadow
+              offset: Offset(
+                0, // horizontal, move right 10
+                0, // vertical, move down 10
+              ),
+            )
+          ],
+        ),
+        child: TabBar(
+          controller: _tabController,
+          // setting attributes for the bar
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white,
+          indicator: BoxDecoration(
+            color: Color(magenta_light),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
-                blurRadius: 5.0, // has the effect of softening the shadow
+                blurRadius:
+                5.0, // has the effect of softening the shadow
                 spreadRadius:
-                2.0, // has the effect of extending the shadow
+                3.0, // has the effect of extending the shadow
                 offset: Offset(
                   0, // horizontal, move right 10
                   0, // vertical, move down 10
@@ -176,52 +217,30 @@ classes_body(BuildContext context, StateSetter setState){
               )
             ],
           ),
-          child: TabBar(
-            // setting attributes for the bar
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white,
-            indicator: BoxDecoration(
-              color: Color(magenta_light),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius:
-                  5.0, // has the effect of softening the shadow
-                  spreadRadius:
-                  3.0, // has the effect of extending the shadow
-                  offset: Offset(
-                    0, // horizontal, move right 10
-                    0, // vertical, move down 10
-                  ),
-                )
-              ],
+
+          onTap: (index) {
+            setState(() {
+              _selectedPage = index;
+            });
+          },
+
+          tabs: [
+            Tab(
+              text: 'MON',
             ),
-
-            onTap: (index) {
-              setState(() {
-                _selectedPage = index;
-              });
-            },
-
-            tabs: [
-              Tab(
-                text: 'MON',
-              ),
-              Tab(
-                text: 'TUE',
-              ),
-              Tab(
-                text: 'WED',
-              ),
-              Tab(
-                text: 'THU',
-              ),
-              Tab(
-                text: 'FRI',
-              ),
-            ],
-          ),
+            Tab(
+              text: 'TUE',
+            ),
+            Tab(
+              text: 'WED',
+            ),
+            Tab(
+              text: 'THU',
+            ),
+            Tab(
+              text: 'FRI',
+            ),
+          ],
         ),
       ),
     ),
@@ -454,7 +473,12 @@ viewClassDialog(BuildContext context, String module,List modulesList, String loc
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white),
                     padding: EdgeInsets.only(left: 10, right: 10),
-                    child: DropdownButtonHideUnderline(
+                    child: modulesList.isEmpty?
+                    SizedBox(
+                        width: double.infinity,
+                        height: 45,
+                        child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(magenta_bg)),textAlign: TextAlign.center,)))
+                        : DropdownButtonHideUnderline(
                       child: DropdownButton(
                         dropdownColor: Colors.white,
                         isExpanded: true,
@@ -530,7 +554,7 @@ viewClassDialog(BuildContext context, String module,List modulesList, String loc
 addClassDialog(BuildContext context, List modulesList) {
   String _location = "",
          _lecturer = "",
-         _module = modulesList[0];
+         _module = modulesList.isNotEmpty? modulesList[0]: null;
 
   int magenta_bg = 0xFF861657, magenta_dark = 0xFF530030;
   var scrollController = new ScrollController();
@@ -594,7 +618,12 @@ addClassDialog(BuildContext context, List modulesList) {
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white),
                                       padding: EdgeInsets.only(left: 10, right: 10),
-                                      child: DropdownButtonHideUnderline(
+                                      child: modulesList.isEmpty?
+                                      SizedBox(
+                                          width: double.infinity,
+                                          height: 45,
+                                          child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(magenta_bg)),textAlign: TextAlign.center,)))
+                                          : DropdownButtonHideUnderline(
                                         child: DropdownButton(
                                           dropdownColor: Colors.white,
                                           isExpanded: true,

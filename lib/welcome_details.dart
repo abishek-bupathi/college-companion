@@ -4,7 +4,7 @@ import './user_details.dart';
 import './main.dart';
 
 Welcome(BuildContext context) {
-  int color_orange = 0xFFFD8369;
+  int color_blue = 0xFF536DFE;
   return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -12,10 +12,10 @@ Welcome(BuildContext context) {
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text('Welcome',
-            style: TextStyle(fontSize: 50, color: Color(color_orange))),
+            style: TextStyle(fontSize: 50, color: Color(color_blue))),
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
+        padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,36 +23,31 @@ Welcome(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Image.asset("assets/backgrounds/welcome_bg.png"),
-            Container(
-                padding: EdgeInsets.all(20),
+            Text(
+              "This is a good app",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Color(color_blue), fontSize: 20),
+            ),
+            SizedBox(
+              height: 45,
+              width: MediaQuery.of(context).size.width - 40,
+              child: RawMaterialButton(
+                highlightColor: Color(color_blue),
+                fillColor: Color(color_blue),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PersonalDetails()));
+                },
                 child: Text(
-                  "This is a good app",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: Color(color_orange), fontSize: 20),
-                )),
-            Container(
-              padding: EdgeInsets.all(20),
-              child: SizedBox(
-                height: 45,
-                width: MediaQuery.of(context).size.width - 40,
-                child: RawMaterialButton(
-                  highlightColor: Color(color_orange),
-                  fillColor: Color(color_orange),
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PersonalDetails()));
-                  },
-                  child: Text(
-                    "Get Started",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+                  "Get Started",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             )
@@ -85,7 +80,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         automaticallyImplyLeading: false,
         brightness: Brightness.light,
         elevation: 0,
-        backgroundColor: Color(0xFFF2F2F2),
+        backgroundColor:(scrn_height < 750) ? Colors.white : Color(0xFFF2F2F2),
         title: Text('Details',
             style: TextStyle(fontSize: 50, color: Color(color_grey))),
       ),
@@ -99,7 +94,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                (scrn_height < 750) ? Container(): Image.asset("assets/backgrounds/details_bg.png"),
+                (scrn_height < 750) ? Container(
+                  height: 250,
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Image.asset("assets/backgrounds/details_bg_small.png")) : Image.asset("assets/backgrounds/details_bg.png"),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
                   decoration: BoxDecoration(
@@ -308,12 +306,11 @@ class _UniversityDetailsState extends State<UniversityDetails> {
           automaticallyImplyLeading: false,
           brightness: Brightness.dark,
           elevation: 0,
-          backgroundColor: Color(0xFF3F3D56),
+          backgroundColor:(scrn_height < 750) ? Colors.white : Color(0xFF3F3D56),
           title: Text('Details',
-              style: TextStyle(fontSize: 50, color: Colors.white)),
+              style: TextStyle(fontSize: 50, color: (scrn_height < 750) ? Color(0xFF3F3D56) : Colors.white)),
         ),
         body: Container(
-            //padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
             color: Colors.white,
             child: SingleChildScrollView(
               physics: ClampingScrollPhysics(),
@@ -323,7 +320,10 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      (scrn_height < 750) ? Container(): Image.asset("assets/backgrounds/uni_details_bg.png"),
+                      (scrn_height < 750) ? Container(
+                          height: 250,
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: Image.asset("assets/backgrounds/uni_details_bg_small.png")) : Image.asset("assets/backgrounds/uni_details_bg.png"),
                       SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -432,7 +432,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                       UserDetails().setId(widget.id);
                                       UserDetails().setCourse(widget.course);
                                       UserDetails().setUniversity(widget.university);
-
+                                      UserDetails().profile_complete();
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
