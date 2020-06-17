@@ -22,4 +22,13 @@ class Tasks extends Table{
 class AppDatabase extends _$AppDatabase{
 
   AppDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(path: 'db.sqlite', logStatements: true));
+
+
+  Future<List<Task>> getAllTasks() => select(tasks).get();
+  Stream<List<Task>> watchAllTask() => select(tasks).watch();
+  Future insertTask(Task task) => into(tasks).insert(task);
+  Future updateTask(Task task) => update(tasks).replace(task);
+  Future deleteTask(Task task) => delete(tasks).delete(task);
+
+
 }
