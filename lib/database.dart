@@ -10,12 +10,6 @@ class Tasks extends Table{
   DateTimeColumn get dueDate => dateTime().nullable()();
   BoolColumn get completed => boolean().withDefault(Constant(false))();
 
-  /*
-  @override
-  // TODO: implement primaryKey
-  Set<Column> get primaryKey => {id, title};
-
- */
 }
 
 @UseMoor(tables: [Tasks])
@@ -23,12 +17,13 @@ class AppDatabase extends _$AppDatabase{
 
   AppDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(path: 'db.sqlite', logStatements: true));
 
+  @override
+  int get schemaVersion => 1;
 
   Future<List<Task>> getAllTasks() => select(tasks).get();
   Stream<List<Task>> watchAllTask() => select(tasks).watch();
   Future insertTask(Task task) => into(tasks).insert(task);
   Future updateTask(Task task) => update(tasks).replace(task);
   Future deleteTask(Task task) => delete(tasks).delete(task);
-
 
 }
