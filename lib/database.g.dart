@@ -174,12 +174,11 @@ class TasksCompanion extends UpdateCompanion<Task> {
   TasksCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
-    @required String note,
+    this.note = const Value.absent(),
     @required String module,
     this.dueDate = const Value.absent(),
     this.completed = const Value.absent(),
   })  : title = Value(title),
-        note = Value(note),
         module = Value(module);
   static Insertable<Task> custom({
     Expression<int> id,
@@ -267,7 +266,8 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   @override
   GeneratedTextColumn get note => _note ??= _constructNote();
   GeneratedTextColumn _constructNote() {
-    return GeneratedTextColumn('note', $tableName, false, minTextLength: 1);
+    return GeneratedTextColumn('note', $tableName, false,
+        defaultValue: Constant(""));
   }
 
   final VerificationMeta _moduleMeta = const VerificationMeta('module');
@@ -329,8 +329,6 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     if (data.containsKey('note')) {
       context.handle(
           _noteMeta, note.isAcceptableOrUnknown(data['note'], _noteMeta));
-    } else if (isInserting) {
-      context.missing(_noteMeta);
     }
     if (data.containsKey('module')) {
       context.handle(_moduleMeta,

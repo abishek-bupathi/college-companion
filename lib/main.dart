@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -10,6 +11,7 @@ import './classes.dart';
 import './profile.dart';
 import './custom_icons.dart';
 import './welcome_details.dart';
+import 'database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -100,87 +102,93 @@ class AfterSplashState extends State<AfterSplash> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "College Companion",
-        home: Scaffold(
-          body: PageView(
-              children: _pageOptions,
-              onPageChanged: (index) {
+
+    return Provider(
+      create: (_) => AppDatabase(),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "College Companion",
+          home: Scaffold(
+            body: PageView(
+                children: _pageOptions,
+                onPageChanged: (index) {
+                  setState(() {
+                    _selectedPage = index;
+                  });
+                },
+                controller: _pageController,
+                physics: BouncingScrollPhysics()),
+
+            bottomNavigationBar: BottomNavigationBar(
+              // setting attributes for the bar
+              unselectedItemColor: Colors.black38,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              elevation: 0,
+
+              currentIndex: _selectedPage,
+              onTap: (index) {
                 setState(() {
-                  _selectedPage = index;
+                  _pageController.jumpToPage(index);
                 });
               },
-              controller: _pageController,
-              physics: BouncingScrollPhysics()),
-          bottomNavigationBar: BottomNavigationBar(
-            // setting attributes for the bar
-            unselectedItemColor: Colors.black38,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            elevation: 0,
 
-            currentIndex: _selectedPage,
-            onTap: (index) {
-              setState(() {
-                _pageController.jumpToPage(index);
-              });
-            },
-
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(CustomIcons.test),
-                backgroundColor: Colors.white,
-                activeIcon: Icon(
-                  CustomIcons.test,
-                  color: Color(0xFF05989B),
-                  size: 30,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(CustomIcons.test),
+                  backgroundColor: Colors.white,
+                  activeIcon: Icon(
+                    CustomIcons.test,
+                    color: Color(0xFF05989B),
+                    size: 30,
+                  ),
+                  title: Text('Exam'),
                 ),
-                title: Text('Exam'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CustomIcons.calendar),
-                backgroundColor: Colors.white,
-                activeIcon: Icon(
-                  CustomIcons.calendar,
-                  color: Color(0xFF861657),
-                  size: 30,
+                BottomNavigationBarItem(
+                  icon: Icon(CustomIcons.calendar),
+                  backgroundColor: Colors.white,
+                  activeIcon: Icon(
+                    CustomIcons.calendar,
+                    color: Color(0xFF861657),
+                    size: 30,
+                  ),
+                  title: Text('Classes'),
                 ),
-                title: Text('Classes'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CustomIcons.list),
-                backgroundColor: Colors.white,
-                activeIcon: Icon(
-                  CustomIcons.list,
-                  color: Color(0xFFc71831),
-                  size: 30,
+                BottomNavigationBarItem(
+                  icon: Icon(CustomIcons.list),
+                  backgroundColor: Colors.white,
+                  activeIcon: Icon(
+                    CustomIcons.list,
+                    color: Color(0xFFc71831),
+                    size: 30,
+                  ),
+                  title: Text('Academic'),
                 ),
-                title: Text('Academic'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CustomIcons.scout),
-                backgroundColor: Colors.white,
-                activeIcon: Icon(
-                  CustomIcons.scout,
-                  color: Color(0xFF0488e3),
-                  size: 30,
+                BottomNavigationBarItem(
+                  icon: Icon(CustomIcons.scout),
+                  backgroundColor: Colors.white,
+                  activeIcon: Icon(
+                    CustomIcons.scout,
+                    color: Color(0xFF0488e3),
+                    size: 30,
+                  ),
+                  title: Text('Activities'),
                 ),
-                title: Text('Activities'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CustomIcons.man_avatar),
-                backgroundColor: Colors.white,
-                activeIcon: Icon(
-                  CustomIcons.man_avatar,
-                  color: Color(0xFF9e1bd6),
-                  size: 30,
+                BottomNavigationBarItem(
+                  icon: Icon(CustomIcons.man_avatar),
+                  backgroundColor: Colors.white,
+                  activeIcon: Icon(
+                    CustomIcons.man_avatar,
+                    color: Color(0xFF9e1bd6),
+                    size: 30,
+                  ),
+                  title: Text('Profile'),
                 ),
-                title: Text('Profile'),
-              ),
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+        dispose: (context, db) => db.close()
+    );
   }
 }
 

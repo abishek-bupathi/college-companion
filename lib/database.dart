@@ -5,7 +5,7 @@ class Tasks extends Table{
 
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text().withLength(min: 1)();
-  TextColumn get note => text().withLength(min: 1)();
+  TextColumn get note => text().withDefault(Constant(""))();
   TextColumn get module => text()();
   DateTimeColumn get dueDate => dateTime().nullable()();
   BoolColumn get completed => boolean().withDefault(Constant(false))();
