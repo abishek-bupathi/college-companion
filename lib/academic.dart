@@ -47,10 +47,12 @@ class _AcademicState extends State<Academic> {
   Widget build(BuildContext context) {
 
     final database = Provider.of<AppDatabase>(context);
+    final scaffold_key = new GlobalKey<ScaffoldState>();
 
     return Container(
         color: Colors.white,
         child: Scaffold(
+          key: scaffold_key,
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             brightness: Brightness.light,
@@ -79,7 +81,7 @@ class _AcademicState extends State<Academic> {
             showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) =>  addTaskDialog(context, moduleList, database));
+                      builder: (context) =>  addTaskDialog(context, moduleList, database, scaffold_key));
                 },
                 iconSize: 40,
                 color: Color(0xFFc71831)
@@ -142,8 +144,8 @@ class _ItemAcademicState extends State<ItemAcademic> {
     String title = widget.itemTask.title,
            note = widget.itemTask.note,
            module = widget.itemTask.module;
-    DateTime date = widget.itemTask.dueDate;
-
+    var date = widget.itemTask.dueDate != null?widget.itemTask.dueDate:"" ;
+    print(date);
     return new Card(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -188,7 +190,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
                       });
                     },
                   ),
-                  Column(
+                  note != ""? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -201,6 +203,9 @@ class _ItemAcademicState extends State<ItemAcademic> {
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       )
                     ],
+                  ):Text(
+                    title,
+                    style: TextStyle(color: Colors.white, fontSize: 28),
                   ),
                 ],
               ),
@@ -212,7 +217,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
                     module,
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
-                  Text(date.toString().isNotEmpty?
+                  Text(date.toString().isEmpty?
                    "-":
                   DateFormat(
                       "EEE, dd MMM")
@@ -232,7 +237,8 @@ class _ItemAcademicState extends State<ItemAcademic> {
 }
 
 
-addTaskDialog(BuildContext context, List modulesList, AppDatabase database) {
+addTaskDialog(BuildContext context, List modulesList, AppDatabase database, GlobalKey<ScaffoldState> scaffold_key) {
+
   String _module, _note = "", _title = "";
   var dateWithoutFormat, _date = " - ";
   int red_bg = 0xFFe1323b, red_high = 0xFFb6152b;
@@ -470,15 +476,21 @@ addTaskDialog(BuildContext context, List modulesList, AppDatabase database) {
                             ),
                             onPressed: () {
 
-                              final task = Task(
+                              if(_title.isNotEmpty && _module.isNotEmpty) {
+                            final task = Task(
                                 title: _title,
                                 note: _note,
                                 module: _module,
-                                dueDate: dateWithoutFormat
-                              );
-                              database.insertTask(task);
-                              Navigator.pop(context);
-                            },
+                                dueDate: dateWithoutFormat);
+                            database.insertTask(task);
+                            Navigator.pop(context);
+                          }else
+                            {
+                              scaffold_key.currentState.showSnackBar(new SnackBar(
+                                content: new Text("Please add title and module"),
+                              ));
+                            }
+                        },
                             child: Text(
                               "Done",
                               style: TextStyle(color: Color(red_bg)),
@@ -500,7 +512,7 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
   var titleController = new TextEditingController();
   titleController.text = itemTask.title;
   String _module = itemTask.module;
-  DateTime _date = itemTask.dueDate;
+  var _date = itemTask.dueDate != null?itemTask.dueDate:"" ;
   return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -549,6 +561,8 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                           controller: noteController,
                           style: TextStyle(color: Colors.white, fontSize: 25),
                           decoration: InputDecoration(
+                            hintText: "-",
+                            hintStyle: TextStyle(color: Colors.white),
                             focusColor: Colors.white,
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide.none),
@@ -581,7 +595,7 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                           color: Color(red_bg),
                           size: 20,
                         ),
-                        Text(_date.toString().isEmpty?
+                        Text(_date.toString().isNotEmpty?
                         DateFormat(
                             "EEE, dd MMM")
                             .format(
@@ -609,7 +623,7 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                                     _date = date1;
                                   });
                                 },
-                                    currentTime: _date,
+                                    currentTime: _date != ""?_date:DateTime.now(),
                                     locale: LocaleType.en);
                               },
                             )),
