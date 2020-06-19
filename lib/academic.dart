@@ -617,10 +617,10 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                                     showTitleActions: true,
                                     minTime: DateTime(2020, 1, 1),
                                     maxTime: DateTime(2025, 6, 7),
-                                    onConfirm: (date1) {
+                                    onConfirm: (date_new) {
                                   setState(() {
-                                    database.updateTask(itemTask.copyWith(dueDate: date1));
-                                    _date = date1;
+                                    database.updateTask(itemTask.copyWith(dueDate: date_new));
+                                    _date = date_new;
                                   });
                                 },
                                     currentTime: _date != ""?_date:DateTime.now(),

@@ -19,6 +19,7 @@ class Activity extends Table{
   TextColumn get note => text().withDefault(Constant(""))();
   TextColumn get location => text().withDefault(Constant(""))();
   DateTimeColumn get date => dateTime().nullable()();
+  DateTimeColumn get time => dateTime().nullable()();
   BoolColumn get completed => boolean().withDefault(Constant(false))();
 
 }

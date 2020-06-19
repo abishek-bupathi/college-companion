@@ -367,6 +367,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
   final String note;
   final String location;
   final DateTime date;
+  final DateTime time;
   final bool completed;
   ActivityData(
       {@required this.id,
@@ -374,6 +375,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
       @required this.note,
       @required this.location,
       this.date,
+      this.time,
       @required this.completed});
   factory ActivityData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -391,6 +393,8 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}location']),
       date:
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+      time:
+          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}time']),
       completed:
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}completed']),
     );
@@ -413,6 +417,9 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
     if (!nullToAbsent || date != null) {
       map['date'] = Variable<DateTime>(date);
     }
+    if (!nullToAbsent || time != null) {
+      map['time'] = Variable<DateTime>(time);
+    }
     if (!nullToAbsent || completed != null) {
       map['completed'] = Variable<bool>(completed);
     }
@@ -429,6 +436,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           ? const Value.absent()
           : Value(location),
       date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+      time: time == null && nullToAbsent ? const Value.absent() : Value(time),
       completed: completed == null && nullToAbsent
           ? const Value.absent()
           : Value(completed),
@@ -444,6 +452,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
       note: serializer.fromJson<String>(json['note']),
       location: serializer.fromJson<String>(json['location']),
       date: serializer.fromJson<DateTime>(json['date']),
+      time: serializer.fromJson<DateTime>(json['time']),
       completed: serializer.fromJson<bool>(json['completed']),
     );
   }
@@ -456,6 +465,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
       'note': serializer.toJson<String>(note),
       'location': serializer.toJson<String>(location),
       'date': serializer.toJson<DateTime>(date),
+      'time': serializer.toJson<DateTime>(time),
       'completed': serializer.toJson<bool>(completed),
     };
   }
@@ -466,6 +476,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           String note,
           String location,
           DateTime date,
+          DateTime time,
           bool completed}) =>
       ActivityData(
         id: id ?? this.id,
@@ -473,6 +484,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
         note: note ?? this.note,
         location: location ?? this.location,
         date: date ?? this.date,
+        time: time ?? this.time,
         completed: completed ?? this.completed,
       );
   @override
@@ -483,6 +495,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           ..write('note: $note, ')
           ..write('location: $location, ')
           ..write('date: $date, ')
+          ..write('time: $time, ')
           ..write('completed: $completed')
           ..write(')'))
         .toString();
@@ -495,8 +508,10 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           title.hashCode,
           $mrjc(
               note.hashCode,
-              $mrjc(location.hashCode,
-                  $mrjc(date.hashCode, completed.hashCode))))));
+              $mrjc(
+                  location.hashCode,
+                  $mrjc(date.hashCode,
+                      $mrjc(time.hashCode, completed.hashCode)))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -506,6 +521,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           other.note == this.note &&
           other.location == this.location &&
           other.date == this.date &&
+          other.time == this.time &&
           other.completed == this.completed);
 }
 
@@ -515,6 +531,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
   final Value<String> note;
   final Value<String> location;
   final Value<DateTime> date;
+  final Value<DateTime> time;
   final Value<bool> completed;
   const ActivityCompanion({
     this.id = const Value.absent(),
@@ -522,6 +539,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
     this.note = const Value.absent(),
     this.location = const Value.absent(),
     this.date = const Value.absent(),
+    this.time = const Value.absent(),
     this.completed = const Value.absent(),
   });
   ActivityCompanion.insert({
@@ -530,6 +548,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
     this.note = const Value.absent(),
     this.location = const Value.absent(),
     this.date = const Value.absent(),
+    this.time = const Value.absent(),
     this.completed = const Value.absent(),
   }) : title = Value(title);
   static Insertable<ActivityData> custom({
@@ -538,6 +557,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
     Expression<String> note,
     Expression<String> location,
     Expression<DateTime> date,
+    Expression<DateTime> time,
     Expression<bool> completed,
   }) {
     return RawValuesInsertable({
@@ -546,6 +566,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
       if (note != null) 'note': note,
       if (location != null) 'location': location,
       if (date != null) 'date': date,
+      if (time != null) 'time': time,
       if (completed != null) 'completed': completed,
     });
   }
@@ -556,6 +577,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
       Value<String> note,
       Value<String> location,
       Value<DateTime> date,
+      Value<DateTime> time,
       Value<bool> completed}) {
     return ActivityCompanion(
       id: id ?? this.id,
@@ -563,6 +585,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
       note: note ?? this.note,
       location: location ?? this.location,
       date: date ?? this.date,
+      time: time ?? this.time,
       completed: completed ?? this.completed,
     );
   }
@@ -584,6 +607,9 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
     }
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
+    }
+    if (time.present) {
+      map['time'] = Variable<DateTime>(time.value);
     }
     if (completed.present) {
       map['completed'] = Variable<bool>(completed.value);
@@ -644,6 +670,18 @@ class $ActivityTable extends Activity
     );
   }
 
+  final VerificationMeta _timeMeta = const VerificationMeta('time');
+  GeneratedDateTimeColumn _time;
+  @override
+  GeneratedDateTimeColumn get time => _time ??= _constructTime();
+  GeneratedDateTimeColumn _constructTime() {
+    return GeneratedDateTimeColumn(
+      'time',
+      $tableName,
+      true,
+    );
+  }
+
   final VerificationMeta _completedMeta = const VerificationMeta('completed');
   GeneratedBoolColumn _completed;
   @override
@@ -655,7 +693,7 @@ class $ActivityTable extends Activity
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, note, location, date, completed];
+      [id, title, note, location, date, time, completed];
   @override
   $ActivityTable get asDslTable => this;
   @override
@@ -687,6 +725,10 @@ class $ActivityTable extends Activity
     if (data.containsKey('date')) {
       context.handle(
           _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
+    }
+    if (data.containsKey('time')) {
+      context.handle(
+          _timeMeta, time.isAcceptableOrUnknown(data['time'], _timeMeta));
     }
     if (data.containsKey('completed')) {
       context.handle(_completedMeta,
