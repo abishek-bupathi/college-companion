@@ -5,39 +5,34 @@ import './user_details.dart';
 
 bool data_present = false;
 
-
-
-List<String> daysOfWeek = ["Mon", "Tue", "Wed", "Thu","Fri", "Sat", "Sun"];
+List<String> daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 DateTime date = DateTime.now();
 String current_day = DateFormat('EEE').format(date);
 
-int index = daysOfWeek.indexOf(current_day) < 5 ? daysOfWeek.indexOf(current_day): 0;
+int index =
+    daysOfWeek.indexOf(current_day) < 5 ? daysOfWeek.indexOf(current_day) : 0;
 
 int _selectedPage = index;
 
-
-
 class Classes extends StatefulWidget {
-
   @override
   _ClassesState createState() => _ClassesState();
 }
 
-class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin{
+class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin {
+  int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
+  TabController _tabController;
 
- int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
- TabController _tabController;
+  @override
+  void initState() {
+    print(daysOfWeek.indexOf(current_day));
+    super.initState();
+    _tabController =
+        new TabController(vsync: this, length: 5, initialIndex: index);
+  }
 
- @override
- void initState() {
-   print(daysOfWeek.indexOf(current_day));
-   super.initState();
-   _tabController = new TabController(vsync: this, length: 5, initialIndex: index);
- }
-
- @override
+  @override
   Widget build(BuildContext context) {
-
     return Container(
       color: Colors.white,
       child: Scaffold(
@@ -62,43 +57,45 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin{
             ),
           ],
         ),
-        body: data_present ? classes_body(context, setState, _tabController): empty_classes_body(setState),
+        body: data_present
+            ? classes_body(context, setState, _tabController)
+            : empty_classes_body(setState),
       ),
     );
   }
 }
 
-empty_classes_body(StateSetter setState){
+empty_classes_body(StateSetter setState) {
   return Center(
     child: GestureDetector(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.add,
-            size: 50,
-            color: Colors.grey,
-          ),
-          SizedBox(height: 20,),
-          Text(
-            "Tap to add new Timetable",
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      ),
-
-      onTap: (){
-        setState((){
-          data_present = true;
-        });
-      }
-    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.add,
+              size: 50,
+              color: Colors.grey,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Tap to add new Timetable",
+              style: TextStyle(color: Colors.grey),
+            )
+          ],
+        ),
+        onTap: () {
+          setState(() {
+            data_present = true;
+          });
+        }),
   );
 }
 
-classes_body(BuildContext context, StateSetter setState, TabController _tabController){
+classes_body(
+    BuildContext context, StateSetter setState, TabController _tabController) {
   int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
-
 
   double width = (MediaQuery.of(context).size.width - 50) / 3;
 
@@ -149,8 +146,7 @@ classes_body(BuildContext context, StateSetter setState, TabController _tabContr
                         width: width,
                         child: Text(
                           "Module",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: 18),
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -162,8 +158,7 @@ classes_body(BuildContext context, StateSetter setState, TabController _tabContr
                         width: width,
                         child: Text(
                           "Venue",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: 18),
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -186,8 +181,7 @@ classes_body(BuildContext context, StateSetter setState, TabController _tabContr
             BoxShadow(
               color: Colors.black12,
               blurRadius: 5.0, // has the effect of softening the shadow
-              spreadRadius:
-              2.0, // has the effect of extending the shadow
+              spreadRadius: 2.0, // has the effect of extending the shadow
               offset: Offset(
                 0, // horizontal, move right 10
                 0, // vertical, move down 10
@@ -206,10 +200,8 @@ classes_body(BuildContext context, StateSetter setState, TabController _tabContr
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
-                blurRadius:
-                5.0, // has the effect of softening the shadow
-                spreadRadius:
-                3.0, // has the effect of extending the shadow
+                blurRadius: 5.0, // has the effect of softening the shadow
+                spreadRadius: 3.0, // has the effect of extending the shadow
                 offset: Offset(
                   0, // horizontal, move right 10
                   0, // vertical, move down 10
@@ -248,15 +240,64 @@ classes_body(BuildContext context, StateSetter setState, TabController _tabContr
 }
 
 class timeTable extends StatefulWidget {
-
   double width;
   String day;
   List<String> modulesList = UserDetails().getModules();
-  List<String> modules_mon = ["Maths","-","Analog","Analog","-","Programming","-","Physics","-"];
-  List<String> modules_tue = ["Physics","Programming","Electrical","Analog","-","Maths","Maths","Digital","-"];
-  List<String> locationList = ["ENG-3034","ENG-3034","ENG-3035","ENG-2034","G-07","ENG-3034","ENG-1004","AC-002","ENG-3034"];
-  List<String> timeList = ["9:00 AM","10:00 AM","11:00 AM","12:00 AM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM"];
-  List<String> lecturers = ["Ron", "Ron", "Ron", "Ron", "Ron", "Ron", "Ron", "Ron", "Ron"];
+  List<String> modules_mon = [
+    "Maths",
+    "-",
+    "Analog",
+    "Analog",
+    "-",
+    "Programming",
+    "-",
+    "Physics",
+    "-"
+  ];
+  List<String> modules_tue = [
+    "Physics",
+    "Programming",
+    "Electrical",
+    "Analog",
+    "-",
+    "Maths",
+    "Maths",
+    "Digital",
+    "-"
+  ];
+  List<String> locationList = [
+    "ENG-3034",
+    "ENG-3034",
+    "ENG-3035",
+    "ENG-2034",
+    "G-07",
+    "ENG-3034",
+    "ENG-1004",
+    "AC-002",
+    "ENG-3034"
+  ];
+  List<String> timeList = [
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 AM",
+    "1:00 PM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
+    "5:00 PM"
+  ];
+  List<String> lecturers = [
+    "Ron",
+    "Ron",
+    "Ron",
+    "Ron",
+    "Ron",
+    "Ron",
+    "Ron",
+    "Ron",
+    "Ron"
+  ];
 
   timeTable(this.width, this.day);
 
@@ -270,38 +311,35 @@ class _timeTableState extends State<timeTable> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height - 278;
-    if (widget.day.compareTo("tue") == 0)
-    {
+    if (widget.day.compareTo("tue") == 0) {
       modules = widget.modules_tue;
-    }else modules = widget.modules_mon;
+    } else
+      modules = widget.modules_mon;
     return Container(
-      height: height,
+        height: height,
         child: ListView.builder(
-
             physics: BouncingScrollPhysics(),
             itemBuilder: (_, int index) {
-            return  GestureDetector(
-                child: ItemClasses(modules[index], widget.timeList[index], widget.locationList[index], widget.width, height),
+              return GestureDetector(
+                child: ItemClasses(modules[index], widget.timeList[index],
+                    widget.locationList[index], widget.width, height),
                 onTap: () {
-                  if(modules[index] != '-'){
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => viewClassDialog(
-                          context,
-                          modules[index],
-                          widget.modulesList,
-                          widget.locationList[index],
-                          widget.lecturers[index]
-                    ));}
-                  else{
+                  if (modules[index] != '-') {
                     showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) => addClassDialog(
+                        builder: (context) => viewClassDialog(
                             context,
-                            widget.modulesList
-                        ));
+                            modules[index],
+                            widget.modulesList,
+                            widget.locationList[index],
+                            widget.lecturers[index]));
+                  } else {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) =>
+                            addClassDialog(context, widget.modulesList));
                   }
                 },
               );
@@ -383,7 +421,8 @@ class _ItemClassesState extends State<ItemClasses> {
   }
 }
 
-viewClassDialog(BuildContext context, String module,List modulesList, String location, String lecturer) {
+viewClassDialog(BuildContext context, String module, List modulesList,
+    String location, String lecturer) {
   int magenta_bg = 0xFF861657, label_clr = 0xFFE0A3C6;
   var dateWithoutFormat, timeWithoutFormat;
 
@@ -399,162 +438,166 @@ viewClassDialog(BuildContext context, String module,List modulesList, String loc
       backgroundColor: Color(magenta_bg),
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              height: 400,
-
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Class",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 25),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Venue",
-                          style: TextStyle(fontSize: 18, color: Color(label_clr)),
+        return Container(
+          height: 400,
+          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Class",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 25),
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Venue",
+                      style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                    ),
+                    TextField(
+                        controller: locationController,
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        decoration: InputDecoration(
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
                         ),
-                        TextField(
-                            controller: locationController,
-                            cursorColor: Colors.white,
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                            decoration: InputDecoration(
-                              focusColor: Colors.white,
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                            onChanged: (String location_new) {
-                              setState(() {
-                                location = location_new;
-                              });
-                            }),
-                      ]),
-                  SizedBox(height: 20),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Lecturer/ Tutor",
-                          style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                        onChanged: (String location_new) {
+                          setState(() {
+                            location = location_new;
+                          });
+                        }),
+                  ]),
+              SizedBox(height: 20),
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Lecturer/ Tutor",
+                      style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                    ),
+                    TextField(
+                        controller: lecturerController,
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        decoration: InputDecoration(
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
                         ),
-                        TextField(
-                            controller: lecturerController,
-                            cursorColor: Colors.white,
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                            decoration: InputDecoration(
-                              focusColor: Colors.white,
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                            onChanged: (String lecturer_new) {
-                              setState(() {
-                                lecturer = lecturer_new;
-                              });
-                            }),
-                      ]),
-                  SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: modulesList.isEmpty?
-                    SizedBox(
+                        onChanged: (String lecturer_new) {
+                          setState(() {
+                            lecturer = lecturer_new;
+                          });
+                        }),
+                  ]),
+              SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white),
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: modulesList.isEmpty
+                    ? SizedBox(
                         width: double.infinity,
                         height: 45,
-                        child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(magenta_bg)),textAlign: TextAlign.center,)))
-                        : DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        dropdownColor: Colors.white,
-                        isExpanded: true,
-                        value: module,
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Color(magenta_bg),
+                        child: Center(
+                            child: Text(
+                          "No modules found \n Please add modules in profile",
+                          style: TextStyle(color: Color(magenta_bg)),
+                          textAlign: TextAlign.center,
+                        )))
+                    : DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: Colors.white,
+                          isExpanded: true,
+                          value: module,
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: Color(magenta_bg),
+                          ),
+                          iconSize: 30,
+                          elevation: 0,
+                          style:
+                              TextStyle(color: Color(magenta_bg), fontSize: 20),
+                          onChanged: (newValue) {
+                            setState(() {
+                              module = newValue;
+                            });
+                          },
+                          items: modulesList.map((value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
-                        iconSize: 30,
-                        elevation: 0,
-                        style: TextStyle(color: Color(magenta_bg), fontSize: 20),
-                        onChanged: (newValue) {
-                          setState(() {
-                            module = newValue;
-                          });
-                        },
-                        items: modulesList.map((value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
                       ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: RawMaterialButton(
+                      highlightColor: Colors.white,
+                      fillColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onPressed: () {},
+                      child: Icon(Icons.delete_outline,
+                          color: Color(magenta_bg), size: 25),
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    width: 35,
+                    height: 35,
+                    child: RawMaterialButton(
+                      highlightColor: Colors.white,
+                      fillColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.arrow_back_ios,
+                          color: Color(magenta_bg), size: 25),
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: RawMaterialButton(
-                          highlightColor: Colors.white,
-                          fillColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          onPressed: () {},
-                          child: Icon(Icons.delete_outline,
-                              color: Color(magenta_bg), size: 25),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: RawMaterialButton(
-                          highlightColor: Colors.white,
-                          fillColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(Icons.arrow_back_ios,
-                              color: Color(magenta_bg), size: 25),
-                        ),
-                      ),
-                    ],
-                  )
                 ],
-
-              ),
-            );
-          }));
+              )
+            ],
+          ),
+        );
+      }));
 }
 
 addClassDialog(BuildContext context, List modulesList) {
   String _location = "",
-         _lecturer = "",
-         _module = modulesList.isNotEmpty? modulesList[0]: null;
+      _lecturer = "",
+      _module = modulesList.isNotEmpty ? modulesList[0] : null;
 
   int magenta_bg = 0xFF861657, magenta_dark = 0xFF530030;
   var scrollController = new ScrollController();
@@ -565,184 +608,191 @@ addClassDialog(BuildContext context, List modulesList) {
       backgroundColor: Color(magenta_bg),
       child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return Container(
-                height: 390,
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Color(magenta_dark),
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(15),
-                                  topLeft: Radius.circular(15)),
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                          ),
-                          Text(
-                            "Class",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Icon(
-                            Icons.add,
-                            color: Colors.transparent,
-                            size: 50,
-                          )
-                        ],
+        return Container(
+            height: 390,
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Color(magenta_dark),
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(15),
+                              topLeft: Radius.circular(15)),
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 50,
+                        ),
                       ),
-                      SizedBox(height: 15),
-                      Expanded(
-                          child: SingleChildScrollView(
-                              controller: scrollController,
-                              child: Container(
-                                  padding: EdgeInsets.all(20),
-                                  child: Column(children: <Widget>[
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.rectangle,
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: Colors.white),
-                                      padding: EdgeInsets.only(left: 10, right: 10),
-                                      child: modulesList.isEmpty?
-                                      SizedBox(
+                      Text(
+                        "Class",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.add,
+                        color: Colors.transparent,
+                        size: 50,
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Expanded(
+                      child: SingleChildScrollView(
+                          controller: scrollController,
+                          child: Container(
+                              padding: EdgeInsets.all(20),
+                              child: Column(children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white),
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  child: modulesList.isEmpty
+                                      ? SizedBox(
                                           width: double.infinity,
                                           height: 45,
-                                          child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(magenta_bg)),textAlign: TextAlign.center,)))
-                                          : DropdownButtonHideUnderline(
-                                        child: DropdownButton(
-                                          dropdownColor: Colors.white,
-                                          isExpanded: true,
-                                          value: _module,
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(magenta_bg),
+                                          child: Center(
+                                              child: Text(
+                                            "No modules found \n Please add modules in profile",
+                                            style: TextStyle(
+                                                color: Color(magenta_bg)),
+                                            textAlign: TextAlign.center,
+                                          )))
+                                      : DropdownButtonHideUnderline(
+                                          child: DropdownButton(
+                                            dropdownColor: Colors.white,
+                                            isExpanded: true,
+                                            value: _module,
+                                            icon: Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Color(magenta_bg),
+                                            ),
+                                            iconSize: 30,
+                                            elevation: 0,
+                                            style: TextStyle(
+                                                color: Color(magenta_bg),
+                                                fontSize: 20),
+                                            onChanged: (newValue) {
+                                              setState(() {
+                                                _module = newValue;
+                                              });
+                                            },
+                                            items: modulesList.map((value) {
+                                              return DropdownMenuItem(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList(),
                                           ),
-                                          iconSize: 30,
-                                          elevation: 0,
-                                          style: TextStyle(
-                                              color: Color(magenta_bg), fontSize: 20),
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              _module = newValue;
-                                            });
-                                          },
-                                          items: modulesList.map((value) {
-                                            return DropdownMenuItem(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    TextField(
-                                      cursorColor: Colors.white,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                      decoration: InputDecoration(
-                                        labelText: 'Venue',
-                                        focusColor: Colors.white,
-                                        labelStyle: new TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide:
+                                ),
+                                SizedBox(height: 20),
+                                TextField(
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                  decoration: InputDecoration(
+                                    labelText: 'Venue',
+                                    focusColor: Colors.white,
+                                    labelStyle: new TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide:
                                             BorderSide(color: Colors.white),
-                                            borderRadius:
+                                        borderRadius:
                                             BorderRadius.circular(10)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
                                             BorderSide(color: Colors.white),
-                                            borderRadius:
+                                        borderRadius:
                                             BorderRadius.circular(10)),
-                                      ),
-                                      onChanged: (String new_location) {
-                                        setState(() {
-                                          _location = new_location;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(height: 20),
-                                    TextField(
-                                      cursorColor: Colors.white,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                      decoration: InputDecoration(
-                                        labelText: 'Lecturer/Tutor',
-                                        focusColor: Colors.white,
-                                        labelStyle: new TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide:
+                                  ),
+                                  onChanged: (String new_location) {
+                                    setState(() {
+                                      _location = new_location;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 20),
+                                TextField(
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                  decoration: InputDecoration(
+                                    labelText: 'Lecturer/Tutor',
+                                    focusColor: Colors.white,
+                                    labelStyle: new TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide:
                                             BorderSide(color: Colors.white),
-                                            borderRadius:
+                                        borderRadius:
                                             BorderRadius.circular(10)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
                                             BorderSide(color: Colors.white),
-                                            borderRadius:
+                                        borderRadius:
                                             BorderRadius.circular(10)),
-                                      ),
-                                      onChanged: (String new_lecturer) {
-                                        setState(() {
-                                          _lecturer = new_lecturer;
-                                        });
-                                      },
-                                    ),
+                                  ),
+                                  onChanged: (String new_lecturer) {
+                                    setState(() {
+                                      _lecturer = new_lecturer;
+                                    });
+                                  },
+                                ),
 
-                                    // SizedBox(height: 10),
-                                  ])))),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15, 15, 15, 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            MaterialButton(
-                              highlightColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 0,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                "Cancel",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            Text("  "),
-                            MaterialButton(
-                              color: Colors.white,
-                              highlightColor: Colors.white,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                "Done",
-                                style: TextStyle(color: Color(magenta_bg)),
-                              ),
-                            )
-                          ],
+                                // SizedBox(height: 10),
+                              ])))),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15, 15, 15, 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        MaterialButton(
+                          highlightColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 0,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                      )
-                    ]));
-          }));
+                        Text("  "),
+                        MaterialButton(
+                          color: Colors.white,
+                          highlightColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            "Done",
+                            style: TextStyle(color: Color(magenta_bg)),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ]));
+      }));
 }

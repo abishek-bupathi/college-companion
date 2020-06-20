@@ -4,30 +4,26 @@ import './settings.dart';
 import './user_details.dart';
 
 class Profile extends StatefulWidget {
-   @override
+  @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-
-
   List<String> modules, skills;
   String id, name, course, university, dob, current_avatar;
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   double width, height_avatar, height_details, spacing, box_height = 190;
   @override
   Widget build(BuildContext context) {
-    
     modules = UserDetails().getModules();
     skills = UserDetails().getSkills();
 
     id = UserDetails().getId();
-        name = UserDetails().getName();
-        course = UserDetails().getCourse();
-        university = UserDetails().getUniversity();
-        dob = UserDetails().getDob();
-        current_avatar = UserDetails().getCurrentAvatar();
-
+    name = UserDetails().getName();
+    course = UserDetails().getCourse();
+    university = UserDetails().getUniversity();
+    dob = UserDetails().getDob();
+    current_avatar = UserDetails().getCurrentAvatar();
 
     width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;
     height_avatar = width;
@@ -53,9 +49,7 @@ class _ProfileState extends State<Profile> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Settings()),
+                  MaterialPageRoute(builder: (context) => Settings()),
                 ).then((_) => setState(() {}));
               },
               iconSize: 40,
@@ -247,9 +241,9 @@ class _ProfileState extends State<Profile> {
                         BoxShadow(
                           color: Colors.black12,
                           blurRadius:
-                          5.0, // has the effect of softening the shadow
+                              5.0, // has the effect of softening the shadow
                           spreadRadius:
-                          3.0, // has the effect of extending the shadow
+                              3.0, // has the effect of extending the shadow
                           offset: Offset(
                             0, // horizontal, move right 10
                             0, // vertical, move down 10
@@ -327,42 +321,46 @@ class _ProfileState extends State<Profile> {
                                   ))
                             ],
                           ),
-                          (modules.length == 0) ?
-                              Center(
-                                child: Text("No modules Present", style: TextStyle(color: Colors.white54)),
-                              )
+                          (modules.length == 0)
+                              ? Center(
+                                  child: Text("No modules Present",
+                                      style: TextStyle(color: Colors.white54)),
+                                )
                               : Expanded(
-                            child: GridView.builder(
-                              padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
-                              scrollDirection: Axis.vertical,
-                              itemCount: modules.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      childAspectRatio: 3.25,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                    alignment: Alignment.center,
-                                    //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                    ),
-                                    padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                    child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Text(
-                                          modules[index],
-                                          style: TextStyle(
-                                              color: Color(dark_purple),
-                                              fontSize: 15),
-                                        )));
-                              },
-                            ),
-                          ),
+                                  child: GridView.builder(
+                                    padding: EdgeInsets.fromLTRB(0, 4, 12, 0),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: modules.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            childAspectRatio: 3.25,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                          alignment: Alignment.center,
+                                          //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.white,
+                                          ),
+                                          padding:
+                                              EdgeInsets.fromLTRB(3, 3, 3, 3),
+                                          child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                modules[index],
+                                                style: TextStyle(
+                                                    color: Color(dark_purple),
+                                                    fontSize: 15),
+                                              )));
+                                    },
+                                  ),
+                                ),
                         ])),
                 SizedBox(height: spacing),
                 Container(
@@ -426,43 +424,49 @@ class _ProfileState extends State<Profile> {
                               )
                             ],
                           ),
-                          (skills.length == 0) ?
-                          Center(
-                            child: Text("No Skills present", style: TextStyle(color: Colors.white54),),
-                          )
+                          (skills.length == 0)
+                              ? Center(
+                                  child: Text(
+                                    "No Skills present",
+                                    style: TextStyle(color: Colors.white54),
+                                  ),
+                                )
                               : Expanded(
-                            child: GridView.builder(
-                              padding: EdgeInsets.fromLTRB(0, 4, 12, 5),
-                              scrollDirection: Axis.vertical,
-                              itemCount: skills.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                childAspectRatio: 3.25,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                    alignment: Alignment.center,
-                                    //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
+                                  child: GridView.builder(
+                                    padding: EdgeInsets.fromLTRB(0, 4, 12, 5),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: skills.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      childAspectRatio: 3.25,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
                                     ),
-                                    padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                    child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Text(
-                                          skills[index],
-                                          style: TextStyle(
-                                              color: Color(dark_purple),
-                                              fontSize: 15),
-                                        )));
-                              },
-                            ),
-                          ),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                          alignment: Alignment.center,
+                                          //                margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.white,
+                                          ),
+                                          padding:
+                                              EdgeInsets.fromLTRB(3, 3, 3, 3),
+                                          child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                skills[index],
+                                                style: TextStyle(
+                                                    color: Color(dark_purple),
+                                                    fontSize: 15),
+                                              )));
+                                    },
+                                  ),
+                                ),
                         ])),
               ],
             ),
@@ -563,18 +567,18 @@ editListDialog(
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Color(purple_bg)),
-
-                                        onTap: (){
-                                          _controllers[index].addListener((){
-                                            UserDetails().modifyItem(title, index, _controllers[index].text);
+                                        onTap: () {
+                                          _controllers[index].addListener(() {
+                                            UserDetails().modifyItem(
+                                                title,
+                                                index,
+                                                _controllers[index].text);
                                           });
                                         },
                                         maxLength: 20,
                                         maxLengthEnforced: true,
                                       ),
-
                                       width: 150,
-
                                     ),
                                   ),
                                   SizedBox(
@@ -583,7 +587,8 @@ editListDialog(
                                           color: Colors.red, size: 20),
                                       onPressed: () {
                                         setState(() {
-                                          UserDetails().deleteItem(title, index);
+                                          UserDetails()
+                                              .deleteItem(title, index);
                                           list.removeAt(index);
                                         });
                                       },
@@ -597,9 +602,7 @@ editListDialog(
                                 ],
                               ),
                             ),
-
                           );
-
                         }),
                   ),
                   Row(
@@ -614,7 +617,7 @@ editListDialog(
                           style: TextStyle(color: Colors.white, fontSize: 20),
                           decoration: InputDecoration(
                             counterText: "",
-                            hintText: "Add new "+title,
+                            hintText: "Add new " + title,
                             hintStyle: TextStyle(color: Colors.white60),
                             contentPadding: EdgeInsets.all(10),
                             focusColor: Colors.white,
@@ -630,12 +633,10 @@ editListDialog(
                               add_item = new_add_module;
                             });
                           },
-
                           maxLength: 20,
                           maxLengthEnforced: true,
                         ),
                       ),
-
                       Container(
                         margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
                         decoration: BoxDecoration(

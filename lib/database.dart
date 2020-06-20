@@ -24,8 +24,15 @@ class Activity extends Table{
 
 }
 
+class Tests extends Table{
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get location => text()();
+  TextColumn get module => text()();
+  DateTimeColumn get date => dateTime().nullable()();
+  DateTimeColumn get time => dateTime().nullable()();
+}
 
-@UseMoor(tables: [Tasks, Activity])
+@UseMoor(tables: [Tasks, Activity, Tests])
 class AppDatabase extends _$AppDatabase{
 
   AppDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(path: 'db.sqlite', logStatements: true));
@@ -44,6 +51,12 @@ class AppDatabase extends _$AppDatabase{
   Future insertActivity(ActivityData activity_item) => into(activity).insert(activity_item);
   Future updateActivity(ActivityData activity_item) => update(activity).replace(activity_item);
   Future deleteActivity(ActivityData activity_item) => delete(activity).delete(activity_item);
+
+  Future<List<Test>> getAllTests() => select(tests).get();
+  Stream<List<Test>> watchAllTests() => select(tests).watch();
+  Future insertTest(Test test) => into(tests).insert(test);
+  Future updateTest(Test test) => update(tests).replace(test);
+  Future deleteTest(Test test) => delete(tests).delete(test);
 
 
 }

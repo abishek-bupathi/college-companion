@@ -26,20 +26,20 @@ void main() async {
     await Hive.openBox('profile_complete');
   }
 
-  runApp(
-      new MaterialApp(
-    home: FutureBuilder(
-      future: _openBox(),
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasError)
-            return Text(snapshot.error.toString());
-          else
-            return  Hive.box('profile_complete').isNotEmpty ? MyApp() : new WelcomePage(); // !Hive.box('user_details').isEmpty ? MyApp() : new WelcomePage();
-        }
+  runApp(new MaterialApp(
+      home: FutureBuilder(
+    future: _openBox(),
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasError)
+          return Text(snapshot.error.toString());
         else
-          return Scaffold();
-      },
+          return Hive.box('profile_complete').isNotEmpty
+              ? MyApp()
+              : new WelcomePage(); // !Hive.box('user_details').isEmpty ? MyApp() : new WelcomePage();
+      } else
+        return Scaffold();
+    },
   )));
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarIconBrightness: Brightness.dark,
@@ -47,32 +47,29 @@ void main() async {
     systemNavigationBarColor: Color(0xFFF8F8F8),
     statusBarColor: Colors.transparent, // status bar color
   ));
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp
-  ]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Hive.close();
 }
 
-
 class MyApp extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp>{
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: new SplashScreen(
         seconds: 1,
         photoSize: 50.0,
-        loaderColor: Hive.box('profile_complete').isNotEmpty ? Colors.white : Colors.red,
+        loaderColor:
+            Hive.box('profile_complete').isNotEmpty ? Colors.white : Colors.red,
         navigateAfterSeconds: new AfterSplash(),
         image: new Image.asset("assets/Avatars/1.png"),
-        backgroundColor: Colors.white ,
+        backgroundColor: Colors.white,
       ),
     );
   }
@@ -84,7 +81,6 @@ class AfterSplash extends StatefulWidget {
     return AfterSplashState();
   }
 }
-
 
 class AfterSplashState extends State<AfterSplash> {
   int _selectedPage = 2;
@@ -102,7 +98,6 @@ class AfterSplashState extends State<AfterSplash> {
 
   @override
   Widget build(BuildContext context) {
-
     return Provider(
       create: (_) => AppDatabase(),
       child: MaterialApp(
@@ -118,7 +113,6 @@ class AfterSplashState extends State<AfterSplash> {
                 },
                 controller: _pageController,
                 physics: BouncingScrollPhysics()),
-
             bottomNavigationBar: BottomNavigationBar(
               // setting attributes for the bar
               unselectedItemColor: Colors.black38,
@@ -187,7 +181,7 @@ class AfterSplashState extends State<AfterSplash> {
               ],
             ),
           )),
-       // dispose: (context, db) => db.close()
+      // dispose: (context, db) => db.close()
     );
   }
 }
@@ -205,8 +199,6 @@ class WelcomePageState extends State<WelcomePage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "College Companion",
-        home: Welcome(context)
-
-    );
+        home: Welcome(context));
   }
 }

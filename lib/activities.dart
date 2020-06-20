@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import './calendar.dart';
 
-
 class Activities extends StatefulWidget {
   @override
   _ActivitiesState createState() => _ActivitiesState();
@@ -83,7 +82,8 @@ class _ActivitiesState extends State<Activities> {
                 showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) => addActivityDialog(context, database, scaffold_key))
+                        builder: (context) =>
+                            addActivityDialog(context, database, scaffold_key))
                     .then((_) => setState(() {}));
               },
               iconSize: 40,
@@ -91,41 +91,40 @@ class _ActivitiesState extends State<Activities> {
             ),
           ],
         ),
-
         body: StreamBuilder(
-    stream: database.watchAllActivities(),
-    builder: (context,AsyncSnapshot<List<ActivityData>> snapshot) {
-    final activities = snapshot.data ?? List();
-    bool data_exists = activities.isEmpty;
-    return data_exists ?
-         Center(
-            child: Text("No Activites !", style: TextStyle(fontSize: 20, color: Colors.grey),),
-         )
-            :  new Container(
-          padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
-          child: new ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (_, int index) {
-              final itemActivity = activities[index];
-              return GestureDetector(
-                child: ItemActivity(itemActivity, database),
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => editActivityDialog(
-                          context,
-                          itemActivity,
-                          database
-                          )).then((_) => setState(() {}));
-                },
-              );
-            },
-            itemCount: activities.length,
-          ),
-        );
-    }
-        ),
+            stream: database.watchAllActivities(),
+            builder: (context, AsyncSnapshot<List<ActivityData>> snapshot) {
+              final activities = snapshot.data ?? List();
+              bool data_exists = activities.isEmpty;
+              return data_exists
+                  ? Center(
+                      child: Text(
+                        "No Activites !",
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      ),
+                    )
+                  : new Container(
+                      padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
+                      child: new ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (_, int index) {
+                          final itemActivity = activities[index];
+                          return GestureDetector(
+                            child: ItemActivity(itemActivity, database),
+                            onTap: () {
+                              showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) => editActivityDialog(
+                                          context, itemActivity, database))
+                                  .then((_) => setState(() {}));
+                            },
+                          );
+                        },
+                        itemCount: activities.length,
+                      ),
+                    );
+            }),
       ),
     );
   }
@@ -149,8 +148,8 @@ class _ItemActivityState extends State<ItemActivity> {
     bool completed = widget.itemActivity.completed;
     String title = widget.itemActivity.title,
         location = widget.itemActivity.location;
-    var date = widget.itemActivity.date != null?widget.itemActivity.date:"",
-        time = widget.itemActivity.time != null?widget.itemActivity.time:"";
+    var date = widget.itemActivity.date != null ? widget.itemActivity.date : "",
+        time = widget.itemActivity.time != null ? widget.itemActivity.time : "";
 
     return new Card(
       shape: RoundedRectangleBorder(
@@ -185,54 +184,55 @@ class _ItemActivityState extends State<ItemActivity> {
                     onPressed: () {
                       setState(() {
                         if (completed) {
-                          widget.database.updateActivity(widget.itemActivity.copyWith(completed: false));
+                          widget.database.updateActivity(
+                              widget.itemActivity.copyWith(completed: false));
                           completed = false;
                         } else
-                          widget.database.updateActivity(widget.itemActivity.copyWith(completed: true));
+                          widget.database.updateActivity(
+                              widget.itemActivity.copyWith(completed: true));
                         completed = true;
                       });
                     },
                   ),
-                  location != ""?Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
-                      Text(
-                        location,
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      )
-                    ],
-                  ): Text(
-                    title,
-                    style: TextStyle(color: Colors.white, fontSize: 28),
-                  ),
+                  location != ""
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              title,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                            Text(
+                              location,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            )
+                          ],
+                        )
+                      : Text(
+                          title,
+                          style: TextStyle(color: Colors.white, fontSize: 28),
+                        ),
                 ],
               ),
-              date.toString().isEmpty?
-              Container(): Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    DateFormat(
-                        "hh:mm a")
-                        .format(
-                        time).toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  Text(
-                    DateFormat(
-                        "EEE, dd MMM")
-                        .format(
-                        date).toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  )
-                ],
-              )
+              date.toString().isEmpty
+                  ? Container()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          DateFormat("hh:mm a").format(time).toString(),
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Text(
+                          DateFormat("EEE, dd MMM").format(date).toString(),
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        )
+                      ],
+                    )
             ],
           )),
       elevation: 5,
@@ -242,7 +242,8 @@ class _ItemActivityState extends State<ItemActivity> {
   }
 }
 
-addActivityDialog(BuildContext context, AppDatabase database, GlobalKey<ScaffoldState> scaffold_key) {
+addActivityDialog(BuildContext context, AppDatabase database,
+    GlobalKey<ScaffoldState> scaffold_key) {
   String _dateEvent = " - ",
       _timeEvent = " - ",
       _note = "",
@@ -509,20 +510,20 @@ addActivityDialog(BuildContext context, AppDatabase database, GlobalKey<Scaffold
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            if(_title.isNotEmpty) {
+                            if (_title.isNotEmpty) {
                               final activity = ActivityData(
                                   title: _title,
                                   note: _note,
                                   location: _location,
                                   date: dateWithoutFormat,
-                                  time: timeWithoutFormat
-                              );
+                                  time: timeWithoutFormat);
                               database.insertActivity(activity);
                               Navigator.pop(context);
-                            }else
-                            {
-                              scaffold_key.currentState.showSnackBar(new SnackBar(
-                                content: new Text("Please add title and module"),
+                            } else {
+                              scaffold_key.currentState
+                                  .showSnackBar(new SnackBar(
+                                content:
+                                    new Text("Please add title and module"),
                               ));
                             }
                           },
@@ -538,7 +539,8 @@ addActivityDialog(BuildContext context, AppDatabase database, GlobalKey<Scaffold
       }));
 }
 
-editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase database) {
+editActivityDialog(
+    BuildContext context, ActivityData itemActivity, AppDatabase database) {
   int blue_bg = 0xFF3C9CE2, label_clr = 0xFF89CDFF;
 
   var noteController = new TextEditingController();
@@ -547,8 +549,8 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
   titleController.text = itemActivity.title;
   var locationController = new TextEditingController();
   locationController.text = itemActivity.location;
-  var _date = itemActivity.date != null?itemActivity.date:"",
-      _time = itemActivity.time != null?itemActivity.time:"";
+  var _date = itemActivity.date != null ? itemActivity.date : "",
+      _time = itemActivity.time != null ? itemActivity.time : "";
   return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -563,28 +565,30 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                    controller: titleController,
-                    cursorColor: Colors.white,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: "-",
-                      hintStyle: TextStyle(color: Colors.white),
-                      focusColor: Colors.white,
-                      enabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
+                  controller: titleController,
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "-",
+                    hintStyle: TextStyle(color: Colors.white),
+                    focusColor: Colors.white,
+                    enabledBorder:
+                        UnderlineInputBorder(borderSide: BorderSide.none),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
                     ),
-                  onTap: (){
-                    titleController.addListener((){
-                      database.updateActivity(itemActivity.copyWith(title: titleController.text));
+                  ),
+                  onTap: () {
+                    titleController.addListener(() {
+                      database.updateActivity(
+                          itemActivity.copyWith(title: titleController.text));
                     });
-                  },),
+                  },
+                ),
                 SizedBox(height: 15),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -594,24 +598,26 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
                         style: TextStyle(fontSize: 18, color: Color(label_clr)),
                       ),
                       TextField(
-                          controller: noteController,
-                          cursorColor: Colors.white,
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                          decoration: InputDecoration(
-                            hintText: "-",
-                            hintStyle: TextStyle(color: Colors.white),
-                            focusColor: Colors.white,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        controller: noteController,
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        decoration: InputDecoration(
+                          hintText: "-",
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
                           ),
-                        onTap: (){
-                          noteController.addListener((){
-                            database.updateActivity(itemActivity.copyWith(note: noteController.text));
+                        ),
+                        onTap: () {
+                          noteController.addListener(() {
+                            database.updateActivity(itemActivity.copyWith(
+                                note: noteController.text));
                           });
-                        },),
+                        },
+                      ),
                     ]),
                 SizedBox(
                   height: 20,
@@ -624,24 +630,26 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
                         style: TextStyle(fontSize: 18, color: Color(label_clr)),
                       ),
                       TextField(
-                          controller: locationController,
-                          cursorColor: Colors.white,
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                          decoration: InputDecoration(
-                            hintText: "-",
-                            hintStyle: TextStyle(color: Colors.white),
-                            focusColor: Colors.white,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        controller: locationController,
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        decoration: InputDecoration(
+                          hintText: "-",
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
                           ),
-                        onTap: (){
-                          locationController.addListener((){
-                            database.updateActivity(itemActivity.copyWith(location: locationController.text));
+                        ),
+                        onTap: () {
+                          locationController.addListener(() {
+                            database.updateActivity(itemActivity.copyWith(
+                                location: locationController.text));
                           });
-                        },),
+                        },
+                      ),
                     ]),
                 SizedBox(height: 20),
                 Container(
@@ -661,11 +669,12 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
                                 size: 15,
                               ),
                               SizedBox(width: 5),
-                              Text(_time.toString().isNotEmpty?
-                              DateFormat(
-                                  "hh:mm a")
-                                  .format(
-                                  _time).toString():"-",
+                              Text(
+                                  _time.toString().isNotEmpty
+                                      ? DateFormat("hh:mm a")
+                                          .format(_time)
+                                          .toString()
+                                      : "-",
                                   style: TextStyle(
                                       color: Color(blue_bg), fontSize: 15)),
                             ],
@@ -675,11 +684,12 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
                               Icon(Icons.calendar_today,
                                   color: Color(blue_bg), size: 15),
                               SizedBox(width: 5),
-                              Text(_date.toString().isNotEmpty?
-                              DateFormat(
-                                  "EEE, dd MMM")
-                                  .format(
-                                  _date).toString():"-",
+                              Text(
+                                  _date.toString().isNotEmpty
+                                      ? DateFormat("EEE, dd MMM")
+                                          .format(_date)
+                                          .toString()
+                                      : "-",
                                   style: TextStyle(
                                       color: Color(blue_bg), fontSize: 15)),
                             ],
@@ -703,16 +713,20 @@ editActivityDialog(BuildContext context, ActivityData itemActivity, AppDatabase 
                                           onConfirm: (time_new) {
                                         setState(() {
                                           print(date_new);
-                                          database.updateActivity(itemActivity.copyWith(time: time_new, date: date_new));
+                                          database.updateActivity(
+                                              itemActivity.copyWith(
+                                                  time: time_new,
+                                                  date: date_new));
                                           _time = time_new;
                                           _date = date_new;
                                         });
                                       },
-                                          currentTime: _date != ""?_date:DateTime.now(),
+                                          //TODO: Fix current data and time
                                           locale: LocaleType.en);
                                     });
                                   },
-                                      currentTime: _time != ""?_time:DateTime.now(),
+                                      currentTime:
+                                          _date != "" ? _date : DateTime.now(),
                                       locale: LocaleType.en);
                                 },
                               )),

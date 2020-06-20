@@ -71,8 +71,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     int selected;
     int color_grey = 0xFF3F3D56;
     double scrn_height = MediaQuery.of(context).size.height;
-    double reducable_height =
-        AppBar().preferredSize.height + MediaQuery.of(context).padding.top + MediaQuery.of(context).padding.bottom;
+    double reducable_height = AppBar().preferredSize.height +
+        MediaQuery.of(context).padding.top +
+        MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
       key: scaffold_key,
@@ -80,7 +81,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         automaticallyImplyLeading: false,
         brightness: Brightness.light,
         elevation: 0,
-        backgroundColor:(scrn_height < 750) ? Colors.white : Color(0xFFF2F2F2),
+        backgroundColor: (scrn_height < 750) ? Colors.white : Color(0xFFF2F2F2),
         title: Text('Details',
             style: TextStyle(fontSize: 50, color: Color(color_grey))),
       ),
@@ -94,10 +95,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                (scrn_height < 750) ? Container(
-                  height: 250,
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Image.asset("assets/backgrounds/details_bg_small.png")) : Image.asset("assets/backgrounds/details_bg.png"),
+                (scrn_height < 750)
+                    ? Container(
+                        height: 250,
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: Image.asset(
+                            "assets/backgrounds/details_bg_small.png"))
+                    : Image.asset("assets/backgrounds/details_bg.png"),
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
                   decoration: BoxDecoration(
@@ -250,19 +254,23 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             onPressed: () {
-                              if(widget.dob == "" || widget.name == ""){
-                                scaffold_key.currentState.showSnackBar(new SnackBar(
-                                  content: new Text("Please fill all the details"),
-                                 ));
-                              }else{
-                                UserDetails().setCurrentAvatar(widget.current_avatar);
+                              if (widget.dob == "" || widget.name == "") {
+                                scaffold_key.currentState
+                                    .showSnackBar(new SnackBar(
+                                  content:
+                                      new Text("Please fill all the details"),
+                                ));
+                              } else {
+                                UserDetails()
+                                    .setCurrentAvatar(widget.current_avatar);
                                 UserDetails().setName(widget.name);
                                 UserDetails().setDob(widget.dob);
 
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UniversityDetails()));
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UniversityDetails()));
                               }
                             },
                             child: Icon(Icons.arrow_forward_ios,
@@ -301,14 +309,18 @@ class _UniversityDetailsState extends State<UniversityDetails> {
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      key: scaffold_key,
+        key: scaffold_key,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           brightness: Brightness.dark,
           elevation: 0,
-          backgroundColor:(scrn_height < 750) ? Colors.white : Color(0xFF3F3D56),
+          backgroundColor:
+              (scrn_height < 750) ? Colors.white : Color(0xFF3F3D56),
           title: Text('Details',
-              style: TextStyle(fontSize: 50, color: (scrn_height < 750) ? Color(0xFF3F3D56) : Colors.white)),
+              style: TextStyle(
+                  fontSize: 50,
+                  color:
+                      (scrn_height < 750) ? Color(0xFF3F3D56) : Colors.white)),
         ),
         body: Container(
             color: Colors.white,
@@ -320,10 +332,14 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      (scrn_height < 750) ? Container(
-                          height: 250,
-                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-                          child: Image.asset("assets/backgrounds/uni_details_bg_small.png")) : Image.asset("assets/backgrounds/uni_details_bg.png"),
+                      (scrn_height < 750)
+                          ? Container(
+                              height: 250,
+                              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                              child: Image.asset(
+                                  "assets/backgrounds/uni_details_bg_small.png"))
+                          : Image.asset(
+                              "assets/backgrounds/uni_details_bg.png"),
                       SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -423,21 +439,26 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   onPressed: () {
-                                    if(widget.university == "" || widget.course == "" || widget.id == ""){
-                                      scaffold_key.currentState.showSnackBar(new SnackBar(
-                                        content: new Text("Please fill all the details"),
+                                    if (widget.university == "" ||
+                                        widget.course == "" ||
+                                        widget.id == "") {
+                                      scaffold_key.currentState
+                                          .showSnackBar(new SnackBar(
+                                        content: new Text(
+                                            "Please fill all the details"),
                                       ));
-                                    }else{
-
+                                    } else {
                                       UserDetails().setId(widget.id);
                                       UserDetails().setCourse(widget.course);
-                                      UserDetails().setUniversity(widget.university);
+                                      UserDetails()
+                                          .setUniversity(widget.university);
                                       UserDetails().profile_complete();
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => MyApp()));
-                                  }},
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => MyApp()));
+                                    }
+                                  },
                                   child: Icon(Icons.check,
                                       color: Colors.white, size: 25),
                                 ),

@@ -9,8 +9,6 @@ import './database.dart';
 import './calendar.dart';
 import './user_details.dart';
 
-
-
 class Academic extends StatefulWidget {
   @override
   _AcademicState createState() => _AcademicState();
@@ -45,7 +43,6 @@ class _AcademicState extends State<Academic> {
 
   @override
   Widget build(BuildContext context) {
-
     final database = Provider.of<AppDatabase>(context);
     final scaffold_key = new GlobalKey<ScaffoldState>();
 
@@ -65,69 +62,70 @@ class _AcademicState extends State<Academic> {
                     fontWeight: FontWeight.bold)),
             actions: <Widget>[
               new IconButton(
-                icon: new Icon(Icons.event),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => Calendar_dialog(),
-                  );
-                },
-                iconSize: 40,
-                color: Color(0xFFc71831)
-              ),
-              new IconButton(
-                icon: new Icon(Icons.add),
-                onPressed: () {
-            showDialog(
+                  icon: new Icon(Icons.event),
+                  onPressed: () {
+                    showDialog(
                       context: context,
-                      barrierDismissible: false,
-                      builder: (context) =>  addTaskDialog(context, moduleList, database, scaffold_key));
-                },
-                iconSize: 40,
-                color: Color(0xFFc71831)
-              ),
+                      builder: (BuildContext context) => Calendar_dialog(),
+                    );
+                  },
+                  iconSize: 40,
+                  color: Color(0xFFc71831)),
+              new IconButton(
+                  icon: new Icon(Icons.add),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => addTaskDialog(
+                            context, moduleList, database, scaffold_key));
+                  },
+                  iconSize: 40,
+                  color: Color(0xFFc71831)),
             ],
           ),
           body: StreamBuilder(
-            stream: database.watchAllTask(),
-            builder: (context,AsyncSnapshot<List<Task>> snapshot) {
-              final tasks = snapshot.data ?? List();
-              bool data_exists = tasks.isEmpty;
-              return data_exists ?
-              Center(
-                child: Text("No Tasks Pending !", style: TextStyle(fontSize: 20,color: Colors.grey),),
-              )
-                  : new Container(
-                padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
-                child: new ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (_, int index) {
-                    final itemTask = tasks[index];
-                    return GestureDetector(
-                      child: ItemAcademic(itemTask, database),
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) => editTaskDialog(
-                                context,
-                                itemTask,
-                                moduleList, database
-                                )).then((_) => setState(() {}));
-                      },
-                    );
-                  },
-                  itemCount: tasks.length,
-                ),
-              );
-            }
-          ),
+              stream: database.watchAllTask(),
+              builder: (context, AsyncSnapshot<List<Task>> snapshot) {
+                final tasks = snapshot.data ?? List();
+                bool data_exists = tasks.isEmpty;
+                return data_exists
+                    ? Center(
+                        child: Text(
+                          "No Tasks Pending !",
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                        ),
+                      )
+                    : new Container(
+                        padding: EdgeInsets.fromLTRB(5, 15, 5, 5),
+                        child: new ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (_, int index) {
+                            final itemTask = tasks[index];
+                            return GestureDetector(
+                              child: ItemAcademic(itemTask, database),
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) => editTaskDialog(
+                                        context,
+                                        itemTask,
+                                        moduleList,
+                                        database)).then((_) => setState(() {}));
+                              },
+                            );
+                          },
+                          itemCount: tasks.length,
+                        ),
+                      );
+              }),
         ));
   }
 }
 
 class ItemAcademic extends StatefulWidget {
- Task itemTask;
+  Task itemTask;
   AppDatabase database;
   ItemAcademic(this.itemTask, this.database);
 
@@ -136,15 +134,13 @@ class ItemAcademic extends StatefulWidget {
 }
 
 class _ItemAcademicState extends State<ItemAcademic> {
-
   @override
   Widget build(BuildContext context) {
-
     bool completed = widget.itemTask.completed;
     String title = widget.itemTask.title,
-           note = widget.itemTask.note,
-           module = widget.itemTask.module;
-    var date = widget.itemTask.dueDate != null?widget.itemTask.dueDate:"" ;
+        note = widget.itemTask.note,
+        module = widget.itemTask.module;
+    var date = widget.itemTask.dueDate != null ? widget.itemTask.dueDate : "";
     print(date);
     return new Card(
       shape: RoundedRectangleBorder(
@@ -154,10 +150,9 @@ class _ItemAcademicState extends State<ItemAcademic> {
           height: 75,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors:completed
+              colors: completed
                   ? [Colors.black54, Colors.black54]
                   : [Color(0xFFf45033), Color(0xFFc71831)],
-
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -180,33 +175,38 @@ class _ItemAcademicState extends State<ItemAcademic> {
                     onPressed: () {
                       setState(() {
                         if (completed) {
-                          widget.database.updateTask(widget.itemTask.copyWith(completed: false));
+                          widget.database.updateTask(
+                              widget.itemTask.copyWith(completed: false));
                           completed = false;
-                        } else
-                          {
-                            widget.database.updateTask(widget.itemTask.copyWith(completed: true));
-                            completed = true;
-                          }
+                        } else {
+                          widget.database.updateTask(
+                              widget.itemTask.copyWith(completed: true));
+                          completed = true;
+                        }
                       });
                     },
                   ),
-                  note != ""? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
-                      Text(
-                        note,
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      )
-                    ],
-                  ):Text(
-                    title,
-                    style: TextStyle(color: Colors.white, fontSize: 28),
-                  ),
+                  note != ""
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              title,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                            Text(
+                              note,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            )
+                          ],
+                        )
+                      : Text(
+                          title,
+                          style: TextStyle(color: Colors.white, fontSize: 28),
+                        ),
                 ],
               ),
               Column(
@@ -217,12 +217,10 @@ class _ItemAcademicState extends State<ItemAcademic> {
                     module,
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
-                  Text(date.toString().isEmpty?
-                   "-":
-                  DateFormat(
-                      "EEE, dd MMM")
-                      .format(
-                      date).toString(),
+                  Text(
+                    date.toString().isEmpty
+                        ? "-"
+                        : DateFormat("EEE, dd MMM").format(date).toString(),
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   )
                 ],
@@ -236,15 +234,13 @@ class _ItemAcademicState extends State<ItemAcademic> {
   }
 }
 
-
-addTaskDialog(BuildContext context, List modulesList, AppDatabase database, GlobalKey<ScaffoldState> scaffold_key) {
-
+addTaskDialog(BuildContext context, List modulesList, AppDatabase database,
+    GlobalKey<ScaffoldState> scaffold_key) {
   String _module, _note = "", _title = "";
   var dateWithoutFormat, _date = " - ";
   int red_bg = 0xFFe1323b, red_high = 0xFFb6152b;
 
-  if(modulesList.isNotEmpty)
-    _module= modulesList[0];
+  if (modulesList.isNotEmpty) _module = modulesList[0];
 
   return Dialog(
       shape: RoundedRectangleBorder(
@@ -253,230 +249,236 @@ addTaskDialog(BuildContext context, List modulesList, AppDatabase database, Glob
       backgroundColor: Color(red_bg),
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              height: 470,
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Color(red_high),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(15),
-                                topLeft: Radius.circular(15)),
-                          ),
-                          child: Hero(
-                            tag: "Add",
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Task",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Icon(
+        return Container(
+          height: 470,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Color(red_high),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(15),
+                            topLeft: Radius.circular(15)),
+                      ),
+                      child: Hero(
+                        tag: "Add",
+                        child: Icon(
                           Icons.add,
-                          color: Colors.transparent,
+                          color: Colors.white,
                           size: 50,
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 15),
-                    Expanded(
-                        child: SingleChildScrollView(
-                            child: Container(
-                                padding: EdgeInsets.all(20),
-                                child: Column(children: <Widget>[
-                                  TextField(
-                                    cursorColor: Colors.white,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                    decoration: InputDecoration(
-                                      focusColor: Colors.white,
-                                      labelStyle: new TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                      labelText: 'Title',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide:
+                    Text(
+                      "Task",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Icon(
+                      Icons.add,
+                      color: Colors.transparent,
+                      size: 50,
+                    )
+                  ],
+                ),
+                SizedBox(height: 15),
+                Expanded(
+                    child: SingleChildScrollView(
+                        child: Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(children: <Widget>[
+                              TextField(
+                                cursorColor: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                decoration: InputDecoration(
+                                  focusColor: Colors.white,
+                                  labelStyle: new TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                  labelText: 'Title',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
                                           BorderSide(color: Colors.white),
-                                          borderRadius: BorderRadius.circular(10)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide:
+                                      borderRadius: BorderRadius.circular(10)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
                                           BorderSide(color: Colors.white),
-                                          borderRadius: BorderRadius.circular(10)),
-                                    ),
-                                    onChanged: (String title) {
-                                      setState(() {
-                                        _title = title;
-                                      });
-                                    },
-                                    onSubmitted: (String title) {
-                                      setState(() {
-                                        _title = title;
-                                      });
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  TextField(
-                                    cursorColor: Colors.white,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                    decoration: InputDecoration(
-                                      labelText: 'Note',
-                                      focusColor: Colors.white,
-                                      labelStyle: new TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide:
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                                onChanged: (String title) {
+                                  setState(() {
+                                    _title = title;
+                                  });
+                                },
+                                onSubmitted: (String title) {
+                                  setState(() {
+                                    _title = title;
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 20),
+                              TextField(
+                                cursorColor: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                decoration: InputDecoration(
+                                  labelText: 'Note',
+                                  focusColor: Colors.white,
+                                  labelStyle: new TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
                                           BorderSide(color: Colors.white),
-                                          borderRadius: BorderRadius.circular(10)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide:
+                                      borderRadius: BorderRadius.circular(10)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
                                           BorderSide(color: Colors.white),
-                                          borderRadius: BorderRadius.circular(10)),
-                                    ),
-                                    onChanged: (String note) {
-                                      setState(() {
-                                        _note = note;
-                                      });
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                    child: Row(
-                                        mainAxisAlignment:
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                                onChanged: (String note) {
+                                  setState(() {
+                                    _note = note;
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 20),
+                              Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white),
+                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Row(
+                                    mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.calendar_today,
-                                            color: Color(red_bg),
-                                            size: 20,
-                                          ),
-                                          Text("   " + _date,
-                                              style: TextStyle(
-                                                  color: Color(red_bg),
-                                                  fontSize: 20)),
-                                          ButtonTheme(
-                                              minWidth: 0,
-                                              child: IconButton(
-                                                focusColor: Colors.black12,
-                                                highlightColor: Colors.transparent,
-                                                iconSize: 20,
-                                                icon: Icon(
-                                                  Icons.edit,
-                                                  color: Color(red_bg),
-                                                ),
-                                                onPressed: () {
-                                                  DatePicker.showDatePicker(context,
-                                                      showTitleActions: true,
-                                                      minTime: DateTime(2020, 1, 1),
-                                                      maxTime: DateTime(2025, 6, 7),
-                                                      onConfirm: (date) {
-                                                        setState(() {
-                                                          dateWithoutFormat = date;
-                                                          _date = DateFormat(
-                                                              "EEE, dd MMM")
-                                                              .format(
-                                                              dateWithoutFormat);
-                                                        });
-                                                      },
-                                                      currentTime: DateTime.now(),
-                                                      locale: LocaleType.en);
-                                                },
-                                              )),
-                                        ]),
-                                  ),
-                                  SizedBox(height: 20),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    padding: EdgeInsets.only(left: 10, right: 10),
-                                    child: modulesList.isEmpty?
-                                    SizedBox(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.calendar_today,
+                                        color: Color(red_bg),
+                                        size: 20,
+                                      ),
+                                      Text("   " + _date,
+                                          style: TextStyle(
+                                              color: Color(red_bg),
+                                              fontSize: 20)),
+                                      ButtonTheme(
+                                          minWidth: 0,
+                                          child: IconButton(
+                                            focusColor: Colors.black12,
+                                            highlightColor: Colors.transparent,
+                                            iconSize: 20,
+                                            icon: Icon(
+                                              Icons.edit,
+                                              color: Color(red_bg),
+                                            ),
+                                            onPressed: () {
+                                              DatePicker.showDatePicker(context,
+                                                  showTitleActions: true,
+                                                  minTime: DateTime(2020, 1, 1),
+                                                  maxTime: DateTime(2025, 6, 7),
+                                                  onConfirm: (date) {
+                                                setState(() {
+                                                  dateWithoutFormat = date;
+                                                  _date = DateFormat(
+                                                          "EEE, dd MMM")
+                                                      .format(
+                                                          dateWithoutFormat);
+                                                });
+                                              },
+                                                  currentTime: DateTime.now(),
+                                                  locale: LocaleType.en);
+                                            },
+                                          )),
+                                    ]),
+                              ),
+                              SizedBox(height: 20),
+                              Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white),
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                child: modulesList.isEmpty
+                                    ? SizedBox(
                                         width: double.infinity,
                                         height: 45,
-                                        child: Center(child: Text("No modules found \n Please add modules in profile", style: TextStyle(color: Color(red_bg)),textAlign: TextAlign.center,)))
-                                        : DropdownButtonHideUnderline(
-                                      child: DropdownButton(
-                                        dropdownColor: Colors.white,
-                                        isExpanded: true,
-                                        value: _module,
-                                        icon: Icon(
-                                          Icons.arrow_drop_down,
-                                          color: Color(red_bg),
+                                        child: Center(
+                                            child: Text(
+                                          "No modules found \n Please add modules in profile",
+                                          style:
+                                              TextStyle(color: Color(red_bg)),
+                                          textAlign: TextAlign.center,
+                                        )))
+                                    : DropdownButtonHideUnderline(
+                                        child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          isExpanded: true,
+                                          value: _module,
+                                          icon: Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Color(red_bg),
+                                          ),
+                                          iconSize: 30,
+                                          elevation: 0,
+                                          style: TextStyle(
+                                              color: Color(red_bg),
+                                              fontSize: 20),
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              _module = newValue;
+                                            });
+                                          },
+                                          items: modulesList.map((value) {
+                                            return DropdownMenuItem(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
                                         ),
-                                        iconSize: 30,
-                                        elevation: 0,
-                                        style: TextStyle(
-                                            color: Color(red_bg), fontSize: 20),
-                                        onChanged: (newValue) {
-                                          setState(() {
-                                            _module = newValue;
-                                          });
-                                        },
-                                        items: modulesList.map((value) {
-                                          return DropdownMenuItem(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
                                       ),
-                                    ),
-                                  ),
-                                ])))),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          MaterialButton(
-                            highlightColor: Color(red_high),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 0,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Text("  "),
-                          MaterialButton(
-                            color: Colors.white,
-                            highlightColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            onPressed: () {
-
-                              if(_title.isNotEmpty && _module.isNotEmpty) {
+                              ),
+                            ])))),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      MaterialButton(
+                        highlightColor: Color(red_high),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        elevation: 0,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      Text("  "),
+                      MaterialButton(
+                        color: Colors.white,
+                        highlightColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: () {
+                          if (_title.isNotEmpty && _module.isNotEmpty) {
                             final task = Task(
                                 title: _title,
                                 note: _note,
@@ -484,27 +486,27 @@ addTaskDialog(BuildContext context, List modulesList, AppDatabase database, Glob
                                 dueDate: dateWithoutFormat);
                             database.insertTask(task);
                             Navigator.pop(context);
-                          }else
-                            {
-                              scaffold_key.currentState.showSnackBar(new SnackBar(
-                                content: new Text("Please add title and module"),
-                              ));
-                            }
+                          } else {
+                            scaffold_key.currentState.showSnackBar(new SnackBar(
+                              content: new Text("Please add title and module"),
+                            ));
+                          }
                         },
-                            child: Text(
-                              "Done",
-                              style: TextStyle(color: Color(red_bg)),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ]),
-            );
-          }));
+                        child: Text(
+                          "Done",
+                          style: TextStyle(color: Color(red_bg)),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ]),
+        );
+      }));
 }
 
-editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase database) {
+editTaskDialog(BuildContext context, Task itemTask, List modulesList,
+    AppDatabase database) {
   int red_bg = 0xFFe1323b, red_high = 0xFFb6152b, label_clr = 0xFFFFACA9;
 
   var noteController = new TextEditingController();
@@ -512,7 +514,7 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
   var titleController = new TextEditingController();
   titleController.text = itemTask.title;
   String _module = itemTask.module;
-  var _date = itemTask.dueDate != null?itemTask.dueDate:"" ;
+  var _date = itemTask.dueDate != null ? itemTask.dueDate : "";
   return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -527,27 +529,28 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                    controller: titleController,
-                    cursorColor: Colors.white,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      focusColor: Colors.white,
-                      enabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
+                  controller: titleController,
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    focusColor: Colors.white,
+                    enabledBorder:
+                        UnderlineInputBorder(borderSide: BorderSide.none),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
                     ),
-                  onTap: (){
-                    titleController.addListener((){
-                      database.updateTask(itemTask.copyWith(title: titleController.text));
-
+                  ),
+                  onTap: () {
+                    titleController.addListener(() {
+                      database.updateTask(
+                          itemTask.copyWith(title: titleController.text));
                     });
-                  },),
+                  },
+                ),
                 SizedBox(height: 15),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -558,24 +561,25 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                       ),
                       TextField(
                         cursorColor: Colors.white,
-                          controller: noteController,
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                          decoration: InputDecoration(
-                            hintText: "-",
-                            hintStyle: TextStyle(color: Colors.white),
-                            focusColor: Colors.white,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        controller: noteController,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        decoration: InputDecoration(
+                          hintText: "-",
+                          hintStyle: TextStyle(color: Colors.white),
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
                           ),
-                        onTap: (){
-                          noteController.addListener((){
-                            database.updateTask(itemTask.copyWith(note: noteController.text));
-
+                        ),
+                        onTap: () {
+                          noteController.addListener(() {
+                            database.updateTask(
+                                itemTask.copyWith(note: noteController.text));
                           });
-                        },),
+                        },
+                      ),
                     ]),
                 SizedBox(
                   height: 20,
@@ -595,13 +599,14 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                           color: Color(red_bg),
                           size: 20,
                         ),
-                        Text(_date.toString().isNotEmpty?
-                        DateFormat(
-                            "EEE, dd MMM")
-                            .format(
-                            _date).toString():"-",
+                        Text(
+                            _date.toString().isNotEmpty
+                                ? DateFormat("EEE, dd MMM")
+                                    .format(_date)
+                                    .toString()
+                                : "-",
                             style:
-                            TextStyle(color: Color(red_bg), fontSize: 20)),
+                                TextStyle(color: Color(red_bg), fontSize: 20)),
                         ButtonTheme(
                             minWidth: 0,
                             child: IconButton(
@@ -619,11 +624,13 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                                     maxTime: DateTime(2025, 6, 7),
                                     onConfirm: (date_new) {
                                   setState(() {
-                                    database.updateTask(itemTask.copyWith(dueDate: date_new));
+                                    database.updateTask(
+                                        itemTask.copyWith(dueDate: date_new));
                                     _date = date_new;
                                   });
                                 },
-                                    currentTime: _date != ""?_date:DateTime.now(),
+                                    currentTime:
+                                        _date != "" ? _date : DateTime.now(),
                                     locale: LocaleType.en);
                               },
                             )),
@@ -636,34 +643,36 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
                   padding: EdgeInsets.only(left: 10, right: 10),
-                  child: modulesList.isEmpty?
-                      Text("No modules found")
+                  child: modulesList.isEmpty
+                      ? Text("No modules found")
                       : DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      dropdownColor: Colors.white,
-                      isExpanded: true,
-                      value: _module,
-                      icon: Icon(
-                        Icons.arrow_drop_down,
-                        color: Color(red_bg),
-                      ),
-                      iconSize: 30,
-                      elevation: 0,
-                      style: TextStyle(color: Color(red_bg), fontSize: 20),
-                      onChanged: (newValue) {
-                        setState(() {
-                          _module = newValue;
-                          database.updateTask(itemTask.copyWith(module: newValue));
-                        });
-                      },
-                      items: modulesList.map((value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                          child: DropdownButton(
+                            dropdownColor: Colors.white,
+                            isExpanded: true,
+                            value: _module,
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Color(red_bg),
+                            ),
+                            iconSize: 30,
+                            elevation: 0,
+                            style:
+                                TextStyle(color: Color(red_bg), fontSize: 20),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _module = newValue;
+                                database.updateTask(
+                                    itemTask.copyWith(module: newValue));
+                              });
+                            },
+                            items: modulesList.map((value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
                 ),
                 SizedBox(height: 35),
                 Row(
@@ -708,6 +717,5 @@ editTaskDialog(BuildContext context, Task itemTask,List modulesList, AppDatabase
                 )
               ],
             ));
-      })
-  );
+      }));
 }

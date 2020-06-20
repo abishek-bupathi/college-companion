@@ -751,14 +751,332 @@ class $ActivityTable extends Activity
   }
 }
 
+class Test extends DataClass implements Insertable<Test> {
+  final int id;
+  final String location;
+  final String module;
+  final DateTime date;
+  final DateTime time;
+  Test(
+      {@required this.id,
+      @required this.location,
+      @required this.module,
+      this.date,
+      this.time});
+  factory Test.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return Test(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      location: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}location']),
+      module:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}module']),
+      date:
+          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+      time:
+          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}time']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || location != null) {
+      map['location'] = Variable<String>(location);
+    }
+    if (!nullToAbsent || module != null) {
+      map['module'] = Variable<String>(module);
+    }
+    if (!nullToAbsent || date != null) {
+      map['date'] = Variable<DateTime>(date);
+    }
+    if (!nullToAbsent || time != null) {
+      map['time'] = Variable<DateTime>(time);
+    }
+    return map;
+  }
+
+  TestsCompanion toCompanion(bool nullToAbsent) {
+    return TestsCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      location: location == null && nullToAbsent
+          ? const Value.absent()
+          : Value(location),
+      module:
+          module == null && nullToAbsent ? const Value.absent() : Value(module),
+      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
+      time: time == null && nullToAbsent ? const Value.absent() : Value(time),
+    );
+  }
+
+  factory Test.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Test(
+      id: serializer.fromJson<int>(json['id']),
+      location: serializer.fromJson<String>(json['location']),
+      module: serializer.fromJson<String>(json['module']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      time: serializer.fromJson<DateTime>(json['time']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'location': serializer.toJson<String>(location),
+      'module': serializer.toJson<String>(module),
+      'date': serializer.toJson<DateTime>(date),
+      'time': serializer.toJson<DateTime>(time),
+    };
+  }
+
+  Test copyWith(
+          {int id,
+          String location,
+          String module,
+          DateTime date,
+          DateTime time}) =>
+      Test(
+        id: id ?? this.id,
+        location: location ?? this.location,
+        module: module ?? this.module,
+        date: date ?? this.date,
+        time: time ?? this.time,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Test(')
+          ..write('id: $id, ')
+          ..write('location: $location, ')
+          ..write('module: $module, ')
+          ..write('date: $date, ')
+          ..write('time: $time')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(location.hashCode,
+          $mrjc(module.hashCode, $mrjc(date.hashCode, time.hashCode)))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is Test &&
+          other.id == this.id &&
+          other.location == this.location &&
+          other.module == this.module &&
+          other.date == this.date &&
+          other.time == this.time);
+}
+
+class TestsCompanion extends UpdateCompanion<Test> {
+  final Value<int> id;
+  final Value<String> location;
+  final Value<String> module;
+  final Value<DateTime> date;
+  final Value<DateTime> time;
+  const TestsCompanion({
+    this.id = const Value.absent(),
+    this.location = const Value.absent(),
+    this.module = const Value.absent(),
+    this.date = const Value.absent(),
+    this.time = const Value.absent(),
+  });
+  TestsCompanion.insert({
+    this.id = const Value.absent(),
+    @required String location,
+    @required String module,
+    this.date = const Value.absent(),
+    this.time = const Value.absent(),
+  })  : location = Value(location),
+        module = Value(module);
+  static Insertable<Test> custom({
+    Expression<int> id,
+    Expression<String> location,
+    Expression<String> module,
+    Expression<DateTime> date,
+    Expression<DateTime> time,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (location != null) 'location': location,
+      if (module != null) 'module': module,
+      if (date != null) 'date': date,
+      if (time != null) 'time': time,
+    });
+  }
+
+  TestsCompanion copyWith(
+      {Value<int> id,
+      Value<String> location,
+      Value<String> module,
+      Value<DateTime> date,
+      Value<DateTime> time}) {
+    return TestsCompanion(
+      id: id ?? this.id,
+      location: location ?? this.location,
+      module: module ?? this.module,
+      date: date ?? this.date,
+      time: time ?? this.time,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (location.present) {
+      map['location'] = Variable<String>(location.value);
+    }
+    if (module.present) {
+      map['module'] = Variable<String>(module.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (time.present) {
+      map['time'] = Variable<DateTime>(time.value);
+    }
+    return map;
+  }
+}
+
+class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $TestsTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _locationMeta = const VerificationMeta('location');
+  GeneratedTextColumn _location;
+  @override
+  GeneratedTextColumn get location => _location ??= _constructLocation();
+  GeneratedTextColumn _constructLocation() {
+    return GeneratedTextColumn(
+      'location',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _moduleMeta = const VerificationMeta('module');
+  GeneratedTextColumn _module;
+  @override
+  GeneratedTextColumn get module => _module ??= _constructModule();
+  GeneratedTextColumn _constructModule() {
+    return GeneratedTextColumn(
+      'module',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  GeneratedDateTimeColumn _date;
+  @override
+  GeneratedDateTimeColumn get date => _date ??= _constructDate();
+  GeneratedDateTimeColumn _constructDate() {
+    return GeneratedDateTimeColumn(
+      'date',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _timeMeta = const VerificationMeta('time');
+  GeneratedDateTimeColumn _time;
+  @override
+  GeneratedDateTimeColumn get time => _time ??= _constructTime();
+  GeneratedDateTimeColumn _constructTime() {
+    return GeneratedDateTimeColumn(
+      'time',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, location, module, date, time];
+  @override
+  $TestsTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'tests';
+  @override
+  final String actualTableName = 'tests';
+  @override
+  VerificationContext validateIntegrity(Insertable<Test> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+    }
+    if (data.containsKey('location')) {
+      context.handle(_locationMeta,
+          location.isAcceptableOrUnknown(data['location'], _locationMeta));
+    } else if (isInserting) {
+      context.missing(_locationMeta);
+    }
+    if (data.containsKey('module')) {
+      context.handle(_moduleMeta,
+          module.isAcceptableOrUnknown(data['module'], _moduleMeta));
+    } else if (isInserting) {
+      context.missing(_moduleMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date'], _dateMeta));
+    }
+    if (data.containsKey('time')) {
+      context.handle(
+          _timeMeta, time.isAcceptableOrUnknown(data['time'], _timeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Test map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Test.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $TestsTable createAlias(String alias) {
+    return $TestsTable(_db, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $TasksTable _tasks;
   $TasksTable get tasks => _tasks ??= $TasksTable(this);
   $ActivityTable _activity;
   $ActivityTable get activity => _activity ??= $ActivityTable(this);
+  $TestsTable _tests;
+  $TestsTable get tests => _tests ??= $TestsTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [tasks, activity];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [tasks, activity, tests];
 }
