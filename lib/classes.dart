@@ -7,11 +7,12 @@ bool data_present = false;
 
 
 
-List<String> daysOfWeek = ["Mon", "Tue", "Wed", "Thu","Fri"];
+List<String> daysOfWeek = ["Mon", "Tue", "Wed", "Thu","Fri", "Sat", "Sun"];
 DateTime date = DateTime.now();
 String current_day = DateFormat('EEE').format(date);
 
 int index = daysOfWeek.indexOf(current_day) < 5 ? daysOfWeek.indexOf(current_day): 0;
+
 int _selectedPage = index;
 
 
@@ -29,14 +30,13 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin{
 
  @override
  void initState() {
+   print(daysOfWeek.indexOf(current_day));
    super.initState();
    _tabController = new TabController(vsync: this, length: 5, initialIndex: index);
  }
 
  @override
   Widget build(BuildContext context) {
-
-
 
     return Container(
       color: Colors.white,

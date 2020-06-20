@@ -187,7 +187,7 @@ class AfterSplashState extends State<AfterSplash> {
               ],
             ),
           )),
-        dispose: (context, db) => db.close()
+       // dispose: (context, db) => db.close()
     );
   }
 }

@@ -185,9 +185,11 @@ class _ItemActivityState extends State<ItemActivity> {
                     onPressed: () {
                       setState(() {
                         if (completed) {
+                          widget.database.updateActivity(widget.itemActivity.copyWith(completed: false));
                           completed = false;
                         } else
-                          completed = true;
+                          widget.database.updateActivity(widget.itemActivity.copyWith(completed: true));
+                        completed = true;
                       });
                     },
                   ),
