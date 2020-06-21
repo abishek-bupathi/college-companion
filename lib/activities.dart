@@ -2,6 +2,7 @@ import 'package:college_companion/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:toast/toast.dart';
 import 'package:provider/provider.dart';
 import './calendar.dart';
 
@@ -520,11 +521,11 @@ addActivityDialog(BuildContext context, AppDatabase database,
                               database.insertActivity(activity);
                               Navigator.pop(context);
                             } else {
-                              scaffold_key.currentState
-                                  .showSnackBar(new SnackBar(
-                                content:
-                                    new Text("Please add title and module"),
-                              ));
+                              Toast.show(
+                                  "Please add Title",
+                                  context,
+                                  duration: Toast.LENGTH_LONG,
+                                  backgroundRadius: 10);
                             }
                           },
                           child: Text(
@@ -764,7 +765,15 @@ editActivityDialog(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
+                          if(titleController.text != "")
+                            Navigator.pop(context);
+                          else
+                            Toast.show(
+                                "Title cannot be empty",
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                gravity: Toast.CENTER,
+                                backgroundRadius: 10);
                         },
                         child: Icon(Icons.arrow_back_ios,
                             color: Color(blue_bg), size: 25),

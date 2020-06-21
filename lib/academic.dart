@@ -2,6 +2,7 @@ import 'package:college_companion/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:toast/toast.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -487,9 +488,11 @@ addTaskDialog(BuildContext context, List modulesList, AppDatabase database,
                             database.insertTask(task);
                             Navigator.pop(context);
                           } else {
-                            scaffold_key.currentState.showSnackBar(new SnackBar(
-                              content: new Text("Please add title and module"),
-                            ));
+                            Toast.show(
+                                "Please add Title and Module",
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                backgroundRadius: 10);
                           }
                         },
                         child: Text(
@@ -707,7 +710,15 @@ editTaskDialog(BuildContext context, Task itemTask, List modulesList,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         onPressed: () {
+                          if(titleController.text != "")
                           Navigator.pop(context);
+                          else
+                            Toast.show(
+                                "Title cannot be empty",
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                gravity: Toast.CENTER,
+                                backgroundRadius: 10);
                         },
                         child: Icon(Icons.arrow_back_ios,
                             color: Color(red_high), size: 25),
