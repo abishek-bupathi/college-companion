@@ -1,5 +1,6 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 import './settings.dart';
 import './user_details.dart';
 
@@ -648,9 +649,17 @@ editListDialog(
                               color: Color(purple_bg), size: 30),
                           onPressed: () {
                             setState(() {
-                              UserDetails().addItem(title, add_item);
-                              list.insert(0, add_item);
-                              _add_item_controller.text = "";
+                              if (add_item != null) {
+                                UserDetails().addItem(title, add_item);
+                                list.insert(0, add_item);
+                                _add_item_controller.text = "";
+                                add_item = null;
+                              } else
+                                Toast.show(
+                                    "Please enter new " + title + " name",
+                                    context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    backgroundRadius: 10);
                             });
                           },
                         ),

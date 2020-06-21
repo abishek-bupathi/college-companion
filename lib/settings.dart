@@ -1,6 +1,7 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 import './user_details.dart';
 
 class Settings extends StatefulWidget {
@@ -32,12 +33,21 @@ class _SettingsState extends State<Settings> {
       color: Colors.white,
       child: WillPopScope(
         onWillPop: () {
+          if(course != "" || name != "" || id != ""){
           UserDetails().setCourse(course);
           UserDetails().setName(name);
           UserDetails().setId(id);
           UserDetails().setCurrentAvatar(current_avatar);
           Navigator.pop(context);
+    }else{
+    Toast.show("No field should be empty",
+    context,
+    duration: Toast.LENGTH_LONG,
+    backgroundRadius: 10);
+    }
+          return null;
         },
+
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -54,11 +64,18 @@ class _SettingsState extends State<Settings> {
                   tag: "setting",
                 ),
                 onPressed: () {
+                  if(course != "" || name != "" || id != ""){
                   UserDetails().setCourse(course);
                   UserDetails().setName(name);
                   UserDetails().setId(id);
                   UserDetails().setCurrentAvatar(current_avatar);
                   Navigator.pop(context);
+                  }else{
+                    Toast.show("No field should be empty",
+                        context,
+                        duration: Toast.LENGTH_LONG,
+                        backgroundRadius: 10);
+                  }
                 },
                 iconSize: 40,
                 color: Color(dark_grey),
