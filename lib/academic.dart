@@ -187,27 +187,35 @@ class _ItemAcademicState extends State<ItemAcademic> {
                       });
                     },
                   ),
-                  note != ""
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              title,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 25),
-                            ),
-                            Text(
-                              note,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                            )
-                          ],
-                        )
-                      : Text(
-                          title,
-                          style: TextStyle(color: Colors.white, fontSize: 28),
-                        ),
+                  Container(
+                    width: 200,
+                    child: note != ""
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                title,
+                                style:
+                                    TextStyle(color: Colors.white, fontSize: 25),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                note,
+                                style:
+                                    TextStyle(color: Colors.white70, fontSize: 15),
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            ],
+                          )
+                        : Text(
+                            title,
+                            style: TextStyle(color: Colors.white, fontSize: 28),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                          ),
+                  ),
                 ],
               ),
               Column(
@@ -218,11 +226,17 @@ class _ItemAcademicState extends State<ItemAcademic> {
                     module,
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
-                  Text(
-                    date.toString().isEmpty
-                        ? "-"
-                        : DateFormat("EEE, dd MMM").format(date).toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        date.toString().isEmpty
+                            ? "-"
+                            : DateFormat("EEE, dd MMM").format(date).toString(),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      SizedBox(width: 5,),
+                      Icon(Icons.event, size: 18,color: Colors.white,),
+                    ],
                   )
                 ],
               )
@@ -568,7 +582,7 @@ editTaskDialog(BuildContext context, Task itemTask, List modulesList,
                         style: TextStyle(color: Colors.white, fontSize: 25),
                         decoration: InputDecoration(
                           hintText: "-",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color:Color(label_clr)),
                           focusColor: Colors.white,
                           enabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),

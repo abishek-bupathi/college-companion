@@ -156,7 +156,7 @@ class _ItemActivityState extends State<ItemActivity> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
+          padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
           height: 75,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -195,27 +195,36 @@ class _ItemActivityState extends State<ItemActivity> {
                       });
                     },
                   ),
-                  location != ""
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              title,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 25),
-                            ),
-                            Text(
-                              location,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                            )
-                          ],
-                        )
-                      : Text(
-                          title,
-                          style: TextStyle(color: Colors.white, fontSize: 28),
-                        ),
+                  Container(
+                    width: 200,
+                    child: location != ""
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                title,
+                                style:
+                                    TextStyle(color: Colors.white, fontSize: 25),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                location,
+                                style:
+                                    TextStyle(color: Colors.white, fontSize: 15),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              )
+                            ],
+                          )
+                        : Text(
+                            title,
+                            style: TextStyle(color: Colors.white, fontSize: 28),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                          ),
+                  ),
                 ],
               ),
               date.toString().isEmpty
@@ -224,13 +233,25 @@ class _ItemActivityState extends State<ItemActivity> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          DateFormat("hh:mm a").format(time).toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              DateFormat("hh:mm a").format(time).toString(),
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            SizedBox(width: 5,),
+                            Icon(Icons.access_time, size: 18,color: Colors.white,),
+                          ],
                         ),
-                        Text(
-                          DateFormat("EEE, dd MMM").format(date).toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              DateFormat("EEE, dd MMM").format(date).toString(),
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            SizedBox(width: 5,),
+                            Icon(Icons.event, size: 18,color: Colors.white,),
+                          ],
                         )
                       ],
                     )
@@ -575,7 +596,7 @@ editActivityDialog(
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "-",
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Color(label_clr)),
                     focusColor: Colors.white,
                     enabledBorder:
                         UnderlineInputBorder(borderSide: BorderSide.none),
@@ -604,7 +625,7 @@ editActivityDialog(
                         style: TextStyle(color: Colors.white, fontSize: 25),
                         decoration: InputDecoration(
                           hintText: "-",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Color(label_clr)),
                           focusColor: Colors.white,
                           enabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
@@ -636,7 +657,7 @@ editActivityDialog(
                         style: TextStyle(color: Colors.white, fontSize: 25),
                         decoration: InputDecoration(
                           hintText: "-",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Color(label_clr)),
                           focusColor: Colors.white,
                           enabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
