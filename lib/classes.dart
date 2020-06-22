@@ -1,7 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import './calendar.dart';
 import './user_details.dart';
+import 'database.dart';
 
 bool data_present = false;
 
@@ -33,39 +37,45 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final database = Provider.of<AppDatabase>(context);
     return Container(
       color: Colors.white,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          brightness: Brightness.light,
-          elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text('Classes',
-              style: TextStyle(fontSize: 50, color: Color(magenta_dark))),
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.event),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => Calendar_dialog(),
-                );
-              },
-              iconSize: 40,
-              color: Color(magenta_dark),
-            ),
-          ],
-        ),
-        body: data_present
-            ? classes_body(context, setState, _tabController)
-            : empty_classes_body(setState),
-      ),
+          appBar: AppBar(
+            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: Text('Classes',
+                style: TextStyle(fontSize: 50, color: Color(magenta_dark))),
+            actions: <Widget>[
+              new IconButton(
+                icon: new Icon(Icons.event),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => Calendar_dialog(),
+                  );
+                },
+                iconSize: 40,
+                color: Color(magenta_dark),
+              ),
+            ],
+          ),
+          body: StreamBuilder(
+              stream: database.watchAllPeriods(),
+              builder: (context, AsyncSnapshot<List<PeriodData>> snapshot) {
+                final periods = snapshot.data ?? List();
+                bool data_exists = periods.isNotEmpty;
+                return data_exists
+                    ? classes_body(context, setState, _tabController)
+                    : empty_classes_body(setState, database);
+              })),
     );
   }
 }
 
-empty_classes_body(StateSetter setState) {
+empty_classes_body(StateSetter setState, AppDatabase database) {
   return Center(
     child: GestureDetector(
         child: Column(
@@ -87,7 +97,26 @@ empty_classes_body(StateSetter setState) {
         ),
         onTap: () {
           setState(() {
-            data_present = true;
+            List<DateTime> time = [
+              DateTime.parse("2020-02-27 9:00:00"),
+              DateTime.parse("2020-02-27 10:00:00"),
+              DateTime.parse("2020-02-27 11:00:00"),
+              DateTime.parse("2020-02-27 12:00:00"),
+              DateTime.parse("2020-02-27 13:00:00"),
+              DateTime.parse("2020-02-27 14:00:00"),
+              DateTime.parse("2020-02-27 15:00:00"),
+              DateTime.parse("2020-02-27 16:00:00"),
+              DateTime.parse("2020-02-27 17:00:00")];
+            for (int i = 0; i < 5; i++) for (int j = 0; j < 9; j++) {
+              final period = PeriodData(
+                     module: "-",
+                     location: "-",
+                     day: i,
+                     lecturer: "-",
+                     time: time[j]
+              );
+              database.insertPeriod(period);
+            }
           });
         }),
   );
@@ -240,6 +269,7 @@ classes_body(
 }
 
 class timeTable extends StatefulWidget {
+  // TODO: Read data from classes table
   double width;
   String day;
   List<String> modulesList = UserDetails().getModules();

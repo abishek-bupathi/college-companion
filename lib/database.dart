@@ -32,7 +32,16 @@ class Tests extends Table{
   DateTimeColumn get time => dateTime().nullable()();
 }
 
-@UseMoor(tables: [Tasks, Activity, Tests])
+class Period extends Table{
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get day => integer()();
+  TextColumn get module => text()();
+  TextColumn get location => text()();
+  TextColumn get lecturer => text()();
+  DateTimeColumn get time => dateTime().nullable()();
+}
+
+@UseMoor(tables: [Tasks, Activity, Tests, Period])
 class AppDatabase extends _$AppDatabase{
 
   AppDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(path: 'db.sqlite', logStatements: true));
@@ -58,5 +67,15 @@ class AppDatabase extends _$AppDatabase{
   Future updateTest(Test test) => update(tests).replace(test);
   Future deleteTest(Test test) => delete(tests).delete(test);
 
+  Future<List<PeriodData>> getAllPeriods() => select(period).get();
+  Stream<List<PeriodData>> watchTodayPeriod(int dayNo){
+    return(select(period)
+           ..where((tbl) => tbl.day.equals(dayNo))
+    ).watch();
+  }
+  Stream<List<PeriodData>> watchAllPeriods() => select(period).watch();
+  Future insertPeriod(PeriodData periodData) => into(period).insert(periodData);
+  Future updatePeriod(PeriodData periodData) => update(period).replace(periodData);
+  Future deletePeriod(PeriodData periodData) => delete(period).delete(periodData);
 
 }
