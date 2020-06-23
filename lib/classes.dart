@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -98,7 +96,7 @@ empty_classes_body(StateSetter setState, AppDatabase database) {
         onTap: () {
           setState(() {
             List<DateTime> time = [
-              DateTime.parse("2020-02-27 9:00:00"),
+              DateTime.parse("2020-02-27 09:00:00"),
               DateTime.parse("2020-02-27 10:00:00"),
               DateTime.parse("2020-02-27 11:00:00"),
               DateTime.parse("2020-02-27 12:00:00"),
@@ -109,10 +107,10 @@ empty_classes_body(StateSetter setState, AppDatabase database) {
               DateTime.parse("2020-02-27 17:00:00")];
             for (int i = 0; i < 5; i++) for (int j = 0; j < 9; j++) {
               final period = PeriodData(
-                     module: "-",
-                     location: "-",
+                     module: "",
+                     location: "",
                      day: i,
-                     lecturer: "-",
+                     lecturer: "",
                      time: time[j]
               );
               database.insertPeriod(period);
@@ -129,11 +127,11 @@ classes_body(
   double width = (MediaQuery.of(context).size.width - 50) / 3;
 
   final _pageOptions = [
-    timeTable(width, "mon"),
-    timeTable(width, "tue"),
-    timeTable(width, "wed"),
-    timeTable(width, "thu"),
-    timeTable(width, "fri"),
+    timeTable(width, 0),
+    timeTable(width, 1),
+    timeTable(width, 2),
+    timeTable(width, 3),
+    timeTable(width, 4),
   ];
 
   return Container(
@@ -271,7 +269,8 @@ classes_body(
 class timeTable extends StatefulWidget {
   // TODO: Read data from classes table
   double width;
-  String day;
+  int day;
+
   List<String> modulesList = UserDetails().getModules();
   List<String> modules_mon = [
     "Maths",
@@ -340,50 +339,59 @@ class _timeTableState extends State<timeTable> {
 
   @override
   Widget build(BuildContext context) {
+    final database = Provider.of<AppDatabase>(context);
     double height = MediaQuery.of(context).size.height - 278;
-    if (widget.day.compareTo("tue") == 0) {
-      modules = widget.modules_tue;
-    } else
-      modules = widget.modules_mon;
-    return Container(
-        height: height,
-        child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (_, int index) {
-              return GestureDetector(
-                child: ItemClasses(modules[index], widget.timeList[index],
-                    widget.locationList[index], widget.width, height),
-                onTap: () {
-                  if (modules[index] != '-') {
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => viewClassDialog(
-                            context,
-                            modules[index],
-                            widget.modulesList,
-                            widget.locationList[index],
-                            widget.lecturers[index]));
-                  } else {
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) =>
-                            addClassDialog(context, widget.modulesList));
-                  }
-                },
-              );
-            },
-            itemCount: 9));
+
+    return StreamBuilder(
+      stream: database.watchTodayPeriod(widget.day),
+      builder: (context,AsyncSnapshot<List<PeriodData>> snapshot) {
+        final periods = snapshot.data ?? List();
+        return Expanded(
+          child: Container(
+              height: height,
+              child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (_, int index) {
+                    final itemPeriod = periods[index];
+                    return GestureDetector(
+                      child: ItemClasses(database,itemPeriod, widget.width, height),
+                      onTap: () {
+                        if (itemPeriod.module != '-') {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => viewClassDialog(
+                                  context,
+                                  widget.modulesList,
+                                  itemPeriod,
+                                  database));
+                        } else {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) =>
+                                  addClassDialog(context,
+                                      widget.modulesList,
+                                      itemPeriod,
+                                      database));
+                        }
+                      },
+                    );
+                  },
+                  itemCount: periods.length)),
+        );
+      }
+    );
   }
 }
 
 class ItemClasses extends StatefulWidget {
   double width, height;
-  var time;
-  String module, venue;
+  AppDatabase database;
+  PeriodData itemPeriod;
 
-  ItemClasses(this.module, this.time, this.venue, this.width, this.height);
+
+  ItemClasses(this.database,this.itemPeriod, this.width, this.height);
   @override
   _ItemClassesState createState() => _ItemClassesState();
 }
@@ -391,6 +399,11 @@ class ItemClasses extends StatefulWidget {
 class _ItemClassesState extends State<ItemClasses> {
   @override
   Widget build(BuildContext context) {
+
+    String venue = widget.itemPeriod.location,
+           module = widget.itemPeriod.module;
+    var  time = widget.itemPeriod.time != null ? widget.itemPeriod.time : "";
+
     int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
     double item_height = 40;
     return new Card(
@@ -415,7 +428,7 @@ class _ItemClassesState extends State<ItemClasses> {
           children: <Widget>[
             SizedBox(
               child: Text(
-                widget.time,
+                DateFormat("hh:mm a").format(time).toString(),
                 style: TextStyle(color: Colors.white, fontSize: 15),
                 textAlign: TextAlign.center,
               ),
@@ -426,7 +439,7 @@ class _ItemClassesState extends State<ItemClasses> {
             SizedBox(
               width: widget.width,
               child: Text(
-                widget.module,
+                module != ""? module : "-",
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
@@ -439,7 +452,7 @@ class _ItemClassesState extends State<ItemClasses> {
             SizedBox(
               width: widget.width,
               child: Text(
-                widget.venue,
+                venue != ""? venue : "-",
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
@@ -451,15 +464,13 @@ class _ItemClassesState extends State<ItemClasses> {
   }
 }
 
-viewClassDialog(BuildContext context, String module, List modulesList,
-    String location, String lecturer) {
+viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, AppDatabase database ) {
   int magenta_bg = 0xFF861657, label_clr = 0xFFE0A3C6;
-  var dateWithoutFormat, timeWithoutFormat;
-
+  String _module = itemPeriod.module;
   var locationController = new TextEditingController();
-  locationController.text = location;
+  locationController.text = itemPeriod.location;
   var lecturerController = new TextEditingController();
-  lecturerController.text = lecturer;
+  lecturerController.text = itemPeriod.lecturer;
 
   return Dialog(
       shape: RoundedRectangleBorder(
@@ -491,10 +502,13 @@ viewClassDialog(BuildContext context, String module, List modulesList,
                       style: TextStyle(fontSize: 18, color: Color(label_clr)),
                     ),
                     TextField(
+
                         controller: locationController,
                         cursorColor: Colors.white,
                         style: TextStyle(color: Colors.white, fontSize: 25),
                         decoration: InputDecoration(
+                          hintText: "-",
+                          hintStyle: TextStyle(color: Color(label_clr)),
                           focusColor: Colors.white,
                           enabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
@@ -502,9 +516,12 @@ viewClassDialog(BuildContext context, String module, List modulesList,
                             borderSide: BorderSide(color: Colors.white),
                           ),
                         ),
-                        onChanged: (String location_new) {
+                        onTap: () {
                           setState(() {
-                            location = location_new;
+                            locationController.addListener(() {
+                              database.updatePeriod(
+                                  itemPeriod.copyWith(location: locationController.text));
+                            });
                           });
                         }),
                   ]),
@@ -521,6 +538,8 @@ viewClassDialog(BuildContext context, String module, List modulesList,
                         cursorColor: Colors.white,
                         style: TextStyle(color: Colors.white, fontSize: 25),
                         decoration: InputDecoration(
+                          hintText: "-",
+                          hintStyle: TextStyle(color: Color(label_clr)),
                           focusColor: Colors.white,
                           enabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
@@ -528,9 +547,12 @@ viewClassDialog(BuildContext context, String module, List modulesList,
                             borderSide: BorderSide(color: Colors.white),
                           ),
                         ),
-                        onChanged: (String lecturer_new) {
+                        onTap: () {
                           setState(() {
-                            lecturer = lecturer_new;
+                            lecturerController.addListener(() {
+                              database.updatePeriod(
+                                  itemPeriod.copyWith(lecturer: lecturerController.text));
+                            });
                           });
                         }),
                   ]),
@@ -555,7 +577,7 @@ viewClassDialog(BuildContext context, String module, List modulesList,
                         child: DropdownButton(
                           dropdownColor: Colors.white,
                           isExpanded: true,
-                          value: module,
+                          value: _module,
                           icon: Icon(
                             Icons.arrow_drop_down,
                             color: Color(magenta_bg),
@@ -566,7 +588,10 @@ viewClassDialog(BuildContext context, String module, List modulesList,
                               TextStyle(color: Color(magenta_bg), fontSize: 20),
                           onChanged: (newValue) {
                             setState(() {
-                              module = newValue;
+                              _module = newValue;
+                              database.updatePeriod(
+                                itemPeriod.copyWith(module: newValue)
+                              );
                             });
                           },
                           items: modulesList.map((value) {
@@ -624,7 +649,7 @@ viewClassDialog(BuildContext context, String module, List modulesList,
       }));
 }
 
-addClassDialog(BuildContext context, List modulesList) {
+addClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, AppDatabase database ) {
   String _location = "",
       _lecturer = "",
       _module = modulesList.isNotEmpty ? modulesList[0] : null;
@@ -814,7 +839,14 @@ addClassDialog(BuildContext context, List modulesList) {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            database.updatePeriod(itemPeriod.copyWith(
+                                location: _location ,
+                                lecturer: _lecturer,
+                                module: _module
+                            ));
+                            Navigator.pop(context);
+                          },
                           child: Text(
                             "Done",
                             style: TextStyle(color: Color(magenta_bg)),
