@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import './calendar.dart';
 import './user_details.dart';
 import 'database.dart';
@@ -194,7 +195,13 @@ classes_body(
                 ),
               ),
               SizedBox(height: 10),
-              Container(child: _pageOptions[_selectedPage]),
+              Container(
+                child: Expanded(
+                  child: TabBarView(children: _pageOptions,
+                  controller: _tabController,
+                  physics: NeverScrollableScrollPhysics(),),
+                ),
+              ),
             ],
           ),
         ),
@@ -239,6 +246,7 @@ classes_body(
 
           onTap: (index) {
             setState(() {
+              _tabController.animateTo(index);
               _selectedPage = index;
             });
           },
@@ -346,40 +354,38 @@ class _timeTableState extends State<timeTable> {
       stream: database.watchTodayPeriod(widget.day),
       builder: (context,AsyncSnapshot<List<PeriodData>> snapshot) {
         final periods = snapshot.data ?? List();
-        return Expanded(
-          child: Container(
-              height: height,
-              child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (_, int index) {
-                    final itemPeriod = periods[index];
-                    return GestureDetector(
-                      child: ItemClasses(database,itemPeriod, widget.width, height),
-                      onTap: () {
-                        if (itemPeriod.module != '-') {
-                          showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => viewClassDialog(
-                                  context,
-                                  widget.modulesList,
-                                  itemPeriod,
-                                  database));
-                        } else {
-                          showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) =>
-                                  addClassDialog(context,
-                                      widget.modulesList,
-                                      itemPeriod,
-                                      database));
-                        }
-                      },
-                    );
-                  },
-                  itemCount: periods.length)),
-        );
+        return Container(
+            height: height,
+            child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (_, int index) {
+                  final itemPeriod = periods[index];
+                  return GestureDetector(
+                    child: ItemClasses(database,itemPeriod, widget.width, height),
+                    onTap: () {
+                      if (itemPeriod.module != "") {
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => viewClassDialog(
+                                context,
+                                widget.modulesList,
+                                itemPeriod,
+                                database));
+                      } else {
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) =>
+                                addClassDialog(context,
+                                    widget.modulesList,
+                                    itemPeriod,
+                                    database));
+                      }
+                    },
+                  );
+                },
+                itemCount: periods.length));
       }
     );
   }
@@ -619,7 +625,14 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        database.updatePeriod(itemPeriod.copyWith(
+                          lecturer: "",
+                          location: "",
+                          module: "",
+                        ));
+                        Navigator.pop(context);
+                      },
                       child: Icon(Icons.delete_outline,
                           color: Color(magenta_bg), size: 25),
                     ),
@@ -635,7 +648,15 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                         borderRadius: BorderRadius.circular(10),
                       ),
                       onPressed: () {
+                        if(_module != null)
                         Navigator.pop(context);
+                        else{
+                          Toast.show(
+                              "Module cannot be empty",
+                              context,
+                              duration: Toast.LENGTH_LONG,
+                              backgroundRadius: 10);
+                        }
                       },
                       child: Icon(Icons.arrow_back_ios,
                           color: Color(magenta_bg), size: 25),
@@ -840,12 +861,20 @@ addClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, Ap
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
+                            if(_module != null){
                             database.updatePeriod(itemPeriod.copyWith(
                                 location: _location ,
                                 lecturer: _lecturer,
                                 module: _module
                             ));
                             Navigator.pop(context);
+                            }else{
+                              Toast.show(
+                                  "Module cannot be empty",
+                                  context,
+                                  duration: Toast.LENGTH_LONG,
+                                  backgroundRadius: 10);
+                            }
                           },
                           child: Text(
                             "Done",
