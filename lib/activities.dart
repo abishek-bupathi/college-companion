@@ -545,6 +545,7 @@ addActivityDialog(BuildContext context, AppDatabase database,
                               Toast.show(
                                   "Please add Title",
                                   context,
+                                  gravity: Toast.CENTER,
                                   duration: Toast.LENGTH_LONG,
                                   backgroundRadius: 10);
                             }

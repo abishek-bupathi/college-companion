@@ -505,6 +505,7 @@ addTaskDialog(BuildContext context, List modulesList, AppDatabase database,
                             Toast.show(
                                 "Please add Title and Module",
                                 context,
+                                gravity: Toast.CENTER,
                                 duration: Toast.LENGTH_LONG,
                                 backgroundRadius: 10);
                           }
