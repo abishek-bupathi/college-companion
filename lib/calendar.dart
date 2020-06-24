@@ -17,19 +17,18 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   List _selectedEvents = [];
   DateTime _selectedDay;
 
-/*
   @override
   void initState() {
     super.initState();
-    _selectedEvents = _events[_selectedDay] ?? [];
+    _selectedEvents = widget._events[_selectedDay] ?? [];
   }
-*/
+
   @override
   Widget build(BuildContext context) {
-    final _events = widget._events;
-    AppDatabase database = widget.database;
 
-      eventsData(context, database, _events);
+    final database = widget.database;
+    _Calendar_dialogState().eventsData(database,widget._events);
+    final _events = widget._events;
 
    print(_events);
     return Dialog(
@@ -134,7 +133,7 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   }
 
 
-  void eventsData (BuildContext context, AppDatabase database, Map<DateTime, List> _events) async {
+  void eventsData (AppDatabase database, Map<DateTime, List> _events) async {
     database.watchAllTests();
     database.watchAllActivities();
     database.watchAllTask();
