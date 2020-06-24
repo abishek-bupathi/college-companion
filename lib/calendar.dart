@@ -147,18 +147,42 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
       }
       print("eh");
     });
+    await Future.forEach(tests, (test) {
+      if(dates.indexOf(test.date) == -1){
+        dates.add(test.date);
+      }
+      print("eh");
+    });
+    await Future.forEach(activities, (activity) {
+      if(dates.indexOf(activity.date) == -1){
+        dates.add(activity.date);
+      }
+      print("eh");
+    });
 
     await Future.forEach(dates, (date) async{
-      List<Task> titles = await database.getTaskOnDate(date)?? List();
-      print(titles);
-      Future.forEach(titles, (element)
+      List<Task> task_titles = await database.getTaskOnDate(date)?? List();
+      List<Test> tests_titles = await database.getTestOnDate(date) ?? List();
+      List<ActivityData> activity_titles = await database.getActivityOnDate(date) ?? List();
+      print(task_titles);
+      Future.forEach(task_titles, (element)
       {
        data.add({'name': element.title, 'isDone': element.completed});
+      });
+      Future.forEach(tests_titles, (element)
+      {
+        data.add({'name': element.module+" Exam", 'isDone': false});
+      });
+      Future.forEach(activity_titles, (element)
+      {
+        data.add({'name': element.title, 'isDone': element.completed});
       });
 
       print("data: "+ data.toString());
       print("date: "+ date.toString());
-      _events.putIfAbsent(date, ()=> data);
+
+       _events.putIfAbsent(date, ()=> data);
+
       data = [];
     });
 
