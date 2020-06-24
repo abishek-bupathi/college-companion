@@ -2,8 +2,6 @@ import 'package:college_companion/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:provider/provider.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
