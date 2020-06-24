@@ -50,10 +50,10 @@ class AppDatabase extends _$AppDatabase{
   int get schemaVersion => 1;
 
   Future<List<Task>> getAllTasks() => select(tasks).get();
-  Stream<List<Task>> watchTaskOnDate(DateTime date){
+  Future<List<Task>> getTaskOnDate(DateTime date){
     return(select(tasks)
       ..where((tbl) => tbl.dueDate.equals(date))
-    ).watch();
+    ).get();
   }
   Stream<List<Task>> watchAllTask() => select(tasks).watch();
   Future insertTask(Task task) => into(tasks).insert(task);
@@ -61,10 +61,10 @@ class AppDatabase extends _$AppDatabase{
   Future deleteTask(Task task) => delete(tasks).delete(task);
 
   Future<List<ActivityData>> getAllActivities() => select(activity).get();
-  Stream<List<ActivityData>> watchActivityOnDate(DateTime date){
+  Future<List<ActivityData>> getActivityOnDate(DateTime date){
     return(select(activity)
       ..where((tbl) => tbl.date.equals(date))
-    ).watch();
+    ).get();
   }
   Stream<List<ActivityData>> watchAllActivities() => select(activity).watch();
   Future insertActivity(ActivityData activity_item) => into(activity).insert(activity_item);
@@ -72,7 +72,7 @@ class AppDatabase extends _$AppDatabase{
   Future deleteActivity(ActivityData activity_item) => delete(activity).delete(activity_item);
 
   Future<List<Test>> getAllTests() => select(tests).get();
-  Future<List<Test>> watchTestOnDate(DateTime date){
+  Future<List<Test>> getTestOnDate(DateTime date){
     return(select(tests)
       ..where((tbl) => tbl.date.equals(date))
     ).get();

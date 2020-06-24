@@ -67,13 +67,10 @@ class _AcademicState extends State<Academic> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context){
-                        return Provider(
-                          create: (_) => AppDatabase(),
-                            child: Calendar_dialog()
-                        );
-                        },
-                    );
+                      builder: (BuildContext context) {
+                        return Calendar_dialog(database);
+                      }
+                      );
                   },
                   iconSize: 40,
                   color: Color(0xFFc71831)),

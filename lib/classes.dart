@@ -54,10 +54,7 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin {
                   showDialog(
                     context: context,
                     builder: (BuildContext context){
-                      return Provider(
-                          create: (_) => AppDatabase(),
-                          child: Calendar_dialog()
-                      );
+                      return Calendar_dialog(database);
                     },
                   );
                 },

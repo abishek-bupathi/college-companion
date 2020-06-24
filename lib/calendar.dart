@@ -1,8 +1,15 @@
+import 'package:college_companion/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:provider/provider.dart';
 
 class Calendar_dialog extends StatefulWidget {
+  AppDatabase database;
+
+  Calendar_dialog(this.database);
+
   @override
   _Calendar_dialogState createState() => _Calendar_dialogState();
 }
@@ -10,32 +17,7 @@ class Calendar_dialog extends StatefulWidget {
 class _Calendar_dialogState extends State<Calendar_dialog> {
   List _selectedEvents;
   DateTime _selectedDay;
-  final Map<DateTime, List> _events = {
-    DateTime(2020, 5, 7): [
-      {'name': 'Event A', 'isDone': true},
-    ],
-    DateTime(2020, 5, 9): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
-    ],
-    DateTime(2020, 5, 10): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
-    ],
-    DateTime(2020, 5, 13): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
-      {'name': 'Event C', 'isDone': false},
-    ],
-    DateTime(2020, 5, 25): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
-      {'name': 'Event C', 'isDone': false},
-    ],
-    DateTime(2020, 6, 6): [
-      {'name': 'Event A', 'isDone': false},
-    ],
-  };
+  static Map _events =  Map<DateTime, List> ();
 
   @override
   void initState() {
@@ -45,17 +27,20 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
 
   @override
   Widget build(BuildContext context) {
+    AppDatabase database = widget.database;
+    eventsData(context, database);
+   print(_events);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      child: dialogContent(context),
+      child: dialogContent(context, _events),
     );
   }
 
-  dialogContent(BuildContext context) {
+  dialogContent(BuildContext context, Map<DateTime, List> _events) {
     return Container(
       height: 550,
       child: Column(
@@ -69,7 +54,7 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
               events: _events,
               onRangeSelected: (range) =>
                   print("Range is ${range.from}, ${range.to}"),
-              onDateSelected: (date) => _handleNewDate(date),
+              onDateSelected: (date) => _handleNewDate(date, _events),
               isExpanded: true,
               isExpandable: true,
               hideTodayIcon: true,
@@ -112,7 +97,7 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
     );
   }
 
-  void _handleNewDate(date) {
+  void _handleNewDate(date, Map<DateTime, List> _events) {
     setState(() {
       _selectedDay = date;
       _selectedEvents = _events[_selectedDay] ?? [];
@@ -145,4 +130,67 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
       ),
     );
   }
+
+
+  void eventsData (BuildContext context, AppDatabase database) async {
+
+    List data = [];
+    List<Task> tasks = await database.getAllTasks() ?? List();
+    List<Test> tests = await database.getAllTests() ?? List();
+    List<ActivityData> activities = await database.getAllActivities() ?? List();
+    List<DateTime> dates = [];
+    print(dates.indexOf(tasks[0].dueDate));
+
+    await Future.forEach(tasks, (task) {
+      if(dates.indexOf(task.dueDate) == -1){
+        dates.add(task.dueDate);
+      }
+      print("eh");
+    });
+
+    await Future.forEach(dates, (date) async{
+      List<Task> titles = await database.getTaskOnDate(date)?? List();
+      print(titles);
+      Future.forEach(titles, (element)
+      {
+       data.add({'name': element.title, 'isDone': element.completed});
+      });
+
+      print("data: "+ data.toString());
+      print("date: "+ date.toString());
+      _events.putIfAbsent(date, ()=> data);
+      data = [];
+    });
+
+
+  }
 }
+
+/*
+{
+      DateTime(2020, 5, 7): [
+        {'name': 'Event A', 'isDone': true},
+      ],
+      DateTime(2020, 5, 9): [
+        {'name': 'Event A', 'isDone': true},
+        {'name': 'Event B', 'isDone': true},
+      ],
+      DateTime(2020, 5, 10): [
+        {'name': 'Event A', 'isDone': true},
+        {'name': 'Event B', 'isDone': true},
+      ],
+      DateTime(2020, 5, 13): [
+        {'name': 'Event A', 'isDone': true},
+        {'name': 'Event B', 'isDone': true},
+        {'name': 'Event C', 'isDone': false},
+      ],
+      DateTime(2020, 5, 25): [
+        {'name': 'Event A', 'isDone': true},
+        {'name': 'Event B', 'isDone': true},
+        {'name': 'Event C', 'isDone': false},
+      ],
+      DateTime(2020, 6, 6): [
+        {'name': 'Event A', 'isDone': false},
+      ],
+    }
+ */
