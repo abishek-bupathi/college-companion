@@ -5,6 +5,7 @@ import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
+  Map _events =  Map<DateTime, List> ();
 
   Calendar_dialog(this.database);
 
@@ -13,20 +14,23 @@ class Calendar_dialog extends StatefulWidget {
 }
 
 class _Calendar_dialogState extends State<Calendar_dialog> {
-  List _selectedEvents;
+  List _selectedEvents = [];
   DateTime _selectedDay;
-  static Map _events =  Map<DateTime, List> ();
 
+/*
   @override
   void initState() {
     super.initState();
     _selectedEvents = _events[_selectedDay] ?? [];
   }
-
+*/
   @override
   Widget build(BuildContext context) {
+    final _events = widget._events;
     AppDatabase database = widget.database;
-    eventsData(context, database);
+
+      eventsData(context, database, _events);
+
    print(_events);
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -130,14 +134,16 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   }
 
 
-  void eventsData (BuildContext context, AppDatabase database) async {
-
+  void eventsData (BuildContext context, AppDatabase database, Map<DateTime, List> _events) async {
+    database.watchAllTests();
+    database.watchAllActivities();
+    database.watchAllTask();
     List data = [];
     List<Task> tasks = await database.getAllTasks() ?? List();
     List<Test> tests = await database.getAllTests() ?? List();
     List<ActivityData> activities = await database.getAllActivities() ?? List();
     List<DateTime> dates = [];
-    print(dates.indexOf(tasks[0].dueDate));
+   // print(dates.indexOf(tasks[0].dueDate));
 
     await Future.forEach(tasks, (task) {
       if(dates.indexOf(task.dueDate) == -1){
