@@ -50,18 +50,33 @@ class AppDatabase extends _$AppDatabase{
   int get schemaVersion => 1;
 
   Future<List<Task>> getAllTasks() => select(tasks).get();
+  Stream<List<Task>> watchTaskOnDate(DateTime date){
+    return(select(tasks)
+      ..where((tbl) => tbl.dueDate.equals(date))
+    ).watch();
+  }
   Stream<List<Task>> watchAllTask() => select(tasks).watch();
   Future insertTask(Task task) => into(tasks).insert(task);
   Future updateTask(Task task) => update(tasks).replace(task);
   Future deleteTask(Task task) => delete(tasks).delete(task);
 
   Future<List<ActivityData>> getAllActivities() => select(activity).get();
+  Stream<List<ActivityData>> watchActivityOnDate(DateTime date){
+    return(select(activity)
+      ..where((tbl) => tbl.date.equals(date))
+    ).watch();
+  }
   Stream<List<ActivityData>> watchAllActivities() => select(activity).watch();
   Future insertActivity(ActivityData activity_item) => into(activity).insert(activity_item);
   Future updateActivity(ActivityData activity_item) => update(activity).replace(activity_item);
   Future deleteActivity(ActivityData activity_item) => delete(activity).delete(activity_item);
 
   Future<List<Test>> getAllTests() => select(tests).get();
+  Future<List<Test>> watchTestOnDate(DateTime date){
+    return(select(tests)
+      ..where((tbl) => tbl.date.equals(date))
+    ).get();
+  }
   Stream<List<Test>> watchAllTests() => select(tests).watch();
   Future insertTest(Test test) => into(tests).insert(test);
   Future updateTest(Test test) => update(tests).replace(test);
