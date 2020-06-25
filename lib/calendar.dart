@@ -5,7 +5,7 @@ import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
-  Map _events =  Map<DateTime, List> ();
+  var _events = <DateTime, List>{};
 
   Calendar_dialog(this.database);
 
@@ -26,22 +26,24 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   @override
   Widget build(BuildContext context) {
 
-    final database = widget.database;
-    _Calendar_dialogState().eventsData(database,widget._events);
-    final _events = widget._events;
+    setState(() {
+      eventsData(widget.database,widget._events);
+    });
 
-   print(_events);
+
+   print(widget._events);
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      child: dialogContent(context, _events),
+      child: dialogContent(context),
     );
   }
 
-  dialogContent(BuildContext context, Map<DateTime, List> _events) {
+  dialogContent(BuildContext context){
     return Container(
       height: 550,
       child: Column(
@@ -52,10 +54,10 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
             child: Calendar(
               startOnMonday: true,
               weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-              events: _events,
+              events: widget._events,
               onRangeSelected: (range) =>
                   print("Range is ${range.from}, ${range.to}"),
-              onDateSelected: (date) => _handleNewDate(date, _events),
+              onDateSelected: (date) => _handleNewDate(date, widget._events),
               isExpanded: true,
               isExpandable: true,
               hideTodayIcon: true,
@@ -133,7 +135,7 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   }
 
 
-  void eventsData (AppDatabase database, Map<DateTime, List> _events) async {
+ void eventsData (AppDatabase database, Map<DateTime, List> _events) async {
     database.watchAllTests();
     database.watchAllActivities();
     database.watchAllTask();
@@ -148,19 +150,16 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
       if(dates.indexOf(task.dueDate) == -1){
         dates.add(task.dueDate);
       }
-      print("eh");
     });
     await Future.forEach(tests, (test) {
       if(dates.indexOf(test.date) == -1){
         dates.add(test.date);
       }
-      print("eh");
     });
     await Future.forEach(activities, (activity) {
       if(dates.indexOf(activity.date) == -1){
         dates.add(activity.date);
       }
-      print("eh");
     });
 
     await Future.forEach(dates, (date) async{
@@ -180,9 +179,6 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
       {
         data.add({'name': element.title, 'isDone': element.completed});
       });
-
-      print("data: "+ data.toString());
-      print("date: "+ date.toString());
 
        _events.putIfAbsent(date, ()=> data);
 
