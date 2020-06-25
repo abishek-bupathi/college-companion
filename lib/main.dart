@@ -127,7 +127,7 @@ class AfterSplashState extends State<AfterSplash> {
               currentIndex: _selectedPage,
               onTap: (index) {
                 setState(() {
-                  _pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                  _pageController.animateToPage(index, duration: Duration(milliseconds: 450), curve: Curves.easeInOut);
                 });
               },
 
