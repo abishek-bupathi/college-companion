@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import './user_details.dart';
 import './main.dart';
 
@@ -57,8 +59,11 @@ Welcome(BuildContext context) {
 }
 
 class PersonalDetails extends StatefulWidget {
-  String name = "", dob = "";
+  String name = "";
+  DateTime dateWithoutFormat;
   String current_avatar = "assets/Avatars/0.png";
+  String _date = "-";
+
   @override
   _PersonalDetailsState createState() => _PersonalDetailsState();
 }
@@ -212,30 +217,56 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       }),
                 ),
                 Container(
-                  height: 55,
-                  padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                  child: TextField(
-                      cursorColor: Color(color_grey),
-                      style: TextStyle(color: Color(color_grey), fontSize: 20),
-                      decoration: InputDecoration(
-                        labelText: 'Date of Birth (dd/mm/yyyy)',
-                        focusColor: Color(color_grey),
-                        labelStyle: new TextStyle(
-                            color: Color(color_grey), fontSize: 15),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Color(color_grey), width: 2),
-                            borderRadius: BorderRadius.circular(10)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Color(color_grey), width: 2),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      onChanged: (String dob_new) {
-                        setState(() {
-                          widget.dob = dob_new;
-                        });
-                      }),
+                  height: 45,
+                  margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(color_grey)),
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Icon(
+                          Icons.cake,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        Text("   " + widget._date,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20)),
+                        ButtonTheme(
+                            minWidth: 0,
+                            child: IconButton(
+                              focusColor: Colors.black12,
+                              highlightColor: Colors.transparent,
+                              iconSize: 20,
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                DatePicker.showDatePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(1950, 1, 1),
+                                    maxTime: DateTime(2020, 6, 7),
+                                    onConfirm: (date) {
+                                      setState(() {
+                                        widget.dateWithoutFormat = date;
+                                        widget._date = DateFormat(
+                                            "dd, MMM yyyy")
+                                            .format(
+                                            widget.dateWithoutFormat);
+                                      });
+                                    },
+                                    currentTime: DateTime(2000, 1, 1),
+                                    locale: LocaleType.en);
+                              },
+                            )),
+                      ]),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 15),
@@ -254,7 +285,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             onPressed: () {
-                              if (widget.dob == "" || widget.name == "") {
+                              if (widget._date == "-" || widget.name == "") {
                                 scaffold_key.currentState
                                     .showSnackBar(new SnackBar(
                                   content:
@@ -264,7 +295,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 UserDetails()
                                     .setCurrentAvatar(widget.current_avatar);
                                 UserDetails().setName(widget.name);
-                                UserDetails().setDob(widget.dob);
+                                UserDetails().setDob(widget.dateWithoutFormat);
 
                                 Navigator.pushReplacement(
                                     context,

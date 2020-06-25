@@ -1,5 +1,6 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:toast/toast.dart';
 import './settings.dart';
 import './user_details.dart';
@@ -23,7 +24,10 @@ class _ProfileState extends State<Profile> {
     name = UserDetails().getName();
     course = UserDetails().getCourse();
     university = UserDetails().getUniversity();
-    dob = UserDetails().getDob();
+    dob = DateFormat(
+        "dd, MMM yyyy")
+        .format(
+        UserDetails().getDob());
     current_avatar = UserDetails().getCurrentAvatar();
 
     width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;

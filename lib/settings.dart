@@ -1,6 +1,8 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:toast/toast.dart';
 import './user_details.dart';
 
@@ -16,8 +18,10 @@ class _SettingsState extends State<Settings> {
   String id = UserDetails().getId(),
       name = UserDetails().getName(),
       course = UserDetails().getCourse(),
-      dob = UserDetails().getDob(),
+      uni = UserDetails().getUniversity(),
       current_avatar = UserDetails().getCurrentAvatar();
+
+  DateTime  dob = UserDetails().getDob();
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +32,20 @@ class _SettingsState extends State<Settings> {
     var courseController = new TextEditingController();
     courseController.text = course;
     var scrollController = new ScrollController();
+    var uniController = new TextEditingController();
+    uniController.text = uni;
 
     return Container(
       color: Colors.white,
       child: WillPopScope(
         onWillPop: () {
-          if(course != "" || name != "" || id != ""){
+          if(course != "" || name != "" || id != ""|| uni != ""){
           UserDetails().setCourse(course);
           UserDetails().setName(name);
           UserDetails().setId(id);
           UserDetails().setCurrentAvatar(current_avatar);
+          UserDetails().setDob(dob);
+          UserDetails().setUniversity(uni);
           Navigator.pop(context);
     }else{
     Toast.show("No field should be empty",
@@ -64,15 +72,18 @@ class _SettingsState extends State<Settings> {
                   tag: "setting",
                 ),
                 onPressed: () {
-                  if(course != "" || name != "" || id != ""){
+                  if(course != "" && name != ""  && id != ""  && uni != "" ){
                   UserDetails().setCourse(course);
                   UserDetails().setName(name);
                   UserDetails().setId(id);
                   UserDetails().setCurrentAvatar(current_avatar);
+                  UserDetails().setDob(dob);
+                  UserDetails().setUniversity(uni);
                   Navigator.pop(context);
                   }else{
                     Toast.show("No field should be empty",
                         context,
+                        gravity: Toast.CENTER,
                         duration: Toast.LENGTH_LONG,
                         backgroundRadius: 10);
                   }
@@ -91,7 +102,7 @@ class _SettingsState extends State<Settings> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Container(
-                    height: 470,
+                    height: 625,
                     decoration: BoxDecoration(
                         color: Color(dark_grey),
                         shape: BoxShape.rectangle,
@@ -203,6 +214,56 @@ class _SettingsState extends State<Settings> {
                                     },
                                   ),
                                   SizedBox(height: 20),
+                                  Container(
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
+                                            Icons.cake,
+                                            color: Color(dark_grey),
+                                            size: 20,
+                                          ),
+                                          Text("   " + DateFormat(
+                                              "dd, MMM yyyy")
+                                              .format(dob).toString(),
+                                              style: TextStyle(
+                                                  color: Color(dark_grey),
+                                                  fontSize: 20)),
+                                          ButtonTheme(
+                                              minWidth: 0,
+                                              child: IconButton(
+                                                focusColor: Colors.black12,
+                                                highlightColor: Colors.transparent,
+                                                iconSize: 20,
+                                                icon: Icon(
+                                                  Icons.edit,
+                                                  color: Color(dark_grey),
+                                                ),
+                                                onPressed: () {
+                                                  DatePicker.showDatePicker(context,
+                                                      showTitleActions: true,
+                                                      minTime: DateTime(1950, 1, 1),
+                                                      maxTime: DateTime(2020, 6, 7),
+                                                      onConfirm: (date) {
+                                                        setState(() {
+                                                          dob = date;
+                                                        });
+                                                      },
+                                                      currentTime: dob,
+                                                      locale: LocaleType.en);
+                                                },
+                                              )),
+                                        ]),
+                                  ),
+                                  SizedBox(height: 20),
                                   TextField(
                                     controller: idController,
                                     cursorColor: Colors.white,
@@ -259,7 +320,37 @@ class _SettingsState extends State<Settings> {
                                             scrollController.jumpTo(1);
                                           },
                                         );
-                                      })
+                                      }),
+                                  SizedBox(height: 20),
+                                  TextField(
+                                    controller: uniController,
+                                    cursorColor: Colors.white,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                    decoration: InputDecoration(
+                                      labelText: 'University',
+                                      focusColor: Colors.white,
+                                      labelStyle: new TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                          BorderSide(color: Colors.white),
+                                          borderRadius:
+                                          BorderRadius.circular(10)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                          BorderSide(color: Colors.white),
+                                          borderRadius:
+                                          BorderRadius.circular(10)),
+                                    ),
+                                    onTap: () {
+                                      uniController.addListener(() {
+                                        uni = uniController.text;
+                                        scrollController.jumpTo(1);
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(height: 20),
                                 ])),
                           ),
                         ),

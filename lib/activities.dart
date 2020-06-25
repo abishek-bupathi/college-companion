@@ -153,7 +153,7 @@ class _ItemActivityState extends State<ItemActivity> {
         location = widget.itemActivity.location;
     var date = widget.itemActivity.date != null ? widget.itemActivity.date : "",
         time = widget.itemActivity.time != null ? widget.itemActivity.time : "";
-
+    int  label_clr = 0xFF89CDFF;
     return new Card(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -214,7 +214,7 @@ class _ItemActivityState extends State<ItemActivity> {
                               Text(
                                 location,
                                 style:
-                                    TextStyle(color: Colors.white, fontSize: 15),
+                                    TextStyle(color: Color(label_clr), fontSize: 15),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               )

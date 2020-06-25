@@ -54,12 +54,12 @@ class UserDetails {
     user_details.put(1, name_new);
   }
 
-  String getDob() {
+  DateTime getDob() {
     // return dob;
     return user_details.get(2);
   }
 
-  void setDob(String dob_new) {
+  void setDob(DateTime dob_new) {
     //  dob = dob_new;
     user_details.put(2, dob_new);
   }

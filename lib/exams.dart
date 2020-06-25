@@ -209,7 +209,7 @@ class _ItemExamState extends State<ItemExam> {
                       date.toString().isEmpty
                           ? "-"
                           : DateFormat("hh:mm a").format(time).toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
                     width: widget.width,
@@ -221,7 +221,7 @@ class _ItemExamState extends State<ItemExam> {
                       date.toString().isEmpty
                           ? "-"
                           : DateFormat("EEE, dd MMM").format(date).toString(),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                       textAlign: TextAlign.center,
                     ),
                     width: widget.width,
@@ -251,6 +251,7 @@ class _ItemExamState extends State<ItemExam> {
                 location,
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -615,7 +616,7 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                         style: TextStyle(color: Colors.white, fontSize: 25),
                         decoration: InputDecoration(
                           hintText: "-",
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Color(label_clr)),
                           focusColor: Colors.white,
                           enabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
