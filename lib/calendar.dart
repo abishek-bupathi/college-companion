@@ -6,30 +6,27 @@ import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
   var _events = <DateTime, List>{};
-
   Calendar_dialog(this.database);
 
   @override
   _Calendar_dialogState createState() => _Calendar_dialogState();
 }
 
-class _Calendar_dialogState extends State<Calendar_dialog> {
+class _Calendar_dialogState extends State<Calendar_dialog>  {
   List _selectedEvents = [];
   DateTime _selectedDay;
 
+/*
   @override
   void initState() {
     super.initState();
-    _selectedEvents = widget._events[_selectedDay] ?? [];
+    _selectedEvents = _events[_selectedDay] ?? [];
   }
-
+*/
   @override
   Widget build(BuildContext context) {
 
-    setState(() {
-      eventsData(widget.database,widget._events);
-    });
-
+    eventsData(widget.database).then((value) => widget._events = value);
 
    print(widget._events);
 
@@ -44,6 +41,8 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   }
 
   dialogContent(BuildContext context){
+
+
     return Container(
       height: 550,
       child: Column(
@@ -135,7 +134,10 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
   }
 
 
- void eventsData (AppDatabase database, Map<DateTime, List> _events) async {
+
+  Future<Map<DateTime, List>> eventsData (AppDatabase database) async {
+    Map events = Map<DateTime, List>();
+
     database.watchAllTests();
     database.watchAllActivities();
     database.watchAllTask();
@@ -180,11 +182,12 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
         data.add({'name': element.title, 'isDone': element.completed});
       });
 
-       _events.putIfAbsent(date, ()=> data);
+       events.putIfAbsent(date, ()=> data);
 
       data = [];
     });
 
+    return events;
 
   }
 }
