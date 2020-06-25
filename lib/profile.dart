@@ -46,19 +46,27 @@ class _ProfileState extends State<Profile> {
           title: Text('Profile',
               style: TextStyle(fontSize: 50, color: Color(dark_purple))),
           actions: <Widget>[
-            new IconButton(
-              icon: Hero(
-                child: new Icon(Icons.settings),
-                tag: "setting",
+            Container(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                height: 40,
+                width: 40,
+                child: new IconButton(
+                  icon: Hero(
+                    child: new Icon(Icons.settings),
+                    tag: "setting",
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Settings()),
+                    ).then((_) => setState(() {}));
+                  },
+                  iconSize: 35,
+                  color: Color(dark_purple),
+                ),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Settings()),
-                ).then((_) => setState(() {}));
-              },
-              iconSize: 40,
-              color: Color(dark_purple),
             ),
           ],
         ),

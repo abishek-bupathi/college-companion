@@ -33,30 +33,41 @@ class _ExamsState extends State<Exams> {
           title: Text('Exams',
               style: TextStyle(fontSize: 50, color: Color(teal_dark))),
           actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.event),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context){
-                    return Calendar_dialog(database);
-                  },
-                );
-              },
-              iconSize: 40,
-              color: Color(teal_dark),
-            ),
-            new IconButton(
-              icon: new Icon(Icons.add),
-              onPressed: () {
-                showDialog(
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              height: 40,
+              width: 40,
+              child: new IconButton(
+                icon: new Icon(Icons.event),
+                onPressed: () {
+                  showDialog(
                     context: context,
-                    barrierDismissible: false,
-                    builder: (context) =>
-                        addExamDialog(context, moduleList, database));
-              },
-              iconSize: 40,
-              color: Color(teal_dark),
+                    builder: (BuildContext context){
+                      return Calendar_dialog(database);
+                    },
+                  );
+                },
+                iconSize: 35,
+                color: Color(teal_dark),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+              padding: EdgeInsets.fromLTRB(0, 0,0, 0),
+              height:45,
+              width: 45,
+              child: new IconButton(
+                icon: new Icon(Icons.add),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) =>
+                          addExamDialog(context, moduleList, database));
+                },
+                iconSize: 45,
+                color: Color(teal_dark),
+              ),
             ),
           ],
         ),

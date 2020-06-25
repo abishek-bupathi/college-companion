@@ -66,30 +66,36 @@ class _SettingsState extends State<Settings> {
             title: Text('Settings',
                 style: TextStyle(fontSize: 50, color: Color(dark_grey))),
             actions: <Widget>[
-              new IconButton(
-                icon: Hero(
-                  child: new Icon(Icons.close),
-                  tag: "setting",
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                height: 40,
+                width: 40,
+                child: new IconButton(
+                  icon: Hero(
+                    child: new Icon(Icons.close),
+                    tag: "setting",
+                  ),
+                  onPressed: () {
+                    if(course != "" && name != ""  && id != ""  && uni != "" ){
+                    UserDetails().setCourse(course);
+                    UserDetails().setName(name);
+                    UserDetails().setId(id);
+                    UserDetails().setCurrentAvatar(current_avatar);
+                    UserDetails().setDob(dob);
+                    UserDetails().setUniversity(uni);
+                    Navigator.pop(context);
+                    }else{
+                      Toast.show("No field should be empty",
+                          context,
+                          gravity: Toast.CENTER,
+                          duration: Toast.LENGTH_LONG,
+                          backgroundRadius: 10);
+                    }
+                  },
+                  iconSize: 35,
+                  color: Color(dark_grey),
                 ),
-                onPressed: () {
-                  if(course != "" && name != ""  && id != ""  && uni != "" ){
-                  UserDetails().setCourse(course);
-                  UserDetails().setName(name);
-                  UserDetails().setId(id);
-                  UserDetails().setCurrentAvatar(current_avatar);
-                  UserDetails().setDob(dob);
-                  UserDetails().setUniversity(uni);
-                  Navigator.pop(context);
-                  }else{
-                    Toast.show("No field should be empty",
-                        context,
-                        gravity: Toast.CENTER,
-                        duration: Toast.LENGTH_LONG,
-                        backgroundRadius: 10);
-                  }
-                },
-                iconSize: 40,
-                color: Color(dark_grey),
               ),
             ],
           ),

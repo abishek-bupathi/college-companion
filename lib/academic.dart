@@ -62,29 +62,41 @@ class _AcademicState extends State<Academic> {
                     color: Color(0xFFc71831),
                     fontWeight: FontWeight.bold)),
             actions: <Widget>[
-              new IconButton(
-                  icon: new Icon(Icons.event),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Calendar_dialog(database);
-                      }
-                      );
-                  },
-                  iconSize: 40,
-                  color: Color(0xFFc71831)),
-              new IconButton(
-                  icon: new Icon(Icons.add),
-                  onPressed: () {
-                    showDialog(
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                height: 40,
+                width: 40,
+                child: new IconButton(
+                    icon: new Icon(Icons.event),
+                    onPressed: () {
+                      showDialog(
                         context: context,
-                        barrierDismissible: false,
-                        builder: (context) => addTaskDialog(
-                            context, moduleList, database, scaffold_key));
-                  },
-                  iconSize: 40,
-                  color: Color(0xFFc71831)),
+                        builder: (BuildContext context) {
+                          return Calendar_dialog(database);
+                        }
+                        );
+                    },
+                    iconSize: 35,
+                    color: Color(0xFFc71831)),
+              ),
+              SizedBox(width: 10,),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                padding: EdgeInsets.fromLTRB(0, 0,0, 0),
+                height:45,
+                width: 45,
+                child: new IconButton(
+                    icon: new Icon(Icons.add),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => addTaskDialog(
+                              context, moduleList, database, scaffold_key));
+                    },
+                    iconSize: 45,
+                    color: Color(0xFFc71831)),
+              ),
             ],
           ),
           body: StreamBuilder(

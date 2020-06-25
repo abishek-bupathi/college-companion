@@ -47,6 +47,7 @@ void main() async {
     systemNavigationBarColor: Color(0xFFF8F8F8),
     statusBarColor: Colors.transparent, // status bar color
   ));
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Hive.close();
 }
@@ -98,6 +99,7 @@ class AfterSplashState extends State<AfterSplash> {
 
   @override
   Widget build(BuildContext context) {
+
     return Provider(
       create: (_) => AppDatabase(),
       child: MaterialApp(
@@ -112,7 +114,9 @@ class AfterSplashState extends State<AfterSplash> {
                   });
                 },
                 controller: _pageController,
-                physics: BouncingScrollPhysics()),
+              physics: ClampingScrollPhysics(),
+
+            ),
             bottomNavigationBar: BottomNavigationBar(
               // setting attributes for the bar
               unselectedItemColor: Colors.black38,

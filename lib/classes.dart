@@ -48,18 +48,24 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin {
             title: Text('Classes',
                 style: TextStyle(fontSize: 50, color: Color(magenta_dark))),
             actions: <Widget>[
-              new IconButton(
-                icon: new Icon(Icons.event),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context){
-                      return Calendar_dialog(database);
-                    },
-                  );
-                },
-                iconSize: 40,
-                color: Color(magenta_dark),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                height: 40,
+                width: 40,
+                child: new IconButton(
+                  icon: new Icon(Icons.event),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return Calendar_dialog(database);
+                      },
+                    );
+                  },
+                  iconSize: 35,
+                  color: Color(magenta_dark),
+                ),
               ),
             ],
           ),

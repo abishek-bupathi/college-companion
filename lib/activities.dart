@@ -66,31 +66,43 @@ class _ActivitiesState extends State<Activities> {
           title: Text('Activities',
               style: TextStyle(fontSize: 50, color: Color(color_blue))),
           actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.event),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context){
-                    return Calendar_dialog(database);
-                  },
-                );
-              },
-              iconSize: 40,
-              color: Color(color_blue),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              height: 40,
+              width: 40,
+              child: new IconButton(
+                icon: new Icon(Icons.event),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context){
+                      return Calendar_dialog(database);
+                    },
+                  );
+                },
+                iconSize: 35,
+                color: Color(color_blue),
+              ),
             ),
-            new IconButton(
-              icon: new Icon(Icons.add),
-              onPressed: () {
-                showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) =>
-                            addActivityDialog(context, database, scaffold_key))
-                    .then((_) => setState(() {}));
-              },
-              iconSize: 40,
-              color: Color(color_blue),
+            SizedBox(width: 10,),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+              padding: EdgeInsets.fromLTRB(0, 0,0, 0),
+              height:45,
+              width: 45,
+              child: new IconButton(
+                icon: new Icon(Icons.add),
+                onPressed: () {
+                  showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) =>
+                              addActivityDialog(context, database, scaffold_key))
+                      .then((_) => setState(() {}));
+                },
+                iconSize: 45,
+                color: Color(color_blue),
+              ),
             ),
           ],
         ),
