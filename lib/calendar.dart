@@ -5,7 +5,8 @@ import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
-  var _events = <DateTime, List>{};
+ var _events = <DateTime, List>{};
+
   Calendar_dialog(this.database);
 
   @override
@@ -13,20 +14,30 @@ class Calendar_dialog extends StatefulWidget {
 }
 
 class _Calendar_dialogState extends State<Calendar_dialog>  {
-  List _selectedEvents = [];
+  List _selectedEvents;
   DateTime _selectedDay;
+ int ctr = 0;
 
-/*
   @override
   void initState() {
     super.initState();
-    _selectedEvents = _events[_selectedDay] ?? [];
+    _selectedEvents = widget._events[_selectedDay] ?? [];
   }
-*/
+
   @override
   Widget build(BuildContext context) {
 
-    eventsData(widget.database).then((value) => widget._events = value);
+
+      eventsData(widget.database).then((value) => {
+        if(this.mounted && ctr == 0){
+          setState((){
+            widget._events = value;
+            ctr++;
+          }
+          ),
+        }
+      });
+
 
    print(widget._events);
 
@@ -41,7 +52,6 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
   }
 
   dialogContent(BuildContext context){
-
 
     return Container(
       height: 550,
