@@ -1,8 +1,8 @@
 import 'package:college_companion/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter/painting.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
@@ -16,14 +16,19 @@ class Calendar_dialog extends StatefulWidget {
 
 class _Calendar_dialogState extends State<Calendar_dialog>  {
   List _selectedEvents;
-  DateTime _selectedDay;
+  CalendarController _calendarController;
  int ctr = 0;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = DateTime.now();
-    _selectedEvents = widget._events[_selectedDay] ?? [];
+    _selectedEvents = widget._events[DateTime.now()] ?? [];
+    _calendarController = CalendarController();
+  }
+  @override
+  void dispose() {
+    _calendarController.dispose();
+    super.dispose();
   }
 
   @override
@@ -40,7 +45,6 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
         }
       });
 
-
    print(widget._events);
 
     return Dialog(
@@ -56,32 +60,105 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
   dialogContent(BuildContext context){
 
     return Container(
-      height: 550,
+
       child: Column(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-            child: Calendar(
-              startOnMonday: true,
-              weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+           // padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            child: TableCalendar(
               events: widget._events,
-              onRangeSelected: (range) =>
-                  print("Range is ${range.from}, ${range.to}"),
-              onDateSelected: (date) => _handleNewDate(date, widget._events),
-              isExpanded: true,
-              isExpandable: true,
-             hideTodayIcon: true,
-              eventDoneColor: Colors.green,
-              selectedColor: Colors.black,
-              todayColor: Colors.red,
-              eventColor: Colors.grey,
-              dayOfWeekStyle: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12),
+              initialCalendarFormat: CalendarFormat.month,
+              initialSelectedDay: DateTime.now(),
+              calendarStyle: CalendarStyle(
+
+                markersColor: Colors.grey,
+                todayColor: Colors.orangeAccent,
+                selectedColor: Colors.black,
+                todayStyle:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              headerStyle: HeaderStyle(
+                formatButtonDecoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                formatButtonTextStyle: TextStyle(color: Colors.white),
+                formatButtonShowsNext: false,
+              ),
+              builders: CalendarBuilders(
+                selectedDayBuilder: (context, date, _) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                    ),
+                    margin: const EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.only(top: 5.0, left: 6.0),
+
+                    width: 100,
+                    height: 100,
+                    child: Text(
+                      '${date.day}',
+                      style: TextStyle().copyWith(fontSize: 16.0, color: Colors.white),
+                    ),
+                  );
+                },
+                todayDayBuilder: (context, date, _) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black12,
+                    ),
+                    margin: const EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.only(top: 5.0, left: 6.0),
+                    width: 100,
+                    height: 100,
+                    child: Text(
+                      '${date.day}',
+                      style: TextStyle().copyWith(fontSize: 16.0),
+                    ),
+                  );
+                },
+                markersBuilder: (context, date, events, holidays) {
+                  final children = <Widget>[];
+
+                  if (events.isNotEmpty) {
+                    children.add(
+                      Positioned(
+                        right: 1,
+                        bottom: 1,
+                        child: _buildEventsMarker(date, events),
+                      ),
+                    );
+                  }
+
+                  if (holidays.isNotEmpty) {
+                    children.add(
+                      Positioned(
+                        right: -2,
+                        top: -2,
+                        child: _buildHolidaysMarker(),
+                      ),
+                    );
+                  }
+
+                  return children;
+                },
+              ),
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              calendarController: _calendarController,
+              onDaySelected: (date, events) {
+                setState(() {
+                  print(date.toIso8601String());
+                  _selectedEvents = events;
+                });
+              },
             ),
           ),
+
           _buildEventList(),
           Container(
             padding: EdgeInsets.all(5),
@@ -111,38 +188,65 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
     );
   }
 
-  void _handleNewDate(date, Map<DateTime, List> _events) {
-    setState(() {
-      _selectedDay = date;
-      _selectedEvents = _events[_selectedDay] ?? [];
-    });
+  Widget _buildEventsMarker(DateTime date, List events) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color:
+        Colors.blue
+      ),
+      width: 16.0,
+      height: 16.0,
+      child: Center(
+        child: Text(
+          '${events.length}',
+          style: TextStyle().copyWith(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHolidaysMarker() {
+    return Icon(
+      Icons.add_box,
+      size: 20.0,
+      color: Colors.blueGrey[800],
+    );
   }
 
   Widget _buildEventList() {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) => Container(
-            height: 50,
-            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                elevation: 2,
-                child: Container(
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Text(
-                      _selectedEvents[index]['name'].toString(),
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    )))),
-        itemCount: _selectedEvents.length,
+
+    return _selectedEvents.length!=0? Expanded(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) => Container(
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 0,
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Text(
+                        _selectedEvents[index]['name'].toString(),
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      )))),
+          itemCount: _selectedEvents.length,
+        ),
       ),
-    );
+    ): Container(height: 10,);
   }
 
 
