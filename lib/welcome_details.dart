@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import './user_details.dart';
 import './main.dart';
 
@@ -275,8 +276,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     children: <Widget>[
                       Hero(
                         child: SizedBox(
-                          width: 35,
-                          height: 35,
+                          width: 40,
+                          height: 40,
                           child: RawMaterialButton(
                             highlightColor: Color(color_grey),
                             fillColor: Color(color_grey),
@@ -299,9 +300,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
                                 Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            UniversityDetails()));
+                                    PageTransition(type: PageTransitionType.rightToLeft, child: UniversityDetails()));
                               }
                             },
                             child: Icon(Icons.arrow_forward_ios,
@@ -460,8 +459,8 @@ class _UniversityDetailsState extends State<UniversityDetails> {
                           children: <Widget>[
                             Hero(
                               child: SizedBox(
-                                width: 35,
-                                height: 35,
+                                width: 40,
+                                height: 40,
                                 child: RawMaterialButton(
                                   highlightColor: Color(color_grey),
                                   fillColor: Color(color_grey),

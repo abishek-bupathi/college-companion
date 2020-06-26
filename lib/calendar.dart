@@ -2,6 +2,7 @@ import 'package:college_companion/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
@@ -21,6 +22,7 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
   @override
   void initState() {
     super.initState();
+    _selectedDay = DateTime.now();
     _selectedEvents = widget._events[_selectedDay] ?? [];
   }
 
@@ -69,7 +71,7 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
               onDateSelected: (date) => _handleNewDate(date, widget._events),
               isExpanded: true,
               isExpandable: true,
-              hideTodayIcon: true,
+             hideTodayIcon: true,
               eventDoneColor: Colors.green,
               selectedColor: Colors.black,
               todayColor: Colors.red,
@@ -120,7 +122,7 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) => Container(
-            height: 45,
+            height: 50,
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
             child: Card(
                 shape: RoundedRectangleBorder(
