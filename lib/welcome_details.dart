@@ -7,7 +7,7 @@ import './user_details.dart';
 import './main.dart';
 
 Welcome(BuildContext context) {
-  int color_blue = 0xFF536DFE;
+  int color_blue = 0xFF7349ab;
   return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -27,9 +27,10 @@ Welcome(BuildContext context) {
           children: <Widget>[
             Image.asset("assets/backgrounds/welcome_bg.png"),
             Text(
-              "This is a good app",
-              textAlign: TextAlign.left,
+              "Organize and plan your university activites, all in one place !",
+              textAlign: TextAlign.center,
               style: TextStyle(color: Color(color_blue), fontSize: 20),
+
             ),
             SizedBox(
               height: 45,
