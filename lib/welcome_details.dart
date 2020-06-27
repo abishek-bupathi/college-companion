@@ -18,7 +18,7 @@ Welcome(BuildContext context) {
             style: TextStyle(fontSize: 50, color: Color(color_blue))),
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
+        padding: EdgeInsets.fromLTRB(20, 25, 20, 20),
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,11 +26,28 @@ Welcome(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Image.asset("assets/backgrounds/welcome_bg.png"),
-            Text(
-              "Boost your productivity by organizing and planning all your university activities in one place !",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Color(color_blue), fontSize: 20),
+            Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "College Companion",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color(color_blue), fontSize: 30, fontWeight: FontWeight.bold),
 
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5,),
+                Text(
+                  "Boost your productivity by organizing and planning all your university activities in one place !",
+                  textAlign: TextAlign.center,
+
+                  style: TextStyle(color: Colors.black54, fontSize: 20, ),
+
+                ),
+              ],
             ),
             SizedBox(
               height: 45,

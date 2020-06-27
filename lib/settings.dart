@@ -1,7 +1,9 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:toast/toast.dart';
 import './user_details.dart';
@@ -398,10 +400,48 @@ class _SettingsState extends State<Settings> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 8),
                         Container(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
                           color: Color(light_grey),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
+                                  child: Image.asset("assets/Avatars/2.png",),
+                              width: 55,
+                              height: 55,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("College Companion v1.0", style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 3,),
+                                  Text("2020", style: TextStyle(fontSize: 10, color: Colors.white)),
+                                  SizedBox(height: 10),
+                                  Text("GNU General Public License v3.0", style: TextStyle(fontSize: 8, color: Colors.white)),
+                                  SizedBox(height: 5),
+                                  RichText(
+                                    text: new TextSpan(
+                                      children: [
+                                      new TextSpan(
+                                      text: 'Source code : ',
+                                      style: new TextStyle(color: Colors.white, fontSize: 10),
+                                    ),
+                                    new TextSpan(
+                                          text: 'github.io',
+                                          style: new TextStyle(color: Colors.blue, fontSize: 10),
+                                          recognizer: new TapGestureRecognizer()
+                                            ..onTap = () { launch('https://github.com/abishek-bupathi/college-companion');
+                                            },
+
+                                  ),
+                                  ]
+                                    )
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         )
                       ],
                     )),

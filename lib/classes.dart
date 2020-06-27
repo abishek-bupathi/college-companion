@@ -202,7 +202,6 @@ classes_body(
                   ),
                 ),
               ),
-              SizedBox(height: 10),
               Container(
                 child: Expanded(
                   child: TabBarView(children: _pageOptions,
@@ -418,11 +417,13 @@ class _ItemClassesState extends State<ItemClasses> {
            module = widget.itemPeriod.module;
     var  time = widget.itemPeriod.time != null ? widget.itemPeriod.time : "";
 
+
     int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
     double item_height = 40;
+    double spacing_height = (widget.height - 380)/10;
     return new Card(
       elevation: 5,
-      margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+      margin: EdgeInsets.fromLTRB(5, spacing_height, 5, 0),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Container(
