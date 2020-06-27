@@ -27,7 +27,7 @@ Welcome(BuildContext context) {
           children: <Widget>[
             Image.asset("assets/backgrounds/welcome_bg.png"),
             Text(
-              "Organize and plan your university activites, all in one place !",
+              "Boost your productivity by organizing and planning all your university activities in one place !",
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(color_blue), fontSize: 20),
 
