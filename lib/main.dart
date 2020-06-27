@@ -163,10 +163,10 @@ class AfterSplashState extends State<AfterSplash> {
                   title: Text('Academic'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CustomIcons.scout),
+                  icon: Icon(CustomIcons.scout_1),
                   backgroundColor: Colors.white,
                   activeIcon: Icon(
-                    CustomIcons.scout,
+                    CustomIcons.scout_1,
                     color: Color(0xFF0488e3),
                     size: 30,
                   ),

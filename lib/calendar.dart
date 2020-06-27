@@ -287,7 +287,7 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
       print(task_titles);
       Future.forEach(task_titles, (element)
       {
-       data.add({'name': element.title, 'isDone': element.completed});
+       data.add({'name': element.module +" "+ element.title, 'isDone': element.completed});
       });
       Future.forEach(tests_titles, (element)
       {
