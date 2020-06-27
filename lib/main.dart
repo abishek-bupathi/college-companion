@@ -66,8 +66,7 @@ class MyAppState extends State<MyApp> {
       child: new SplashScreen(
         seconds: 1,
         photoSize: 50.0,
-        loaderColor:
-            Hive.box('profile_complete').isNotEmpty ? Colors.white : Colors.red,
+        loaderColor: Colors.white,
         navigateAfterSeconds: new AfterSplash(),
         image: new Image.asset("assets/Avatars/1.png"),
         backgroundColor: Colors.white,
