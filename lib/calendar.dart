@@ -2,7 +2,6 @@ import 'package:college_companion/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
@@ -220,33 +219,31 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
   }
 
   Widget _buildEventList() {
-    return _selectedEvents.length!=0 ? Container(
-      height: 250,
-      child: Expanded(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) => Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    elevation: 0,
-                    child: Container(
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Text(
-                          _selectedEvents[index]['name'].toString(),
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        )))),
-            itemCount: _selectedEvents.length,
-          ),
+
+    return _selectedEvents.length!=0 ? Expanded(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) => Container(
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 0,
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Text(
+                        _selectedEvents[index]['name'].toString(),
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      )))),
+          itemCount: _selectedEvents.length,
         ),
       ),
     ): Container(height: 10,);
@@ -294,17 +291,11 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
       });
       Future.forEach(tests_titles, (element)
       {
-        data.add({'name': element.module+" Exam" + " at " + DateFormat(
-            "hh:mm a")
-            .format(
-            element.time) , 'isDone': false});
+        data.add({'name': element.module+" Exam", 'isDone': false});
       });
       Future.forEach(activity_titles, (element)
       {
-        data.add({'name': element.title  + " at " + DateFormat(
-            "hh:mm a")
-            .format(
-            element.time) , 'isDone': element.completed});
+        data.add({'name': element.title, 'isDone': element.completed});
       });
 
        events.putIfAbsent(date, ()=> data);

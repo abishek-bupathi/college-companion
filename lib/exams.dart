@@ -461,7 +461,6 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                                           DateTime(2050, 6, 7),
                                                       onConfirm: (date) {
 
-
                                                       DatePicker
                                                           .showTime12hPicker(
                                                               context,
@@ -481,6 +480,7 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                                               "dd MMM, yyyy")
                                                               .format(
                                                               dateWithoutFormat);
+
                                                         });
                                                       },
                                                               currentTime:
@@ -711,7 +711,7 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                           minTime: DateTime(2020, 1, 1),
                                           maxTime: DateTime(2050, 6, 7),
                                           onConfirm: (date_new) {
-
+                                        setState(() {
                                           DatePicker.showTime12hPicker(context,
                                               showTitleActions: true,
                                               onConfirm: (time_new) {
@@ -722,6 +722,7 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                               _date = date_new;
                                             });
                                           }, locale: LocaleType.en);
+                                        });
                                       },
                                           currentTime:
                                               _date != "" ? _date : DateTime.now(),

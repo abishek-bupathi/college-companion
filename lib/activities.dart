@@ -488,14 +488,12 @@ addActivityDialog(BuildContext context, AppDatabase database,
                                                               onConfirm:
                                                                   (time) {
                                                         setState(() {
-
                                                           timeWithoutFormat =
                                                               time;
                                                           _timeEvent = DateFormat(
                                                                   "hh:mm a")
                                                               .format(
                                                                   timeWithoutFormat);
-
                                                           dateWithoutFormat = date;
                                                           _dateEvent = DateFormat(
                                                               "dd MMM, yyyy")
@@ -508,6 +506,7 @@ addActivityDialog(BuildContext context, AppDatabase database,
                                                                       .now(),
                                                               locale: LocaleType
                                                                   .en);
+
                                                   },
                                                       currentTime:
                                                           DateTime.now(),
@@ -747,7 +746,7 @@ editActivityDialog(
                                             minTime: DateTime(2020, 1, 1),
                                             maxTime: DateTime(2050, 6, 7),
                                             onConfirm: (date_new) {
-
+                                          setState(() {
                                             DatePicker.showTime12hPicker(context,
                                                 showTitleActions: true,
                                                 onConfirm: (time_new) {
@@ -763,7 +762,7 @@ editActivityDialog(
                                             },
                                                 //TODO: Fix current data and time
                                                 locale: LocaleType.en);
-
+                                          });
                                         },
                                             currentTime:
                                                 _date != "" ? _date : DateTime.now(),
