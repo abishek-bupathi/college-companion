@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import './user_details.dart';
 import './calendar.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -526,6 +527,7 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
+                            if(_module != null){
                             final test = Test(
                                 module: _module,
                                 location: _location,
@@ -533,6 +535,13 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                 time: timeWithoutFormat);
                             database.insertTest(test);
                             Navigator.pop(context);
+                            }else{
+                              Toast.show(
+                                  "Module cannot be empty",
+                                  context,
+                                  duration: Toast.LENGTH_LONG,
+                                  backgroundRadius: 10);
+                            }
                           },
                           child: Text(
                             "Done",
