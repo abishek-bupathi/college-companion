@@ -265,17 +265,17 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
    // print(dates.indexOf(tasks[0].dueDate));
 
     await Future.forEach(tasks, (task) {
-      if(dates.indexOf(task.dueDate) == -1){
+      if(dates.indexOf(task.dueDate) == -1 && task.dueDate != null){
         dates.add(task.dueDate);
       }
     });
     await Future.forEach(tests, (test) {
-      if(dates.indexOf(test.date) == -1){
+      if(dates.indexOf(test.date) == -1 && test.date != null){
         dates.add(test.date);
       }
     });
     await Future.forEach(activities, (activity) {
-      if(dates.indexOf(activity.date) == -1){
+      if(dates.indexOf(activity.date) == -1 && activity.date != null){
         dates.add(activity.date);
       }
     });
