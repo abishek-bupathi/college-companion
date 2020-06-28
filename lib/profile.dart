@@ -630,7 +630,7 @@ editListDialog(
                           style: TextStyle(color: Colors.white, fontSize: 20),
                           decoration: InputDecoration(
                             counterText: "",
-                            hintText: "Add new " + title,
+                            hintText: title.compareTo("Modules") == 0?"Module name":"Skill name",
                             hintStyle: TextStyle(color: Colors.white60),
                             contentPadding: EdgeInsets.all(10),
                             focusColor: Colors.white,

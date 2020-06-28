@@ -1,7 +1,9 @@
 import 'package:college_companion/custom_icons.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
@@ -371,7 +373,7 @@ class _SettingsState extends State<Settings> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Container(
-                    height: 150,
+                    height: 175,
                     decoration: BoxDecoration(
                         color: Color(light_grey),
                         shape: BoxShape.rectangle,
@@ -400,25 +402,25 @@ class _SettingsState extends State<Settings> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 10),
                         Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                          padding: EdgeInsets.fromLTRB(25, 10, 25, 5),
                           color: Color(light_grey),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                  child: Image.asset("assets/Avatars/2.png",),
-                              width: 55,
-                              height: 55,),
+                                  child: Image.asset("assets/Avatars/6.png",),
+                              width: 75,
+                              height: 75,),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("College Companion v1.0", style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),),
+                                  Text("College Companion v1.0", style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),),
                                   SizedBox(height: 3,),
-                                  Text("2020", style: TextStyle(fontSize: 10, color: Colors.white)),
+                                  Text("2020", style: TextStyle(fontSize: 15, color: Colors.white)),
                                   SizedBox(height: 10),
-                                  Text("GNU General Public License v3.0", style: TextStyle(fontSize: 8, color: Colors.white)),
+                                  Text("GNU General Public License v3.0", style: TextStyle(fontSize: 10, color: Colors.white)),
                                   SizedBox(height: 5),
                                   RichText(
                                     text: new TextSpan(
@@ -431,8 +433,7 @@ class _SettingsState extends State<Settings> {
                                           text: 'github.io',
                                           style: new TextStyle(color: Colors.blue, fontSize: 10),
                                           recognizer: new TapGestureRecognizer()
-                                            ..onTap = () { launch('https://github.com/abishek-bupathi/college-companion');
-                                            },
+                                            ..onTap = () {openLink();},
 
                                   ),
                                   ]
@@ -451,5 +452,17 @@ class _SettingsState extends State<Settings> {
         ),
       ),
     );
+
+
+  }
+  void openLink() async {
+    String url = 'https://github.com/abishek-bupathi/college-companion';
+    if(kIsWeb) {
+      html.window.open(url, '_blank');
+    } else {
+      if(await canLaunch(url)) {
+        launch(url);
+      }
+    }
   }
 }

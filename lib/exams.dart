@@ -288,7 +288,7 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
       child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
         return Container(
-            height: 390,
+            height: 375,
             child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -499,7 +499,7 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                 // SizedBox(height: 10),
                               ])))),
                   Container(
-                    padding: EdgeInsets.fromLTRB(15, 15, 15, 12),
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -563,200 +563,210 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
         return Container(
-          height: 375,
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                "Exam",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 25),
               Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white),
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    dropdownColor: Colors.white,
-                    isExpanded: true,
-                    value: module,
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Color(teal_bg),
-                    ),
-                    iconSize: 30,
-                    elevation: 0,
-                    style: TextStyle(color: Color(teal_bg), fontSize: 20),
-                    onChanged: (newValue) {
-                      setState(() {
-                        module = newValue;
-                        database
-                            .updateTest(itemTest.copyWith(module: newValue));
-                      });
-                    },
-                    items: modulesList.map((value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: Column(
                   children: <Widget>[
                     Text(
-                      "Venue",
-                      style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                      "Exam",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold),
                     ),
-                    TextField(
-                        controller: locationController,
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                        decoration: InputDecoration(
-                          hintText: "-",
-                          hintStyle: TextStyle(color: Color(label_clr)),
-                          focusColor: Colors.white,
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                    SizedBox(height: 25),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: Colors.white,
+                          isExpanded: true,
+                          value: module,
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: Color(teal_bg),
                           ),
+                          iconSize: 30,
+                          elevation: 0,
+                          style: TextStyle(color: Color(teal_bg), fontSize: 20),
+                          onChanged: (newValue) {
+                            setState(() {
+                              module = newValue;
+                              database
+                                  .updateTest(itemTest.copyWith(module: newValue));
+                            });
+                          },
+                          items: modulesList.map((value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
-                        onTap: () {
-                          locationController.addListener(() {
-                            database.updateTest(itemTest.copyWith(
-                                location: locationController.text));
-                          });
-                        }),
-                  ]),
-              SizedBox(height: 20),
-              Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.schedule,
-                              color: Color(teal_bg),
-                              size: 16,
-                            ),
-                            SizedBox(width: 5),
-                            Text(
-                                _time.toString().isNotEmpty
-                                    ? DateFormat("hh:mm a")
-                                        .format(_time)
-                                        .toString()
-                                    : "-",
-                                style: TextStyle(
-                                    color: Color(teal_bg), fontSize: 16)),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(Icons.calendar_today,
-                                color: Color(teal_bg), size: 16),
-                            SizedBox(width: 5),
-                            Text(
-                                _date.toString().isNotEmpty
-                                    ? DateFormat("EEE, dd MMM")
-                                        .format(_date)
-                                        .toString()
-                                    : "-",
-                                style: TextStyle(
-                                    color: Color(teal_bg), fontSize: 16)),
-                          ],
-                        ),
-                        ButtonTheme(
-                            minWidth: 5,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.edit,
-                                color: Color(teal_bg),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Venue",
+                            style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                          ),
+                          TextField(
+                              controller: locationController,
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              decoration: InputDecoration(
+                                hintText: "-",
+                                hintStyle: TextStyle(color: Color(label_clr)),
+                                focusColor: Colors.white,
+                                enabledBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
                               ),
-                              onPressed: () {
-                                DatePicker.showDatePicker(context,
-                                    showTitleActions: true,
-                                    minTime: DateTime(2020, 1, 1),
-                                    maxTime: DateTime(2050, 6, 7),
-                                    onConfirm: (date_new) {
-                                  setState(() {
-                                    DatePicker.showTime12hPicker(context,
-                                        showTitleActions: true,
-                                        onConfirm: (time_new) {
-                                      setState(() {
-                                        database.updateTest(itemTest.copyWith(
-                                            time: time_new, date: date_new));
-                                        _time = time_new;
-                                        _date = date_new;
-                                      });
-                                    }, locale: LocaleType.en);
-                                  });
-                                },
-                                    currentTime:
-                                        _date != "" ? _date : DateTime.now(),
-                                    locale: LocaleType.en);
-                              },
-                            )),
-                      ])),
+                              onTap: () {
+                                locationController.addListener(() {
+                                  database.updateTest(itemTest.copyWith(
+                                      location: locationController.text));
+                                });
+                              }),
+                        ]),
+                    SizedBox(height: 20),
+                    Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white),
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.schedule,
+                                    color: Color(teal_bg),
+                                    size: 16,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                      _time.toString().isNotEmpty
+                                          ? DateFormat("hh:mm a")
+                                              .format(_time)
+                                              .toString()
+                                          : "-",
+                                      style: TextStyle(
+                                          color: Color(teal_bg), fontSize: 16)),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Icon(Icons.calendar_today,
+                                      color: Color(teal_bg), size: 16),
+                                  SizedBox(width: 5),
+                                  Text(
+                                      _date.toString().isNotEmpty
+                                          ? DateFormat("EEE, dd MMM")
+                                              .format(_date)
+                                              .toString()
+                                          : "-",
+                                      style: TextStyle(
+                                          color: Color(teal_bg), fontSize: 16)),
+                                ],
+                              ),
+                              ButtonTheme(
+                                  minWidth: 5,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Color(teal_bg),
+                                    ),
+                                    onPressed: () {
+                                      DatePicker.showDatePicker(context,
+                                          showTitleActions: true,
+                                          minTime: DateTime(2020, 1, 1),
+                                          maxTime: DateTime(2050, 6, 7),
+                                          onConfirm: (date_new) {
+                                        setState(() {
+                                          DatePicker.showTime12hPicker(context,
+                                              showTitleActions: true,
+                                              onConfirm: (time_new) {
+                                            setState(() {
+                                              database.updateTest(itemTest.copyWith(
+                                                  time: time_new, date: date_new));
+                                              _time = time_new;
+                                              _date = date_new;
+                                            });
+                                          }, locale: LocaleType.en);
+                                        });
+                                      },
+                                          currentTime:
+                                              _date != "" ? _date : DateTime.now(),
+                                          locale: LocaleType.en);
+                                    },
+                                  )),
+                            ])),
+                  ],
+                ),
+              ),
               SizedBox(height: 35),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(
-                    width: 35,
-                    height: 35,
-                    child: RawMaterialButton(
-                      highlightColor: Colors.white,
-                      fillColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: RawMaterialButton(
+                        highlightColor: Colors.white,
+                        fillColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: () {
+                          database.deleteTest(itemTest);
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.delete_outline,
+                            color: Color(teal_bg), size: 25),
                       ),
-                      onPressed: () {
-                        database.deleteTest(itemTest);
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.delete_outline,
-                          color: Color(teal_bg), size: 25),
                     ),
-                  ),
-                  SizedBox(
-                    width: 35,
-                    height: 35,
-                    child: RawMaterialButton(
-                      highlightColor: Colors.white,
-                      fillColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: RawMaterialButton(
+                        highlightColor: Colors.white,
+                        fillColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.arrow_back_ios,
+                            color: Color(teal_bg), size: 25),
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.arrow_back_ios,
-                          color: Color(teal_bg), size: 25),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),

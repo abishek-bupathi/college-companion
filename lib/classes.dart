@@ -495,183 +495,192 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
         return Container(
-          height: 400,
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                "Class",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 25),
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Venue",
-                      style: TextStyle(fontSize: 18, color: Color(label_clr)),
-                    ),
-                    TextField(
-
-                        controller: locationController,
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                        decoration: InputDecoration(
-                          hintText: "-",
-                          hintStyle: TextStyle(color: Color(label_clr)),
-                          focusColor: Colors.white,
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            locationController.addListener(() {
-                              database.updatePeriod(
-                                  itemPeriod.copyWith(location: locationController.text));
-                            });
-                          });
-                        }),
-                  ]),
-              SizedBox(height: 20),
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Lecturer/ Tutor",
-                      style: TextStyle(fontSize: 18, color: Color(label_clr)),
-                    ),
-                    TextField(
-                        controller: lecturerController,
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                        decoration: InputDecoration(
-                          hintText: "-",
-                          hintStyle: TextStyle(color: Color(label_clr)),
-                          focusColor: Colors.white,
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            lecturerController.addListener(() {
-                              database.updatePeriod(
-                                  itemPeriod.copyWith(lecturer: lecturerController.text));
-                            });
-                          });
-                        }),
-                  ]),
-              SizedBox(height: 20),
               Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white),
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: modulesList.isEmpty
-                    ? SizedBox(
-                        width: double.infinity,
-                        height: 45,
-                        child: Center(
-                            child: Text(
-                          "No modules found \n Please add modules in profile",
-                          style: TextStyle(color: Color(magenta_bg)),
-                          textAlign: TextAlign.center,
-                        )))
-                    : DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          dropdownColor: Colors.white,
-                          isExpanded: true,
-                          value: _module,
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: Color(magenta_bg),
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Class",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 25),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Venue",
+                            style: TextStyle(fontSize: 18, color: Color(label_clr)),
                           ),
-                          iconSize: 30,
-                          elevation: 0,
-                          style:
-                              TextStyle(color: Color(magenta_bg), fontSize: 20),
-                          onChanged: (newValue) {
-                            setState(() {
-                              _module = newValue;
-                              database.updatePeriod(
-                                itemPeriod.copyWith(module: newValue)
-                              );
-                            });
-                          },
-                          items: modulesList.map((value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                          TextField(
+
+                              controller: locationController,
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              decoration: InputDecoration(
+                                hintText: "-",
+                                hintStyle: TextStyle(color: Color(label_clr)),
+                                focusColor: Colors.white,
+                                enabledBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  locationController.addListener(() {
+                                    database.updatePeriod(
+                                        itemPeriod.copyWith(location: locationController.text));
+                                  });
+                                });
+                              }),
+                        ]),
+                    SizedBox(height: 20),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Lecturer/ Tutor",
+                            style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                          ),
+                          TextField(
+                              controller: lecturerController,
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              decoration: InputDecoration(
+                                hintText: "-",
+                                hintStyle: TextStyle(color: Color(label_clr)),
+                                focusColor: Colors.white,
+                                enabledBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  lecturerController.addListener(() {
+                                    database.updatePeriod(
+                                        itemPeriod.copyWith(lecturer: lecturerController.text));
+                                  });
+                                });
+                              }),
+                        ]),
+                    SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: modulesList.isEmpty
+                          ? SizedBox(
+                              width: double.infinity,
+                              height: 45,
+                              child: Center(
+                                  child: Text(
+                                "No modules found \n Please add modules in profile",
+                                style: TextStyle(color: Color(magenta_bg)),
+                                textAlign: TextAlign.center,
+                              )))
+                          : DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                dropdownColor: Colors.white,
+                                isExpanded: true,
+                                value: _module,
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Color(magenta_bg),
+                                ),
+                                iconSize: 30,
+                                elevation: 0,
+                                style:
+                                    TextStyle(color: Color(magenta_bg), fontSize: 20),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _module = newValue;
+                                    database.updatePeriod(
+                                      itemPeriod.copyWith(module: newValue)
+                                    );
+                                  });
+                                },
+                                items: modulesList.map((value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(
-                    width: 35,
-                    height: 35,
-                    child: RawMaterialButton(
-                      highlightColor: Colors.white,
-                      fillColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: RawMaterialButton(
+                        highlightColor: Colors.white,
+                        fillColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: () {
+                          database.updatePeriod(itemPeriod.copyWith(
+                            lecturer: "",
+                            location: "",
+                            module: "",
+                          ));
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.delete_outline,
+                            color: Color(magenta_bg), size: 25),
                       ),
-                      onPressed: () {
-                        database.updatePeriod(itemPeriod.copyWith(
-                          lecturer: "",
-                          location: "",
-                          module: "",
-                        ));
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.delete_outline,
-                          color: Color(magenta_bg), size: 25),
                     ),
-                  ),
-                  SizedBox(
-                    width: 35,
-                    height: 35,
-                    child: RawMaterialButton(
-                      highlightColor: Colors.white,
-                      fillColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: RawMaterialButton(
+                        highlightColor: Colors.white,
+                        fillColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: () {
+                          if(_module != null)
+                          Navigator.pop(context);
+                          else{
+                            Toast.show(
+                                "Module cannot be empty",
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                backgroundRadius: 10);
+                          }
+                        },
+                        child: Icon(Icons.arrow_back_ios,
+                            color: Color(magenta_bg), size: 25),
                       ),
-                      onPressed: () {
-                        if(_module != null)
-                        Navigator.pop(context);
-                        else{
-                          Toast.show(
-                              "Module cannot be empty",
-                              context,
-                              duration: Toast.LENGTH_LONG,
-                              backgroundRadius: 10);
-                        }
-                      },
-                      child: Icon(Icons.arrow_back_ios,
-                          color: Color(magenta_bg), size: 25),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),
@@ -843,7 +852,7 @@ addClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, Ap
                                 // SizedBox(height: 10),
                               ])))),
                   Container(
-                    padding: EdgeInsets.fromLTRB(15, 15, 15, 12),
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

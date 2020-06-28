@@ -297,7 +297,7 @@ addActivityDialog(BuildContext context, AppDatabase database,
       child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
         return Container(
-            height: 485,
+            height: 480,
             child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -519,7 +519,7 @@ addActivityDialog(BuildContext context, AppDatabase database,
                                 // SizedBox(height: 10),
                               ])))),
                   Container(
-                    padding: EdgeInsets.all(15),
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -596,228 +596,236 @@ editActivityDialog(
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
         return Container(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  controller: titleController,
-                  cursorColor: Colors.white,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: "-",
-                    hintStyle: TextStyle(color: Color(label_clr)),
-                    focusColor: Colors.white,
-                    enabledBorder:
-                        UnderlineInputBorder(borderSide: BorderSide.none),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  onTap: () {
-                    titleController.addListener(() {
-                      database.updateActivity(
-                          itemActivity.copyWith(title: titleController.text));
-                    });
-                  },
-                ),
-                SizedBox(height: 15),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Note",
-                        style: TextStyle(fontSize: 18, color: Color(label_clr)),
-                      ),
-                      TextField(
-                        controller: noteController,
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                        decoration: InputDecoration(
-                          hintText: "-",
-                          hintStyle: TextStyle(color: Color(label_clr)),
-                          focusColor: Colors.white,
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          noteController.addListener(() {
-                            database.updateActivity(itemActivity.copyWith(
-                                note: noteController.text));
-                          });
-                        },
-                      ),
-                    ]),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Venue",
-                        style: TextStyle(fontSize: 18, color: Color(label_clr)),
-                      ),
-                      TextField(
-                        controller: locationController,
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                        decoration: InputDecoration(
-                          hintText: "-",
-                          hintStyle: TextStyle(color: Color(label_clr)),
-                          focusColor: Colors.white,
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          locationController.addListener(() {
-                            database.updateActivity(itemActivity.copyWith(
-                                location: locationController.text));
-                          });
-                        },
-                      ),
-                    ]),
-                SizedBox(height: 20),
                 Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.schedule,
-                                color: Color(0xFF3C9CE2),
-                                size: 15,
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: titleController,
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: "-",
+                          hintStyle: TextStyle(color: Color(label_clr)),
+                          focusColor: Colors.white,
+                          enabledBorder:
+                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                        ),
+                        onTap: () {
+                          titleController.addListener(() {
+                            database.updateActivity(
+                                itemActivity.copyWith(title: titleController.text));
+                          });
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Note",
+                              style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                            ),
+                            TextField(
+                              controller: noteController,
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              decoration: InputDecoration(
+                                hintText: "-",
+                                hintStyle: TextStyle(color: Color(label_clr)),
+                                focusColor: Colors.white,
+                                enabledBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
                               ),
-                              SizedBox(width: 5),
-                              Text(
-                                  _time.toString().isNotEmpty
-                                      ? DateFormat("hh:mm a")
-                                          .format(_time)
-                                          .toString()
-                                      : "-",
-                                  style: TextStyle(
-                                      color: Color(blue_bg), fontSize: 15)),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(Icons.calendar_today,
-                                  color: Color(blue_bg), size: 15),
-                              SizedBox(width: 5),
-                              Text(
-                                  _date.toString().isNotEmpty
-                                      ? DateFormat("EEE, dd MMM")
-                                          .format(_date)
-                                          .toString()
-                                      : "-",
-                                  style: TextStyle(
-                                      color: Color(blue_bg), fontSize: 15)),
-                            ],
-                          ),
-                          ButtonTheme(
-                              minWidth: 5,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: Color(blue_bg),
+                              onTap: () {
+                                noteController.addListener(() {
+                                  database.updateActivity(itemActivity.copyWith(
+                                      note: noteController.text));
+                                });
+                              },
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Venue",
+                              style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                            ),
+                            TextField(
+                              controller: locationController,
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              decoration: InputDecoration(
+                                hintText: "-",
+                                hintStyle: TextStyle(color: Color(label_clr)),
+                                focusColor: Colors.white,
+                                enabledBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                              ),
+                              onTap: () {
+                                locationController.addListener(() {
+                                  database.updateActivity(itemActivity.copyWith(
+                                      location: locationController.text));
+                                });
+                              },
+                            ),
+                          ]),
+                      SizedBox(height: 20),
+                      Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white),
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.schedule,
+                                      color: Color(0xFF3C9CE2),
+                                      size: 15,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                        _time.toString().isNotEmpty
+                                            ? DateFormat("hh:mm a")
+                                                .format(_time)
+                                                .toString()
+                                            : "-",
+                                        style: TextStyle(
+                                            color: Color(blue_bg), fontSize: 15)),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(Icons.calendar_today,
+                                        color: Color(blue_bg), size: 15),
+                                    SizedBox(width: 5),
+                                    Text(
+                                        _date.toString().isNotEmpty
+                                            ? DateFormat("EEE, dd MMM")
+                                                .format(_date)
+                                                .toString()
+                                            : "-",
+                                        style: TextStyle(
+                                            color: Color(blue_bg), fontSize: 15)),
+                                  ],
+                                ),
+                                ButtonTheme(
+                                    minWidth: 5,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Color(blue_bg),
+                                      ),
+                                      onPressed: () {
+                                        DatePicker.showDatePicker(context,
+                                            showTitleActions: true,
+                                            minTime: DateTime(2020, 1, 1),
+                                            maxTime: DateTime(2050, 6, 7),
+                                            onConfirm: (date_new) {
+                                          setState(() {
+                                            DatePicker.showTime12hPicker(context,
+                                                showTitleActions: true,
+                                                onConfirm: (time_new) {
+                                              setState(() {
+                                                print(date_new);
+                                                database.updateActivity(
+                                                    itemActivity.copyWith(
+                                                        time: time_new,
+                                                        date: date_new));
+                                                _time = time_new;
+                                                _date = date_new;
+                                              });
+                                            },
+                                                //TODO: Fix current data and time
+                                                locale: LocaleType.en);
+                                          });
+                                        },
+                                            currentTime:
+                                                _date != "" ? _date : DateTime.now(),
+                                            locale: LocaleType.en);
+                                      },
+                                    )),
+                              ])),])),
+                      SizedBox(height: 35),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: RawMaterialButton(
+                                highlightColor: Colors.white,
+                                fillColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 onPressed: () {
-                                  DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      minTime: DateTime(2020, 1, 1),
-                                      maxTime: DateTime(2050, 6, 7),
-                                      onConfirm: (date_new) {
-                                    setState(() {
-                                      DatePicker.showTime12hPicker(context,
-                                          showTitleActions: true,
-                                          onConfirm: (time_new) {
-                                        setState(() {
-                                          print(date_new);
-                                          database.updateActivity(
-                                              itemActivity.copyWith(
-                                                  time: time_new,
-                                                  date: date_new));
-                                          _time = time_new;
-                                          _date = date_new;
-                                        });
-                                      },
-                                          //TODO: Fix current data and time
-                                          locale: LocaleType.en);
-                                    });
-                                  },
-                                      currentTime:
-                                          _date != "" ? _date : DateTime.now(),
-                                      locale: LocaleType.en);
+                                  database.deleteActivity(itemActivity);
+                                  Navigator.pop(context);
                                 },
-                              )),
-                        ])),
-                SizedBox(height: 35),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: RawMaterialButton(
-                        highlightColor: Colors.white,
-                        fillColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                                child: Icon(Icons.delete_outline,
+                                    color: Color(blue_bg), size: 25),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: RawMaterialButton(
+                                highlightColor: Colors.white,
+                                fillColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                onPressed: () {
+                                  if(titleController.text != "")
+                                    Navigator.pop(context);
+                                  else
+                                    Toast.show(
+                                        "Title cannot be empty",
+                                        context,
+                                        duration: Toast.LENGTH_LONG,
+                                        gravity: Toast.CENTER,
+                                        backgroundRadius: 10);
+                                },
+                                child: Icon(Icons.arrow_back_ios,
+                                    color: Color(blue_bg), size: 25),
+                              ),
+                            ),
+                          ],
                         ),
-                        onPressed: () {
-                          database.deleteActivity(itemActivity);
-                          Navigator.pop(context);
-                        },
-                        child: Icon(Icons.delete_outline,
-                            color: Color(blue_bg), size: 25),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: RawMaterialButton(
-                        highlightColor: Colors.white,
-                        fillColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        onPressed: () {
-                          if(titleController.text != "")
-                            Navigator.pop(context);
-                          else
-                            Toast.show(
-                                "Title cannot be empty",
-                                context,
-                                duration: Toast.LENGTH_LONG,
-                                gravity: Toast.CENTER,
-                                backgroundRadius: 10);
-                        },
-                        child: Icon(Icons.arrow_back_ios,
-                            color: Color(blue_bg), size: 25),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ));
+                        padding: EdgeInsets.all(10),
+                      )
+                    ],
+                  ),
+
+            );
       }));
 }
