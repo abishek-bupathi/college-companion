@@ -25,7 +25,15 @@ Welcome(BuildContext context) {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.asset("assets/backgrounds/welcome_bg.png"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    height: MediaQuery.of(context).size.height < 750 ? 375 : 800,
+                    child: Image.asset("assets/backgrounds/welcome_bg.png")),
+              ],
+            ),
             Column(
               children: <Widget>[
                 Row(
@@ -360,7 +368,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
         key: scaffold_key,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          brightness: Brightness.dark,
+          brightness: (scrn_height < 750) ? Brightness.light: Brightness.dark,
           elevation: 0,
           backgroundColor:
               (scrn_height < 750) ? Colors.white : Color(0xFF3F3D56),

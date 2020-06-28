@@ -560,14 +560,15 @@ editTaskDialog(BuildContext context, Task itemTask, List modulesList,
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
         return Container(
+            height: 400,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Column(children: [
-                    TextField(
+                SizedBox(height: 10),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: TextField(
                       controller: titleController,
                       cursorColor: Colors.white,
                       style: TextStyle(
@@ -578,7 +579,7 @@ editTaskDialog(BuildContext context, Task itemTask, List modulesList,
                       decoration: InputDecoration(
                         focusColor: Colors.white,
                         enabledBorder:
-                            UnderlineInputBorder(borderSide: BorderSide.none),
+                        UnderlineInputBorder(borderSide: BorderSide.none),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -590,135 +591,144 @@ editTaskDialog(BuildContext context, Task itemTask, List modulesList,
                         });
                       },
                     ),
-                    SizedBox(height: 15),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Note",
-                            style: TextStyle(
-                                fontSize: 18, color: Color(label_clr)),
-                          ),
-                          TextField(
-                            cursorColor: Colors.white,
-                            controller: noteController,
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                            decoration: InputDecoration(
-                              hintText: "-",
-                              hintStyle: TextStyle(color: Color(label_clr)),
-                              focusColor: Colors.white,
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                  ),
+                  SizedBox(height: 5),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                      child: Column(children: [
+
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Note",
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(label_clr)),
                               ),
-                            ),
-                            onTap: () {
-                              noteController.addListener(() {
-                                database.updateTask(itemTask.copyWith(
-                                    note: noteController.text));
-                              });
-                            },
-                          ),
-                        ]),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white),
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Icon(
-                              Icons.calendar_today,
-                              color: Color(red_bg),
-                              size: 20,
-                            ),
-                            Text(
-                                _date.toString().isNotEmpty
-                                    ? DateFormat("EEE, dd MMM")
-                                        .format(_date)
-                                        .toString()
-                                    : "-",
-                                style: TextStyle(
-                                    color: Color(red_bg), fontSize: 20)),
-                            ButtonTheme(
-                                minWidth: 0,
-                                child: IconButton(
-                                  focusColor: Colors.black12,
-                                  highlightColor: Colors.transparent,
-                                  iconSize: 20,
-                                  icon: Icon(
-                                    Icons.edit,
-                                    color: Color(red_bg),
+                              TextField(
+                                cursorColor: Colors.white,
+                                controller: noteController,
+                                style: TextStyle(color: Colors.white, fontSize: 25),
+                                decoration: InputDecoration(
+                                  hintText: "-",
+                                  hintStyle: TextStyle(color: Color(label_clr)),
+                                  focusColor: Colors.white,
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide.none),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
                                   ),
-                                  onPressed: () {
-                                    DatePicker.showDatePicker(context,
-                                        showTitleActions: true,
-                                        minTime: DateTime(2020, 1, 1),
-                                        maxTime: DateTime(2025, 6, 7),
-                                        onConfirm: (date_new) {
-                                      setState(() {
-                                        database.updateTask(itemTask.copyWith(
-                                            dueDate: date_new));
-
-                                        _date = date_new;
-                                      });
-                                    },
-                                        currentTime: _date != ""
-                                            ? _date
-                                            : DateTime.now(),
-                                        locale: LocaleType.en);
-                                  },
-                                )),
-                          ]),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white),
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: modulesList.isEmpty
-                          ? Text("No modules found")
-                          : DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                isExpanded: true,
-                                value: _module,
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Color(red_bg),
                                 ),
-                                iconSize: 30,
-                                elevation: 0,
-                                style: TextStyle(
-                                    color: Color(red_bg), fontSize: 20),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _module = newValue;
-
-                                    database.updateTask(
-                                        itemTask.copyWith(module: newValue));
+                                onTap: () {
+                                  noteController.addListener(() {
+                                    database.updateTask(itemTask.copyWith(
+                                        note: noteController.text));
                                   });
                                 },
-                                items: modulesList.map((value) {
-                                  return DropdownMenuItem(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
                               ),
-                            ),
-                    ),
-                  ])),
-              SizedBox(height: 35),
+                            ]),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white),
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Icon(
+                                  Icons.calendar_today,
+                                  color: Color(red_bg),
+                                  size: 20,
+                                ),
+                                Text(
+                                    _date.toString().isNotEmpty
+                                        ? DateFormat("EEE, dd MMM")
+                                            .format(_date)
+                                            .toString()
+                                        : "-",
+                                    style: TextStyle(
+                                        color: Color(red_bg), fontSize: 20)),
+                                ButtonTheme(
+                                    minWidth: 0,
+                                    child: IconButton(
+                                      focusColor: Colors.black12,
+                                      highlightColor: Colors.transparent,
+                                      iconSize: 20,
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Color(red_bg),
+                                      ),
+                                      onPressed: () {
+                                        DatePicker.showDatePicker(context,
+                                            showTitleActions: true,
+                                            minTime: DateTime(2020, 1, 1),
+                                            maxTime: DateTime(2025, 6, 7),
+                                            onConfirm: (date_new) {
+                                          setState(() {
+                                            database.updateTask(itemTask.copyWith(
+                                                dueDate: date_new));
+
+                                            _date = date_new;
+                                          });
+                                        },
+                                            currentTime: _date != ""
+                                                ? _date
+                                                : DateTime.now(),
+                                            locale: LocaleType.en);
+                                      },
+                                    )),
+                              ]),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white),
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          child: modulesList.isEmpty
+                              ? Text("No modules found")
+                              : DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    isExpanded: true,
+                                    value: _module,
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Color(red_bg),
+                                    ),
+                                    iconSize: 30,
+                                    elevation: 0,
+                                    style: TextStyle(
+                                        color: Color(red_bg), fontSize: 20),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _module = newValue;
+
+                                        database.updateTask(
+                                            itemTask.copyWith(module: newValue));
+                                      });
+                                    },
+                                    items: modulesList.map((value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                        ),
+                      ])),
+                ),
+              ),
+              SizedBox(height: 3),
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(

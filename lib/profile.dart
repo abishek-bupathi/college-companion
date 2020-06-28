@@ -541,89 +541,93 @@ editListDialog(
                     ],
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    height: 265,
-                    child: ListView.builder(
-                        itemCount: list.length,
-                        itemBuilder: (_, index) {
-                          _controllers.add(new TextEditingController());
-                          _controllers[index].text = list[index];
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: 265,
+                        child: ListView.builder(
+                            itemCount: list.length,
+                            itemBuilder: (_, index) {
+                              _controllers.add(new TextEditingController());
+                              _controllers[index].text = list[index];
 
-                          return Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: 40,
-                              padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                          counterText: "",
-                                          focusColor: Colors.white,
-                                          enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide.none),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
+                              return Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  height: 40,
+                                  padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Container(
+                                          child: TextField(
+                                            decoration: InputDecoration(
+                                              counterText: "",
+                                              focusColor: Colors.white,
+                                              enabledBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide.none),
+                                              focusedBorder: UnderlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: Colors.white),
+                                              ),
+                                            ),
+                                            controller: _controllers[index],
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color(purple_bg)),
+                                            onTap: () {
+                                              _controllers[index].addListener(() {
+                                                UserDetails().modifyItem(
+                                                    title,
+                                                    index,
+                                                    _controllers[index].text);
+                                              });
+                                            },
+                                            maxLength: 20,
+                                            maxLengthEnforced: true,
                                           ),
+                                          width: 150,
                                         ),
-                                        controller: _controllers[index],
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color(purple_bg)),
-                                        onTap: () {
-                                          _controllers[index].addListener(() {
-                                            UserDetails().modifyItem(
-                                                title,
-                                                index,
-                                                _controllers[index].text);
-                                          });
-                                        },
-                                        maxLength: 20,
-                                        maxLengthEnforced: true,
                                       ),
-                                      width: 150,
-                                    ),
+                                      SizedBox(
+                                        child: RawMaterialButton(
+                                          child: Icon(Icons.delete_outline,
+                                              color: Colors.red, size: 20),
+                                          onPressed: () {
+                                            setState(() {
+                                              UserDetails()
+                                                  .deleteItem(title, index);
+                                              list.removeAt(index);
+                                            });
+                                          },
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                        ),
+                                        height: 40,
+                                        width: 30,
+                                      )
+                                    ],
                                   ),
-                                  SizedBox(
-                                    child: RawMaterialButton(
-                                      child: Icon(Icons.delete_outline,
-                                          color: Colors.red, size: 20),
-                                      onPressed: () {
-                                        setState(() {
-                                          UserDetails()
-                                              .deleteItem(title, index);
-                                          list.removeAt(index);
-                                        });
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                    ),
-                                    height: 40,
-                                    width: 30,
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
                   ),
                   Row(
                     children: <Widget>[
                       Container(
                         width: 230,
                         height: 50,
-                        padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                        padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
                         child: TextField(
                           controller: _add_item_controller,
                           cursorColor: Colors.white,
@@ -651,7 +655,7 @@ editListDialog(
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                        margin: EdgeInsets.fromLTRB(5, 10, 0, 5),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
@@ -661,7 +665,7 @@ editListDialog(
                               color: Color(purple_bg), size: 30),
                           onPressed: () {
                             setState(() {
-                              if (add_item != null) {
+                              if (add_item != null && list.indexOf(add_item) == -1) {
                                 UserDetails().addItem(title, add_item);
                                 list.insert(0, add_item);
                                 _add_item_controller.text = "";
@@ -670,6 +674,7 @@ editListDialog(
                                 Toast.show(
                                     "Please enter new " + title + " name",
                                     context,
+                                    gravity: Toast.CENTER,
                                     duration: Toast.LENGTH_SHORT,
                                     backgroundRadius: 10);
                             });

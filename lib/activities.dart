@@ -595,182 +595,191 @@ editActivityDialog(
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
         return Container(
+          height: 410,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+                SizedBox(height: 10),
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: titleController,
-                        cursorColor: Colors.white,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          hintText: "-",
-                          hintStyle: TextStyle(color: Color(label_clr)),
-                          focusColor: Colors.white,
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          titleController.addListener(() {
-                            database.updateActivity(
-                                itemActivity.copyWith(title: titleController.text));
-                          });
-                        },
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: TextField(
+                    controller: titleController,
+                    cursorColor: Colors.white,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: "-",
+                      hintStyle: TextStyle(color: Color(label_clr)),
+                      focusColor: Colors.white,
+                      enabledBorder:
+                      UnderlineInputBorder(borderSide: BorderSide.none),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
-                      SizedBox(height: 15),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Note",
-                              style: TextStyle(fontSize: 18, color: Color(label_clr)),
-                            ),
-                            TextField(
-                              controller: noteController,
-                              cursorColor: Colors.white,
-                              style: TextStyle(color: Colors.white, fontSize: 25),
-                              decoration: InputDecoration(
-                                hintText: "-",
-                                hintStyle: TextStyle(color: Color(label_clr)),
-                                focusColor: Colors.white,
-                                enabledBorder:
-                                    UnderlineInputBorder(borderSide: BorderSide.none),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                    ),
+                    onTap: () {
+                      titleController.addListener(() {
+                        database.updateActivity(
+                            itemActivity.copyWith(title: titleController.text));
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(height: 5),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                      child: Column(
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Note",
+                                  style: TextStyle(fontSize: 18, color: Color(label_clr)),
                                 ),
-                              ),
-                              onTap: () {
-                                noteController.addListener(() {
-                                  database.updateActivity(itemActivity.copyWith(
-                                      note: noteController.text));
-                                });
-                              },
-                            ),
-                          ]),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Venue",
-                              style: TextStyle(fontSize: 18, color: Color(label_clr)),
-                            ),
-                            TextField(
-                              controller: locationController,
-                              cursorColor: Colors.white,
-                              style: TextStyle(color: Colors.white, fontSize: 25),
-                              decoration: InputDecoration(
-                                hintText: "-",
-                                hintStyle: TextStyle(color: Color(label_clr)),
-                                focusColor: Colors.white,
-                                enabledBorder:
-                                    UnderlineInputBorder(borderSide: BorderSide.none),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                              ),
-                              onTap: () {
-                                locationController.addListener(() {
-                                  database.updateActivity(itemActivity.copyWith(
-                                      location: locationController.text));
-                                });
-                              },
-                            ),
-                          ]),
-                      SizedBox(height: 20),
-                      Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.schedule,
-                                      color: Color(0xFF3C9CE2),
-                                      size: 15,
+                                TextField(
+                                  controller: noteController,
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(color: Colors.white, fontSize: 25),
+                                  decoration: InputDecoration(
+                                    hintText: "-",
+                                    hintStyle: TextStyle(color: Color(label_clr)),
+                                    focusColor: Colors.white,
+                                    enabledBorder:
+                                        UnderlineInputBorder(borderSide: BorderSide.none),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white),
                                     ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                        _time.toString().isNotEmpty
-                                            ? DateFormat("hh:mm a")
-                                                .format(_time)
-                                                .toString()
-                                            : "-",
-                                        style: TextStyle(
-                                            color: Color(blue_bg), fontSize: 15)),
-                                  ],
+                                  ),
+                                  onTap: () {
+                                    noteController.addListener(() {
+                                      database.updateActivity(itemActivity.copyWith(
+                                          note: noteController.text));
+                                    });
+                                  },
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    Icon(Icons.calendar_today,
-                                        color: Color(blue_bg), size: 15),
-                                    SizedBox(width: 5),
-                                    Text(
-                                        _date.toString().isNotEmpty
-                                            ? DateFormat("EEE, dd MMM")
-                                                .format(_date)
-                                                .toString()
-                                            : "-",
-                                        style: TextStyle(
-                                            color: Color(blue_bg), fontSize: 15)),
-                                  ],
+                              ]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Venue",
+                                  style: TextStyle(fontSize: 18, color: Color(label_clr)),
                                 ),
-                                ButtonTheme(
-                                    minWidth: 5,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Color(blue_bg),
-                                      ),
-                                      onPressed: () {
-                                        DatePicker.showDatePicker(context,
-                                            showTitleActions: true,
-                                            minTime: DateTime(2020, 1, 1),
-                                            maxTime: DateTime(2050, 6, 7),
-                                            onConfirm: (date_new) {
-                                          setState(() {
-                                            DatePicker.showTime12hPicker(context,
+                                TextField(
+                                  controller: locationController,
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(color: Colors.white, fontSize: 25),
+                                  decoration: InputDecoration(
+                                    hintText: "-",
+                                    hintStyle: TextStyle(color: Color(label_clr)),
+                                    focusColor: Colors.white,
+                                    enabledBorder:
+                                        UnderlineInputBorder(borderSide: BorderSide.none),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    locationController.addListener(() {
+                                      database.updateActivity(itemActivity.copyWith(
+                                          location: locationController.text));
+                                    });
+                                  },
+                                ),
+                              ]),
+                          SizedBox(height: 20),
+                          Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white),
+                              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.schedule,
+                                          color: Color(0xFF3C9CE2),
+                                          size: 15,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                            _time.toString().isNotEmpty
+                                                ? DateFormat("hh:mm a")
+                                                    .format(_time)
+                                                    .toString()
+                                                : "-",
+                                            style: TextStyle(
+                                                color: Color(blue_bg), fontSize: 15)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Icon(Icons.calendar_today,
+                                            color: Color(blue_bg), size: 15),
+                                        SizedBox(width: 5),
+                                        Text(
+                                            _date.toString().isNotEmpty
+                                                ? DateFormat("EEE, dd MMM")
+                                                    .format(_date)
+                                                    .toString()
+                                                : "-",
+                                            style: TextStyle(
+                                                color: Color(blue_bg), fontSize: 15)),
+                                      ],
+                                    ),
+                                    ButtonTheme(
+                                        minWidth: 5,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.edit,
+                                            color: Color(blue_bg),
+                                          ),
+                                          onPressed: () {
+                                            DatePicker.showDatePicker(context,
                                                 showTitleActions: true,
-                                                onConfirm: (time_new) {
+                                                minTime: DateTime(2020, 1, 1),
+                                                maxTime: DateTime(2050, 6, 7),
+                                                onConfirm: (date_new) {
                                               setState(() {
-                                                print(date_new);
-                                                database.updateActivity(
-                                                    itemActivity.copyWith(
-                                                        time: time_new,
-                                                        date: date_new));
-                                                _time = time_new;
-                                                _date = date_new;
+                                                DatePicker.showTime12hPicker(context,
+                                                    showTitleActions: true,
+                                                    onConfirm: (time_new) {
+                                                  setState(() {
+                                                    print(date_new);
+                                                    database.updateActivity(
+                                                        itemActivity.copyWith(
+                                                            time: time_new,
+                                                            date: date_new));
+                                                    _time = time_new;
+                                                    _date = date_new;
+                                                  });
+                                                },
+                                                    //TODO: Fix current data and time
+                                                    locale: LocaleType.en);
                                               });
                                             },
-                                                //TODO: Fix current data and time
+                                                currentTime:
+                                                    _date != "" ? _date : DateTime.now(),
                                                 locale: LocaleType.en);
-                                          });
-                                        },
-                                            currentTime:
-                                                _date != "" ? _date : DateTime.now(),
-                                            locale: LocaleType.en);
-                                      },
-                                    )),
-                              ])),])),
-                      SizedBox(height: 35),
+                                          },
+                                        )),
+                                  ])),])),
+                  ),
+                ),
+                      SizedBox(height: 3),
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
