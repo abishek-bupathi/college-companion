@@ -460,12 +460,7 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                                       maxTime:
                                                           DateTime(2050, 6, 7),
                                                       onConfirm: (date) {
-                                                    setState(() {
-                                                      dateWithoutFormat = date;
-                                                      _dateExam = DateFormat(
-                                                              "dd MMM, yyyy")
-                                                          .format(
-                                                              dateWithoutFormat);
+
 
                                                       DatePicker
                                                           .showTime12hPicker(
@@ -481,6 +476,11 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                                                   "hh:mm a")
                                                               .format(
                                                                   timeWithoutFormat);
+                                                          dateWithoutFormat = date;
+                                                          _dateExam = DateFormat(
+                                                              "dd MMM, yyyy")
+                                                              .format(
+                                                              dateWithoutFormat);
                                                         });
                                                       },
                                                               currentTime:
@@ -488,7 +488,7 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                                                       .now(),
                                                               locale: LocaleType
                                                                   .en);
-                                                    });
+
                                                   },
                                                       currentTime:
                                                           DateTime.now(),
@@ -711,7 +711,7 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                           minTime: DateTime(2020, 1, 1),
                                           maxTime: DateTime(2050, 6, 7),
                                           onConfirm: (date_new) {
-                                        setState(() {
+
                                           DatePicker.showTime12hPicker(context,
                                               showTitleActions: true,
                                               onConfirm: (time_new) {
@@ -722,7 +722,6 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                               _date = date_new;
                                             });
                                           }, locale: LocaleType.en);
-                                        });
                                       },
                                           currentTime:
                                               _date != "" ? _date : DateTime.now(),

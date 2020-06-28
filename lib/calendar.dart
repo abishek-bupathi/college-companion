@@ -2,6 +2,7 @@ import 'package:college_companion/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
@@ -219,12 +220,10 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
   }
 
   Widget _buildEventList() {
-
     return _selectedEvents.length!=0 ? Container(
       height: 250,
       child: Expanded(
         child: Container(
-
           padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
           child: ListView.builder(
             itemBuilder: (BuildContext context, int index) => Container(
@@ -295,11 +294,17 @@ class _Calendar_dialogState extends State<Calendar_dialog>  {
       });
       Future.forEach(tests_titles, (element)
       {
-        data.add({'name': element.module+" Exam", 'isDone': false});
+        data.add({'name': element.module+" Exam" + " at " + DateFormat(
+            "hh:mm a")
+            .format(
+            element.time) , 'isDone': false});
       });
       Future.forEach(activity_titles, (element)
       {
-        data.add({'name': element.title, 'isDone': element.completed});
+        data.add({'name': element.title  + " at " + DateFormat(
+            "hh:mm a")
+            .format(
+            element.time) , 'isDone': element.completed});
       });
 
        events.putIfAbsent(date, ()=> data);
