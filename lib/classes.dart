@@ -291,61 +291,6 @@ class timeTable extends StatefulWidget {
   int day;
 
   List<String> modulesList = UserDetails().getModules();
-  List<String> modules_mon = [
-    "Maths",
-    "-",
-    "Analog",
-    "Analog",
-    "-",
-    "Programming",
-    "-",
-    "Physics",
-    "-"
-  ];
-  List<String> modules_tue = [
-    "Physics",
-    "Programming",
-    "Electrical",
-    "Analog",
-    "-",
-    "Maths",
-    "Maths",
-    "Digital",
-    "-"
-  ];
-  List<String> locationList = [
-    "ENG-3034",
-    "ENG-3034",
-    "ENG-3035",
-    "ENG-2034",
-    "G-07",
-    "ENG-3034",
-    "ENG-1004",
-    "AC-002",
-    "ENG-3034"
-  ];
-  List<String> timeList = [
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 AM",
-    "1:00 PM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
-    "5:00 PM"
-  ];
-  List<String> lecturers = [
-    "Ron",
-    "Ron",
-    "Ron",
-    "Ron",
-    "Ron",
-    "Ron",
-    "Ron",
-    "Ron",
-    "Ron"
-  ];
 
   timeTable(this.width, this.day);
 

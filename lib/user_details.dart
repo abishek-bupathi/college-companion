@@ -1,33 +1,6 @@
 import 'package:hive/hive.dart';
 
 class UserDetails {
-  String id = "18280072",
-      name = "Abishek Bupathi",
-      course = "Electronic and Computer",
-      university = "National University of Ireland, Galway",
-      dob = "08/12/2000",
-      current_avatar = "assets/Avatars/4.png";
-
-  List<String> modules = [
-    "Maths",
-    "Programming",
-    "Electrical",
-    "Mechanics",
-    "Analog",
-    "Physics"
-  ];
-
-  List<String> skills = [
-    "Julia",
-    "C",
-    "Raspberry Pi",
-    "Java",
-    "Python",
-    "Badminton",
-    "Flutter",
-    "Tensor flow",
-    "Scikit-Learn"
-  ];
 
   final user_details = Hive.box('user_details');
   final modules_box = Hive.box('modules');
@@ -90,8 +63,7 @@ class UserDetails {
   }
 
   void setCurrentAvatar(String avatar_new) {
-    current_avatar = avatar_new;
-    user_details.put(5, current_avatar);
+    user_details.put(5, avatar_new);
   }
 
   List<String> getModules() {
