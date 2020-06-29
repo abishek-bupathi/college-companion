@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+
 import './calendar.dart';
 import './user_details.dart';
 import 'database.dart';
@@ -50,7 +51,7 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin {
             actions: <Widget>[
               Container(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
                 height: 40,
                 width: 40,
                 child: new IconButton(
@@ -58,7 +59,7 @@ class _ClassesState extends State<Classes> with SingleTickerProviderStateMixin {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context){
+                      builder: (BuildContext context) {
                         return Calendar_dialog(database);
                       },
                     );
@@ -113,17 +114,18 @@ empty_classes_body(StateSetter setState, AppDatabase database) {
               DateTime.parse("2020-02-27 14:00:00"),
               DateTime.parse("2020-02-27 15:00:00"),
               DateTime.parse("2020-02-27 16:00:00"),
-              DateTime.parse("2020-02-27 17:00:00")];
-            for (int i = 0; i < 5; i++) for (int j = 0; j < 9; j++) {
-              final period = PeriodData(
-                     module: "",
-                     location: "",
-                     day: i,
-                     lecturer: "",
-                     time: time[j]
-              );
-              database.insertPeriod(period);
-            }
+              DateTime.parse("2020-02-27 17:00:00")
+            ];
+            for (int i = 0; i < 5; i++)
+              for (int j = 0; j < 9; j++) {
+                final period = PeriodData(
+                    module: "",
+                    location: "",
+                    day: i,
+                    lecturer: "",
+                    time: time[j]);
+                database.insertPeriod(period);
+              }
           });
         }),
   );
@@ -204,9 +206,11 @@ classes_body(
               ),
               Container(
                 child: Expanded(
-                  child: TabBarView(children: _pageOptions,
-                  controller: _tabController,
-                  physics: NeverScrollableScrollPhysics(),),
+                  child: TabBarView(
+                    children: _pageOptions,
+                    controller: _tabController,
+                    physics: NeverScrollableScrollPhysics(),
+                  ),
                 ),
               ),
             ],
@@ -358,43 +362,37 @@ class _timeTableState extends State<timeTable> {
     double height = MediaQuery.of(context).size.height - 278;
 
     return StreamBuilder(
-      stream: database.watchTodayPeriod(widget.day),
-      builder: (context,AsyncSnapshot<List<PeriodData>> snapshot) {
-        final periods = snapshot.data ?? List();
-        return Container(
-            height: height,
-            child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (_, int index) {
-                  final itemPeriod = periods[index];
-                  return GestureDetector(
-                    child: ItemClasses(database,itemPeriod, widget.width, height),
-                    onTap: () {
-                      if (itemPeriod.module != "") {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) => viewClassDialog(
-                                context,
-                                widget.modulesList,
-                                itemPeriod,
-                                database));
-                      } else {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) =>
-                                addClassDialog(context,
-                                    widget.modulesList,
-                                    itemPeriod,
-                                    database));
-                      }
-                    },
-                  );
-                },
-                itemCount: periods.length));
-      }
-    );
+        stream: database.watchTodayPeriod(widget.day),
+        builder: (context, AsyncSnapshot<List<PeriodData>> snapshot) {
+          final periods = snapshot.data ?? List();
+          return Container(
+              height: height,
+              child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (_, int index) {
+                    final itemPeriod = periods[index];
+                    return GestureDetector(
+                      child: ItemClasses(
+                          database, itemPeriod, widget.width, height),
+                      onTap: () {
+                        if (itemPeriod.module != "") {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => viewClassDialog(context,
+                                  widget.modulesList, itemPeriod, database));
+                        } else {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => addClassDialog(context,
+                                  widget.modulesList, itemPeriod, database));
+                        }
+                      },
+                    );
+                  },
+                  itemCount: periods.length));
+        });
   }
 }
 
@@ -403,8 +401,8 @@ class ItemClasses extends StatefulWidget {
   AppDatabase database;
   PeriodData itemPeriod;
 
+  ItemClasses(this.database, this.itemPeriod, this.width, this.height);
 
-  ItemClasses(this.database,this.itemPeriod, this.width, this.height);
   @override
   _ItemClassesState createState() => _ItemClassesState();
 }
@@ -412,15 +410,13 @@ class ItemClasses extends StatefulWidget {
 class _ItemClassesState extends State<ItemClasses> {
   @override
   Widget build(BuildContext context) {
-
     String venue = widget.itemPeriod.location,
-           module = widget.itemPeriod.module;
-    var  time = widget.itemPeriod.time != null ? widget.itemPeriod.time : "";
-
+        module = widget.itemPeriod.module;
+    var time = widget.itemPeriod.time != null ? widget.itemPeriod.time : "";
 
     int magenta_dark = 0xFF861657, magenta_light = 0xFFaf5a76;
     double item_height = 40;
-    double spacing_height = (widget.height - 380)/10;
+    double spacing_height = (widget.height - 380) / 10;
     return new Card(
       elevation: 5,
       margin: EdgeInsets.fromLTRB(5, spacing_height, 5, 0),
@@ -454,7 +450,7 @@ class _ItemClassesState extends State<ItemClasses> {
             SizedBox(
               width: widget.width,
               child: Text(
-                module != ""? module : "-",
+                module != "" ? module : "-",
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
@@ -467,7 +463,7 @@ class _ItemClassesState extends State<ItemClasses> {
             SizedBox(
               width: widget.width,
               child: Text(
-                venue != ""? venue : "-",
+                venue != "" ? venue : "-",
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
@@ -479,7 +475,8 @@ class _ItemClassesState extends State<ItemClasses> {
   }
 }
 
-viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, AppDatabase database ) {
+viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod,
+    AppDatabase database) {
   int magenta_bg = 0xFF861657, label_clr = 0xFFE0A3C6;
   String _module = itemPeriod.module;
   var locationController = new TextEditingController();
@@ -495,7 +492,6 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
       child: StatefulBuilder(// You need this, notice the parameters below:
           builder: (BuildContext context, StateSetter setState) {
         return Container(
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -517,19 +513,20 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                         children: <Widget>[
                           Text(
                             "Venue",
-                            style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                            style: TextStyle(
+                                fontSize: 18, color: Color(label_clr)),
                           ),
                           TextField(
-
                               controller: locationController,
                               cursorColor: Colors.white,
-                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
                               decoration: InputDecoration(
                                 hintText: "-",
                                 hintStyle: TextStyle(color: Color(label_clr)),
                                 focusColor: Colors.white,
-                                enabledBorder:
-                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
@@ -537,8 +534,8 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                               onTap: () {
                                 setState(() {
                                   locationController.addListener(() {
-                                    database.updatePeriod(
-                                        itemPeriod.copyWith(location: locationController.text));
+                                    database.updatePeriod(itemPeriod.copyWith(
+                                        location: locationController.text));
                                   });
                                 });
                               }),
@@ -549,18 +546,20 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                         children: <Widget>[
                           Text(
                             "Lecturer/ Tutor",
-                            style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                            style: TextStyle(
+                                fontSize: 18, color: Color(label_clr)),
                           ),
                           TextField(
                               controller: lecturerController,
                               cursorColor: Colors.white,
-                              style: TextStyle(color: Colors.white, fontSize: 25),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
                               decoration: InputDecoration(
                                 hintText: "-",
                                 hintStyle: TextStyle(color: Color(label_clr)),
                                 focusColor: Colors.white,
-                                enabledBorder:
-                                    UnderlineInputBorder(borderSide: BorderSide.none),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
@@ -568,8 +567,8 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                               onTap: () {
                                 setState(() {
                                   lecturerController.addListener(() {
-                                    database.updatePeriod(
-                                        itemPeriod.copyWith(lecturer: lecturerController.text));
+                                    database.updatePeriod(itemPeriod.copyWith(
+                                        lecturer: lecturerController.text));
                                   });
                                 });
                               }),
@@ -602,14 +601,13 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                                 ),
                                 iconSize: 30,
                                 elevation: 0,
-                                style:
-                                    TextStyle(color: Color(magenta_bg), fontSize: 20),
+                                style: TextStyle(
+                                    color: Color(magenta_bg), fontSize: 20),
                                 onChanged: (newValue) {
                                   setState(() {
                                     _module = newValue;
                                     database.updatePeriod(
-                                      itemPeriod.copyWith(module: newValue)
-                                    );
+                                        itemPeriod.copyWith(module: newValue));
                                   });
                                 },
                                 items: modulesList.map((value) {
@@ -665,12 +663,10 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
                           borderRadius: BorderRadius.circular(10),
                         ),
                         onPressed: () {
-                          if(_module != null)
-                          Navigator.pop(context);
-                          else{
-                            Toast.show(
-                                "Module cannot be empty",
-                                context,
+                          if (_module != null)
+                            Navigator.pop(context);
+                          else {
+                            Toast.show("Module cannot be empty", context,
                                 duration: Toast.LENGTH_LONG,
                                 backgroundRadius: 10);
                           }
@@ -688,7 +684,8 @@ viewClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, A
       }));
 }
 
-addClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, AppDatabase database ) {
+addClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod,
+    AppDatabase database) {
   String _location = "",
       _lecturer = "",
       _module = modulesList.isNotEmpty ? modulesList[0] : null;
@@ -879,17 +876,14 @@ addClassDialog(BuildContext context, List modulesList, PeriodData itemPeriod, Ap
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            if(_module != null){
-                            database.updatePeriod(itemPeriod.copyWith(
-                                location: _location ,
-                                lecturer: _lecturer,
-                                module: _module
-                            ));
-                            Navigator.pop(context);
-                            }else{
-                              Toast.show(
-                                  "Module cannot be empty",
-                                  context,
+                            if (_module != null) {
+                              database.updatePeriod(itemPeriod.copyWith(
+                                  location: _location,
+                                  lecturer: _lecturer,
+                                  module: _module));
+                              Navigator.pop(context);
+                            } else {
+                              Toast.show("Module cannot be empty", context,
                                   duration: Toast.LENGTH_LONG,
                                   backgroundRadius: 10);
                             }

@@ -25,7 +25,7 @@ class _SettingsState extends State<Settings> {
       uni = UserDetails().getUniversity(),
       current_avatar = UserDetails().getCurrentAvatar();
 
-  DateTime  dob = UserDetails().getDob();
+  DateTime dob = UserDetails().getDob();
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +43,20 @@ class _SettingsState extends State<Settings> {
       color: Colors.white,
       child: WillPopScope(
         onWillPop: () {
-          if(course != "" || name != "" || id != ""|| uni != ""){
-          UserDetails().setCourse(course);
-          UserDetails().setName(name);
-          UserDetails().setId(id);
-          UserDetails().setCurrentAvatar(current_avatar);
-          UserDetails().setDob(dob);
-          UserDetails().setUniversity(uni);
-          Navigator.pop(context);
-    }else{
-    Toast.show("No field should be empty",
-    context,
-    duration: Toast.LENGTH_LONG,
-    backgroundRadius: 10);
-    }
+          if (course != "" || name != "" || id != "" || uni != "") {
+            UserDetails().setCourse(course);
+            UserDetails().setName(name);
+            UserDetails().setId(id);
+            UserDetails().setCurrentAvatar(current_avatar);
+            UserDetails().setDob(dob);
+            UserDetails().setUniversity(uni);
+            Navigator.pop(context);
+          } else {
+            Toast.show("No field should be empty", context,
+                duration: Toast.LENGTH_LONG, backgroundRadius: 10);
+          }
           return null;
         },
-
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -72,7 +69,7 @@ class _SettingsState extends State<Settings> {
             actions: <Widget>[
               Container(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
                 height: 40,
                 width: 40,
                 child: new IconButton(
@@ -81,17 +78,16 @@ class _SettingsState extends State<Settings> {
                     tag: "setting",
                   ),
                   onPressed: () {
-                    if(course != "" && name != ""  && id != ""  && uni != "" ){
-                    UserDetails().setCourse(course);
-                    UserDetails().setName(name);
-                    UserDetails().setId(id);
-                    UserDetails().setCurrentAvatar(current_avatar);
-                    UserDetails().setDob(dob);
-                    UserDetails().setUniversity(uni);
-                    Navigator.pop(context);
-                    }else{
-                      Toast.show("No field should be empty",
-                          context,
+                    if (course != "" && name != "" && id != "" && uni != "") {
+                      UserDetails().setCourse(course);
+                      UserDetails().setName(name);
+                      UserDetails().setId(id);
+                      UserDetails().setCurrentAvatar(current_avatar);
+                      UserDetails().setDob(dob);
+                      UserDetails().setUniversity(uni);
+                      Navigator.pop(context);
+                    } else {
+                      Toast.show("No field should be empty", context,
                           gravity: Toast.CENTER,
                           duration: Toast.LENGTH_LONG,
                           backgroundRadius: 10);
@@ -233,7 +229,7 @@ class _SettingsState extends State<Settings> {
                                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Icon(
@@ -241,9 +237,11 @@ class _SettingsState extends State<Settings> {
                                             color: Color(dark_grey),
                                             size: 20,
                                           ),
-                                          Text("   " + DateFormat(
-                                              "dd, MMM yyyy")
-                                              .format(dob).toString(),
+                                          Text(
+                                              "   " +
+                                                  DateFormat("dd, MMM yyyy")
+                                                      .format(dob)
+                                                      .toString(),
                                               style: TextStyle(
                                                   color: Color(dark_grey),
                                                   fontSize: 20)),
@@ -251,22 +249,26 @@ class _SettingsState extends State<Settings> {
                                               minWidth: 0,
                                               child: IconButton(
                                                 focusColor: Colors.black12,
-                                                highlightColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
                                                 iconSize: 20,
                                                 icon: Icon(
                                                   Icons.edit,
                                                   color: Color(dark_grey),
                                                 ),
                                                 onPressed: () {
-                                                  DatePicker.showDatePicker(context,
+                                                  DatePicker.showDatePicker(
+                                                      context,
                                                       showTitleActions: true,
-                                                      minTime: DateTime(1950, 1, 1),
-                                                      maxTime: DateTime(2020, 6, 7),
+                                                      minTime:
+                                                          DateTime(1950, 1, 1),
+                                                      maxTime:
+                                                          DateTime(2020, 6, 7),
                                                       onConfirm: (date) {
-                                                        setState(() {
-                                                          dob = date;
-                                                        });
-                                                      },
+                                                    setState(() {
+                                                      dob = date;
+                                                    });
+                                                  },
                                                       currentTime: dob,
                                                       locale: LocaleType.en);
                                                 },
@@ -344,14 +346,14 @@ class _SettingsState extends State<Settings> {
                                           color: Colors.white, fontSize: 20),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                           borderRadius:
-                                          BorderRadius.circular(10)),
+                                              BorderRadius.circular(10)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                           borderRadius:
-                                          BorderRadius.circular(10)),
+                                              BorderRadius.circular(10)),
                                     ),
                                     onTap: () {
                                       uniController.addListener(() {
@@ -410,35 +412,50 @@ class _SettingsState extends State<Settings> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                  child: Image.asset("assets/Avatars/6.png",),
-                              width: 75,
-                              height: 75,),
+                                child: Image.asset(
+                                  "assets/logo_about.png",
+                                ),
+                                width: 75,
+                                height: 75,
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("College Companion v1.0", style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),),
-                                  SizedBox(height: 3,),
-                                  Text("2020", style: TextStyle(fontSize: 15, color: Colors.white)),
+                                  Text(
+                                    "College Companion v1.0",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text("2020",
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.white)),
                                   SizedBox(height: 10),
-                                  Text("GNU General Public License v3.0", style: TextStyle(fontSize: 10, color: Colors.white)),
+                                  Text("GNU General Public License v3.0",
+                                      style: TextStyle(
+                                          fontSize: 10, color: Colors.white)),
                                   SizedBox(height: 5),
                                   RichText(
-                                    text: new TextSpan(
-                                      children: [
-                                      new TextSpan(
+                                      text: new TextSpan(children: [
+                                    new TextSpan(
                                       text: 'Source code : ',
-                                      style: new TextStyle(color: Colors.white, fontSize: 10),
+                                      style: new TextStyle(
+                                          color: Colors.white, fontSize: 10),
                                     ),
                                     new TextSpan(
-                                          text: 'github.io',
-                                          style: new TextStyle(color: Colors.blue, fontSize: 10),
-                                          recognizer: new TapGestureRecognizer()
-                                            ..onTap = () {openLink();},
-
-                                  ),
-                                  ]
-                                    )
-                                  )
+                                      text: 'github.io',
+                                      style: new TextStyle(
+                                          color: Colors.blue, fontSize: 10),
+                                      recognizer: new TapGestureRecognizer()
+                                        ..onTap = () {
+                                          openLink();
+                                        },
+                                    ),
+                                  ]))
                                 ],
                               )
                             ],
@@ -452,15 +469,14 @@ class _SettingsState extends State<Settings> {
         ),
       ),
     );
-
-
   }
+
   void openLink() async {
     String url = 'https://github.com/abishek-bupathi/college-companion';
-    if(kIsWeb) {
+    if (kIsWeb) {
       html.window.open(url, '_blank');
     } else {
-      if(await canLaunch(url)) {
+      if (await canLaunch(url)) {
         launch(url);
       }
     }

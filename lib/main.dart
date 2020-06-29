@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:splashscreen/splashscreen.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:provider/provider.dart';
+import 'package:splashscreen/splashscreen.dart';
+
 import './academic.dart';
 import './activities.dart';
-import './exams.dart';
 import './classes.dart';
-import './profile.dart';
 import './custom_icons.dart';
+import './exams.dart';
+import './profile.dart';
 import './welcome_details.dart';
 import 'database.dart';
 
@@ -68,7 +69,7 @@ class MyAppState extends State<MyApp> {
         photoSize: 50.0,
         loaderColor: Colors.white,
         navigateAfterSeconds: new AfterSplash(),
-        image: new Image.asset("assets/Avatars/1.png"),
+        image: new Image.asset("assets/logo.png"),
         backgroundColor: Colors.white,
       ),
     );
@@ -98,7 +99,6 @@ class AfterSplashState extends State<AfterSplash> {
 
   @override
   Widget build(BuildContext context) {
-
     return Provider(
       create: (_) => AppDatabase(),
       child: MaterialApp(
@@ -106,15 +106,14 @@ class AfterSplashState extends State<AfterSplash> {
           title: "College Companion",
           home: Scaffold(
             body: PageView(
-                children: _pageOptions,
-                onPageChanged: (index) {
-                  setState(() {
-                    _selectedPage = index;
-                  });
-                },
-                controller: _pageController,
+              children: _pageOptions,
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedPage = index;
+                });
+              },
+              controller: _pageController,
               physics: ClampingScrollPhysics(),
-
             ),
             bottomNavigationBar: BottomNavigationBar(
               // setting attributes for the bar
@@ -126,7 +125,9 @@ class AfterSplashState extends State<AfterSplash> {
               currentIndex: _selectedPage,
               onTap: (index) {
                 setState(() {
-                  _pageController.animateToPage(index, duration: Duration(milliseconds: 450), curve: Curves.easeInOut);
+                  _pageController.animateToPage(index,
+                      duration: Duration(milliseconds: 450),
+                      curve: Curves.easeInOut);
                 });
               },
 

@@ -15,6 +15,7 @@ class _ProfileState extends State<Profile> {
   String id, name, course, university, dob, current_avatar;
   int light_purple = 0xFFF39CE2, dark_purple = 0xFF8E00B9;
   double width, height_avatar, height_details, spacing, box_height = 190;
+
   @override
   Widget build(BuildContext context) {
     modules = UserDetails().getModules();
@@ -24,10 +25,7 @@ class _ProfileState extends State<Profile> {
     name = UserDetails().getName();
     course = UserDetails().getCourse();
     university = UserDetails().getUniversity();
-    dob = DateFormat(
-        "dd, MMM yyyy")
-        .format(
-        UserDetails().getDob());
+    dob = DateFormat("dd, MMM yyyy").format(UserDetails().getDob());
     current_avatar = UserDetails().getCurrentAvatar();
 
     width = (MediaQuery.of(context).size.width) / 2 - 20 - 10;
@@ -49,7 +47,7 @@ class _ProfileState extends State<Profile> {
             Container(
               child: Container(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                margin: EdgeInsets.fromLTRB(0, 0,15, 0),
+                margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
                 height: 40,
                 width: 40,
                 child: new IconButton(
@@ -115,10 +113,10 @@ class _ProfileState extends State<Profile> {
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black12,
-                                        blurRadius:
-                                            5.0, // has the effect of softening the shadow
-                                        spreadRadius:
-                                            3.0, // has the effect of extending the shadow
+                                        blurRadius: 5.0,
+                                        // has the effect of softening the shadow
+                                        spreadRadius: 3.0,
+                                        // has the effect of extending the shadow
                                         offset: Offset(
                                           0, // horizontal, move right 10
                                           0, // vertical, move down 10
@@ -150,10 +148,10 @@ class _ProfileState extends State<Profile> {
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black12,
-                                        blurRadius:
-                                            5.0, // has the effect of softening the shadow
-                                        spreadRadius:
-                                            3.0, // has the effect of extending the shadow
+                                        blurRadius: 5.0,
+                                        // has the effect of softening the shadow
+                                        spreadRadius: 3.0,
+                                        // has the effect of extending the shadow
                                         offset: Offset(
                                           0, // horizontal, move right 10
                                           0, // vertical, move down 10
@@ -185,10 +183,10 @@ class _ProfileState extends State<Profile> {
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black12,
-                                        blurRadius:
-                                            5.0, // has the effect of softening the shadow
-                                        spreadRadius:
-                                            3.0, // has the effect of extending the shadow
+                                        blurRadius: 5.0,
+                                        // has the effect of softening the shadow
+                                        spreadRadius: 3.0,
+                                        // has the effect of extending the shadow
                                         offset: Offset(
                                           0, // horizontal, move right 10
                                           0, // vertical, move down 10
@@ -563,7 +561,8 @@ editListDialog(
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
@@ -571,11 +570,14 @@ editListDialog(
                                             decoration: InputDecoration(
                                               counterText: "",
                                               focusColor: Colors.white,
-                                              enabledBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide.none),
-                                              focusedBorder: UnderlineInputBorder(
-                                                borderSide:
-                                                    BorderSide(color: Colors.white),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
                                               ),
                                             ),
                                             controller: _controllers[index],
@@ -583,7 +585,8 @@ editListDialog(
                                                 fontSize: 20,
                                                 color: Color(purple_bg)),
                                             onTap: () {
-                                              _controllers[index].addListener(() {
+                                              _controllers[index]
+                                                  .addListener(() {
                                                 UserDetails().modifyItem(
                                                     title,
                                                     index,
@@ -634,7 +637,9 @@ editListDialog(
                           style: TextStyle(color: Colors.white, fontSize: 20),
                           decoration: InputDecoration(
                             counterText: "",
-                            hintText: title.compareTo("Modules") == 0?"Module name":"Skill name",
+                            hintText: title.compareTo("Modules") == 0
+                                ? "Module name"
+                                : "Skill name",
                             hintStyle: TextStyle(color: Colors.white60),
                             contentPadding: EdgeInsets.all(10),
                             focusColor: Colors.white,
@@ -665,7 +670,8 @@ editListDialog(
                               color: Color(purple_bg), size: 30),
                           onPressed: () {
                             setState(() {
-                              if (add_item != null && list.indexOf(add_item) == -1) {
+                              if (add_item != null &&
+                                  list.indexOf(add_item) == -1) {
                                 UserDetails().addItem(title, add_item);
                                 list.insert(0, add_item);
                                 _add_item_controller.text = "";
@@ -688,235 +694,3 @@ editListDialog(
                 ]));
       }));
 }
-
-/*
-editProfileDialog(BuildContext context, StateSetter setState, String name,
-    String id, String course, String current_avatar) {
-  int purple_bg = 0xFFA21FC2;
-  int selected;
-  var nameController = new TextEditingController();
-  nameController.text = name;
-  var idController = new TextEditingController();
-  idController.text = id;
-  var courseController = new TextEditingController();
-  courseController.text = course;
-  var scrollController = new ScrollController();
-
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Color(purple_bg),
-            child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                height: 480,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        height: 150,
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: 105,
-                              height: 105,
-                              margin: EdgeInsets.all(0),
-                              decoration: BoxDecoration(
-                                //  borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image: AssetImage(current_avatar),
-                                    fit: BoxFit.cover),
-                              ),
-                            ),
-                            SizedBox(width: 15),
-                            Expanded(
-                              child: GridView.builder(
-                                scrollDirection: Axis.vertical,
-                                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                                itemCount: 6,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 15,
-                                        mainAxisSpacing: 15),
-                                itemBuilder: (BuildContext context, int index) {
-                                  String grid_avatar = "assets/Avatars/" +
-                                      index.toString() +
-                                      ".png";
-                                  selected = current_avatar == grid_avatar
-                                      ? index
-                                      : null;
-                                  return Container(
-                                      padding: EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                            color: selected == index
-                                                ? Color(purple_bg)
-                                                : Colors.white,
-                                            width: 2),
-                                        // color: selected == index ? Colors.black26 : Colors.white
-                                      ),
-                                      height: 15,
-                                      width: 15,
-                                      child: GestureDetector(
-                                        child: Image(
-                                          image: AssetImage(grid_avatar),
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            current_avatar = grid_avatar;
-                                            selected = index;
-                                          });
-                                        },
-                                      ));
-                                },
-                              ),
-                            ),
-                          ],
-                        )),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        child: Container(
-                            padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                            child: Column(children: [
-                              TextField(
-                                  controller: nameController,
-                                  cursorColor: Colors.white,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                  decoration: InputDecoration(
-                                    labelText: 'Name',
-                                    focusColor: Colors.white,
-                                    labelStyle: new TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  onSubmitted: (String name_new) {
-                                    setState(() {
-                                      name = name_new;
-                                    });
-                                  }),
-                              SizedBox(height: 20),
-                              TextField(
-                                  controller: idController,
-                                  cursorColor: Colors.white,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                  decoration: InputDecoration(
-                                    labelText: 'Id',
-                                    focusColor: Colors.white,
-                                    labelStyle: new TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  onSubmitted: (String id_new) {
-                                    setState(() {
-                                      id = id_new;
-                                    });
-                                  }),
-                              SizedBox(height: 20),
-                              TextField(
-                                  controller: courseController,
-                                  cursorColor: Colors.white,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                  decoration: InputDecoration(
-                                    labelText: 'Course',
-                                    focusColor: Colors.white,
-                                    labelStyle: new TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  onTap: () {
-                                    scrollController.jumpTo(1);
-                                  },
-                                  onSubmitted: (String course_new) {
-                                    setState(() {
-                                      course = course_new;
-                                    });
-                                  }),
-                            ])),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 5, 20, 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          MaterialButton(
-                            highlightColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 0,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Text("  "),
-                          MaterialButton(
-                            color: Colors.white,
-                            highlightColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              "Done",
-                              style: TextStyle(color: Color(purple_bg)),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }));
-      });
-}
-*/

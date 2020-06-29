@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
-import './user_details.dart';
+
 import './main.dart';
+import './user_details.dart';
 
 Welcome(BuildContext context) {
   int color_blue = 0xFF7349ab;
@@ -30,7 +31,7 @@ Welcome(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
-                    height: MediaQuery.of(context).size.height < 750 ? 375 : 800,
+                    height: 375,
                     child: Image.asset("assets/backgrounds/welcome_bg.png")),
               ],
             ),
@@ -42,18 +43,23 @@ Welcome(BuildContext context) {
                     Text(
                       "College Companion",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(color_blue), fontSize: 30, fontWeight: FontWeight.bold),
-
+                      style: TextStyle(
+                          color: Color(color_blue),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
                   "Boost your productivity by organizing and planning all your university activities in one place !",
                   textAlign: TextAlign.center,
-
-                  style: TextStyle(color: Colors.black54, fontSize: 20, ),
-
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 20,
+                  ),
                 ),
               ],
             ),
@@ -252,8 +258,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       color: Color(color_grey)),
                   padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Icon(
@@ -262,9 +267,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           size: 20,
                         ),
                         Text("   " + widget._date,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20)),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20)),
                         ButtonTheme(
                             minWidth: 0,
                             child: IconButton(
@@ -281,14 +285,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                     minTime: DateTime(1950, 1, 1),
                                     maxTime: DateTime(2020, 6, 7),
                                     onConfirm: (date) {
-                                      setState(() {
-                                        widget.dateWithoutFormat = date;
-                                        widget._date = DateFormat(
-                                            "dd, MMM yyyy")
-                                            .format(
-                                            widget.dateWithoutFormat);
-                                      });
-                                    },
+                                  setState(() {
+                                    widget.dateWithoutFormat = date;
+                                    widget._date = DateFormat("dd, MMM yyyy")
+                                        .format(widget.dateWithoutFormat);
+                                  });
+                                },
                                     currentTime: DateTime(2000, 1, 1),
                                     locale: LocaleType.en);
                               },
@@ -326,7 +328,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
                                 Navigator.pushReplacement(
                                     context,
-                                    PageTransition(type: PageTransitionType.rightToLeft, child: UniversityDetails()));
+                                    PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: UniversityDetails()));
                               }
                             },
                             child: Icon(Icons.arrow_forward_ios,
@@ -368,7 +372,7 @@ class _UniversityDetailsState extends State<UniversityDetails> {
         key: scaffold_key,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          brightness: (scrn_height < 750) ? Brightness.light: Brightness.dark,
+          brightness: (scrn_height < 750) ? Brightness.light : Brightness.dark,
           elevation: 0,
           backgroundColor:
               (scrn_height < 750) ? Colors.white : Color(0xFF3F3D56),

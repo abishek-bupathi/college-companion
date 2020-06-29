@@ -14,6 +14,7 @@ class Task extends DataClass implements Insertable<Task> {
   final String module;
   final DateTime dueDate;
   final bool completed;
+
   Task(
       {@required this.id,
       @required this.title,
@@ -21,6 +22,7 @@ class Task extends DataClass implements Insertable<Task> {
       @required this.module,
       this.dueDate,
       @required this.completed});
+
   factory Task.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -41,6 +43,7 @@ class Task extends DataClass implements Insertable<Task> {
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}completed']),
     );
   }
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -94,6 +97,7 @@ class Task extends DataClass implements Insertable<Task> {
       completed: serializer.fromJson<bool>(json['completed']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -122,6 +126,7 @@ class Task extends DataClass implements Insertable<Task> {
         dueDate: dueDate ?? this.dueDate,
         completed: completed ?? this.completed,
       );
+
   @override
   String toString() {
     return (StringBuffer('Task(')
@@ -144,6 +149,7 @@ class Task extends DataClass implements Insertable<Task> {
               note.hashCode,
               $mrjc(module.hashCode,
                   $mrjc(dueDate.hashCode, completed.hashCode))))));
+
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -163,6 +169,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
   final Value<String> module;
   final Value<DateTime> dueDate;
   final Value<bool> completed;
+
   const TasksCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -171,6 +178,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.dueDate = const Value.absent(),
     this.completed = const Value.absent(),
   });
+
   TasksCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
@@ -180,6 +188,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.completed = const Value.absent(),
   })  : title = Value(title),
         module = Value(module);
+
   static Insertable<Task> custom({
     Expression<int> id,
     Expression<String> title,
@@ -243,11 +252,15 @@ class TasksCompanion extends UpdateCompanion<Task> {
 class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   final GeneratedDatabase _db;
   final String _alias;
+
   $TasksTable(this._db, [this._alias]);
+
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
+
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
+
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
@@ -255,16 +268,20 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
 
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   GeneratedTextColumn _title;
+
   @override
   GeneratedTextColumn get title => _title ??= _constructTitle();
+
   GeneratedTextColumn _constructTitle() {
     return GeneratedTextColumn('title', $tableName, false, minTextLength: 1);
   }
 
   final VerificationMeta _noteMeta = const VerificationMeta('note');
   GeneratedTextColumn _note;
+
   @override
   GeneratedTextColumn get note => _note ??= _constructNote();
+
   GeneratedTextColumn _constructNote() {
     return GeneratedTextColumn('note', $tableName, false,
         defaultValue: Constant(""));
@@ -272,8 +289,10 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
 
   final VerificationMeta _moduleMeta = const VerificationMeta('module');
   GeneratedTextColumn _module;
+
   @override
   GeneratedTextColumn get module => _module ??= _constructModule();
+
   GeneratedTextColumn _constructModule() {
     return GeneratedTextColumn(
       'module',
@@ -284,8 +303,10 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
 
   final VerificationMeta _dueDateMeta = const VerificationMeta('dueDate');
   GeneratedDateTimeColumn _dueDate;
+
   @override
   GeneratedDateTimeColumn get dueDate => _dueDate ??= _constructDueDate();
+
   GeneratedDateTimeColumn _constructDueDate() {
     return GeneratedDateTimeColumn(
       'due_date',
@@ -296,8 +317,10 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
 
   final VerificationMeta _completedMeta = const VerificationMeta('completed');
   GeneratedBoolColumn _completed;
+
   @override
   GeneratedBoolColumn get completed => _completed ??= _constructCompleted();
+
   GeneratedBoolColumn _constructCompleted() {
     return GeneratedBoolColumn('completed', $tableName, false,
         defaultValue: Constant(false));
@@ -306,12 +329,15 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   @override
   List<GeneratedColumn> get $columns =>
       [id, title, note, module, dueDate, completed];
+
   @override
   $TasksTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'tasks';
   @override
   final String actualTableName = 'tasks';
+
   @override
   VerificationContext validateIntegrity(Insertable<Task> instance,
       {bool isInserting = false}) {
@@ -349,6 +375,7 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
+
   @override
   Task map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -369,6 +396,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
   final DateTime date;
   final DateTime time;
   final bool completed;
+
   ActivityData(
       {@required this.id,
       @required this.title,
@@ -377,6 +405,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
       this.date,
       this.time,
       @required this.completed});
+
   factory ActivityData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -399,6 +428,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}completed']),
     );
   }
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -456,6 +486,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
       completed: serializer.fromJson<bool>(json['completed']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -487,6 +518,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
         time: time ?? this.time,
         completed: completed ?? this.completed,
       );
+
   @override
   String toString() {
     return (StringBuffer('ActivityData(')
@@ -512,6 +544,7 @@ class ActivityData extends DataClass implements Insertable<ActivityData> {
                   location.hashCode,
                   $mrjc(date.hashCode,
                       $mrjc(time.hashCode, completed.hashCode)))))));
+
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -533,6 +566,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
   final Value<DateTime> date;
   final Value<DateTime> time;
   final Value<bool> completed;
+
   const ActivityCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -542,6 +576,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
     this.time = const Value.absent(),
     this.completed = const Value.absent(),
   });
+
   ActivityCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
@@ -551,6 +586,7 @@ class ActivityCompanion extends UpdateCompanion<ActivityData> {
     this.time = const Value.absent(),
     this.completed = const Value.absent(),
   }) : title = Value(title);
+
   static Insertable<ActivityData> custom({
     Expression<int> id,
     Expression<String> title,
@@ -622,11 +658,15 @@ class $ActivityTable extends Activity
     with TableInfo<$ActivityTable, ActivityData> {
   final GeneratedDatabase _db;
   final String _alias;
+
   $ActivityTable(this._db, [this._alias]);
+
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
+
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
+
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
@@ -634,16 +674,20 @@ class $ActivityTable extends Activity
 
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   GeneratedTextColumn _title;
+
   @override
   GeneratedTextColumn get title => _title ??= _constructTitle();
+
   GeneratedTextColumn _constructTitle() {
     return GeneratedTextColumn('title', $tableName, false, minTextLength: 1);
   }
 
   final VerificationMeta _noteMeta = const VerificationMeta('note');
   GeneratedTextColumn _note;
+
   @override
   GeneratedTextColumn get note => _note ??= _constructNote();
+
   GeneratedTextColumn _constructNote() {
     return GeneratedTextColumn('note', $tableName, false,
         defaultValue: Constant(""));
@@ -651,8 +695,10 @@ class $ActivityTable extends Activity
 
   final VerificationMeta _locationMeta = const VerificationMeta('location');
   GeneratedTextColumn _location;
+
   @override
   GeneratedTextColumn get location => _location ??= _constructLocation();
+
   GeneratedTextColumn _constructLocation() {
     return GeneratedTextColumn('location', $tableName, false,
         defaultValue: Constant(""));
@@ -660,8 +706,10 @@ class $ActivityTable extends Activity
 
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   GeneratedDateTimeColumn _date;
+
   @override
   GeneratedDateTimeColumn get date => _date ??= _constructDate();
+
   GeneratedDateTimeColumn _constructDate() {
     return GeneratedDateTimeColumn(
       'date',
@@ -672,8 +720,10 @@ class $ActivityTable extends Activity
 
   final VerificationMeta _timeMeta = const VerificationMeta('time');
   GeneratedDateTimeColumn _time;
+
   @override
   GeneratedDateTimeColumn get time => _time ??= _constructTime();
+
   GeneratedDateTimeColumn _constructTime() {
     return GeneratedDateTimeColumn(
       'time',
@@ -684,8 +734,10 @@ class $ActivityTable extends Activity
 
   final VerificationMeta _completedMeta = const VerificationMeta('completed');
   GeneratedBoolColumn _completed;
+
   @override
   GeneratedBoolColumn get completed => _completed ??= _constructCompleted();
+
   GeneratedBoolColumn _constructCompleted() {
     return GeneratedBoolColumn('completed', $tableName, false,
         defaultValue: Constant(false));
@@ -694,12 +746,15 @@ class $ActivityTable extends Activity
   @override
   List<GeneratedColumn> get $columns =>
       [id, title, note, location, date, time, completed];
+
   @override
   $ActivityTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'activity';
   @override
   final String actualTableName = 'activity';
+
   @override
   VerificationContext validateIntegrity(Insertable<ActivityData> instance,
       {bool isInserting = false}) {
@@ -739,6 +794,7 @@ class $ActivityTable extends Activity
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
+
   @override
   ActivityData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -757,12 +813,14 @@ class Test extends DataClass implements Insertable<Test> {
   final String module;
   final DateTime date;
   final DateTime time;
+
   Test(
       {@required this.id,
       @required this.location,
       @required this.module,
       this.date,
       this.time});
+
   factory Test.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -781,6 +839,7 @@ class Test extends DataClass implements Insertable<Test> {
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}time']),
     );
   }
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -826,6 +885,7 @@ class Test extends DataClass implements Insertable<Test> {
       time: serializer.fromJson<DateTime>(json['time']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -851,6 +911,7 @@ class Test extends DataClass implements Insertable<Test> {
         date: date ?? this.date,
         time: time ?? this.time,
       );
+
   @override
   String toString() {
     return (StringBuffer('Test(')
@@ -868,6 +929,7 @@ class Test extends DataClass implements Insertable<Test> {
       id.hashCode,
       $mrjc(location.hashCode,
           $mrjc(module.hashCode, $mrjc(date.hashCode, time.hashCode)))));
+
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -885,6 +947,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
   final Value<String> module;
   final Value<DateTime> date;
   final Value<DateTime> time;
+
   const TestsCompanion({
     this.id = const Value.absent(),
     this.location = const Value.absent(),
@@ -892,6 +955,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
     this.date = const Value.absent(),
     this.time = const Value.absent(),
   });
+
   TestsCompanion.insert({
     this.id = const Value.absent(),
     @required String location,
@@ -900,6 +964,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
     this.time = const Value.absent(),
   })  : location = Value(location),
         module = Value(module);
+
   static Insertable<Test> custom({
     Expression<int> id,
     Expression<String> location,
@@ -956,11 +1021,15 @@ class TestsCompanion extends UpdateCompanion<Test> {
 class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
   final GeneratedDatabase _db;
   final String _alias;
+
   $TestsTable(this._db, [this._alias]);
+
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
+
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
+
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
@@ -968,8 +1037,10 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
 
   final VerificationMeta _locationMeta = const VerificationMeta('location');
   GeneratedTextColumn _location;
+
   @override
   GeneratedTextColumn get location => _location ??= _constructLocation();
+
   GeneratedTextColumn _constructLocation() {
     return GeneratedTextColumn(
       'location',
@@ -980,8 +1051,10 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
 
   final VerificationMeta _moduleMeta = const VerificationMeta('module');
   GeneratedTextColumn _module;
+
   @override
   GeneratedTextColumn get module => _module ??= _constructModule();
+
   GeneratedTextColumn _constructModule() {
     return GeneratedTextColumn(
       'module',
@@ -992,8 +1065,10 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
 
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   GeneratedDateTimeColumn _date;
+
   @override
   GeneratedDateTimeColumn get date => _date ??= _constructDate();
+
   GeneratedDateTimeColumn _constructDate() {
     return GeneratedDateTimeColumn(
       'date',
@@ -1004,8 +1079,10 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
 
   final VerificationMeta _timeMeta = const VerificationMeta('time');
   GeneratedDateTimeColumn _time;
+
   @override
   GeneratedDateTimeColumn get time => _time ??= _constructTime();
+
   GeneratedDateTimeColumn _constructTime() {
     return GeneratedDateTimeColumn(
       'time',
@@ -1016,12 +1093,15 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
 
   @override
   List<GeneratedColumn> get $columns => [id, location, module, date, time];
+
   @override
   $TestsTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'tests';
   @override
   final String actualTableName = 'tests';
+
   @override
   VerificationContext validateIntegrity(Insertable<Test> instance,
       {bool isInserting = false}) {
@@ -1055,6 +1135,7 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
+
   @override
   Test map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -1074,6 +1155,7 @@ class PeriodData extends DataClass implements Insertable<PeriodData> {
   final String location;
   final String lecturer;
   final DateTime time;
+
   PeriodData(
       {@required this.id,
       @required this.day,
@@ -1081,6 +1163,7 @@ class PeriodData extends DataClass implements Insertable<PeriodData> {
       @required this.location,
       @required this.lecturer,
       this.time});
+
   factory PeriodData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -1100,6 +1183,7 @@ class PeriodData extends DataClass implements Insertable<PeriodData> {
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}time']),
     );
   }
+
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1152,6 +1236,7 @@ class PeriodData extends DataClass implements Insertable<PeriodData> {
       time: serializer.fromJson<DateTime>(json['time']),
     );
   }
+
   @override
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -1180,6 +1265,7 @@ class PeriodData extends DataClass implements Insertable<PeriodData> {
         lecturer: lecturer ?? this.lecturer,
         time: time ?? this.time,
       );
+
   @override
   String toString() {
     return (StringBuffer('PeriodData(')
@@ -1202,6 +1288,7 @@ class PeriodData extends DataClass implements Insertable<PeriodData> {
               module.hashCode,
               $mrjc(location.hashCode,
                   $mrjc(lecturer.hashCode, time.hashCode))))));
+
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -1221,6 +1308,7 @@ class PeriodCompanion extends UpdateCompanion<PeriodData> {
   final Value<String> location;
   final Value<String> lecturer;
   final Value<DateTime> time;
+
   const PeriodCompanion({
     this.id = const Value.absent(),
     this.day = const Value.absent(),
@@ -1229,6 +1317,7 @@ class PeriodCompanion extends UpdateCompanion<PeriodData> {
     this.lecturer = const Value.absent(),
     this.time = const Value.absent(),
   });
+
   PeriodCompanion.insert({
     this.id = const Value.absent(),
     @required int day,
@@ -1240,6 +1329,7 @@ class PeriodCompanion extends UpdateCompanion<PeriodData> {
         module = Value(module),
         location = Value(location),
         lecturer = Value(lecturer);
+
   static Insertable<PeriodData> custom({
     Expression<int> id,
     Expression<int> day,
@@ -1303,11 +1393,15 @@ class PeriodCompanion extends UpdateCompanion<PeriodData> {
 class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
   final GeneratedDatabase _db;
   final String _alias;
+
   $PeriodTable(this._db, [this._alias]);
+
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
+
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
+
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
@@ -1315,8 +1409,10 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 
   final VerificationMeta _dayMeta = const VerificationMeta('day');
   GeneratedIntColumn _day;
+
   @override
   GeneratedIntColumn get day => _day ??= _constructDay();
+
   GeneratedIntColumn _constructDay() {
     return GeneratedIntColumn(
       'day',
@@ -1327,8 +1423,10 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 
   final VerificationMeta _moduleMeta = const VerificationMeta('module');
   GeneratedTextColumn _module;
+
   @override
   GeneratedTextColumn get module => _module ??= _constructModule();
+
   GeneratedTextColumn _constructModule() {
     return GeneratedTextColumn(
       'module',
@@ -1339,8 +1437,10 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 
   final VerificationMeta _locationMeta = const VerificationMeta('location');
   GeneratedTextColumn _location;
+
   @override
   GeneratedTextColumn get location => _location ??= _constructLocation();
+
   GeneratedTextColumn _constructLocation() {
     return GeneratedTextColumn(
       'location',
@@ -1351,8 +1451,10 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 
   final VerificationMeta _lecturerMeta = const VerificationMeta('lecturer');
   GeneratedTextColumn _lecturer;
+
   @override
   GeneratedTextColumn get lecturer => _lecturer ??= _constructLecturer();
+
   GeneratedTextColumn _constructLecturer() {
     return GeneratedTextColumn(
       'lecturer',
@@ -1363,8 +1465,10 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 
   final VerificationMeta _timeMeta = const VerificationMeta('time');
   GeneratedDateTimeColumn _time;
+
   @override
   GeneratedDateTimeColumn get time => _time ??= _constructTime();
+
   GeneratedDateTimeColumn _constructTime() {
     return GeneratedDateTimeColumn(
       'time',
@@ -1376,12 +1480,15 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
   @override
   List<GeneratedColumn> get $columns =>
       [id, day, module, location, lecturer, time];
+
   @override
   $PeriodTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'period';
   @override
   final String actualTableName = 'period';
+
   @override
   VerificationContext validateIntegrity(Insertable<PeriodData> instance,
       {bool isInserting = false}) {
@@ -1423,6 +1530,7 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
+
   @override
   PeriodData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -1438,15 +1546,21 @@ class $PeriodTable extends Period with TableInfo<$PeriodTable, PeriodData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $TasksTable _tasks;
+
   $TasksTable get tasks => _tasks ??= $TasksTable(this);
   $ActivityTable _activity;
+
   $ActivityTable get activity => _activity ??= $ActivityTable(this);
   $TestsTable _tests;
+
   $TestsTable get tests => _tests ??= $TestsTable(this);
   $PeriodTable _period;
+
   $PeriodTable get period => _period ??= $PeriodTable(this);
+
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [tasks, activity, tests, period];

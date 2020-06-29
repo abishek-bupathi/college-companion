@@ -43,7 +43,7 @@ class _ExamsState extends State<Exams> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context){
+                    builder: (BuildContext context) {
                       return Calendar_dialog(database);
                     },
                   );
@@ -53,9 +53,9 @@ class _ExamsState extends State<Exams> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0,15, 0),
-              padding: EdgeInsets.fromLTRB(0, 0,0, 0),
-              height:45,
+              margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              height: 45,
               width: 45,
               child: new IconButton(
                 icon: new Icon(Icons.add),
@@ -460,35 +460,31 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                                                       maxTime:
                                                           DateTime(2050, 6, 7),
                                                       onConfirm: (date) {
-
-                                                      DatePicker
-                                                          .showTime12hPicker(
-                                                              context,
-                                                              showTitleActions:
-                                                                  true,
-                                                              onConfirm:
-                                                                  (time) {
-                                                        setState(() {
-                                                          timeWithoutFormat =
-                                                              time;
-                                                          _timeExam = DateFormat(
-                                                                  "hh:mm a")
-                                                              .format(
-                                                                  timeWithoutFormat);
-                                                          dateWithoutFormat = date;
-                                                          _dateExam = DateFormat(
-                                                              "dd MMM, yyyy")
-                                                              .format(
-                                                              dateWithoutFormat);
-
-                                                        });
-                                                      },
-                                                              currentTime:
-                                                                  DateTime
-                                                                      .now(),
-                                                              locale: LocaleType
-                                                                  .en);
-
+                                                    DatePicker
+                                                        .showTime12hPicker(
+                                                            context,
+                                                            showTitleActions:
+                                                                true,
+                                                            onConfirm: (time) {
+                                                      setState(() {
+                                                        timeWithoutFormat =
+                                                            time;
+                                                        _timeExam = DateFormat(
+                                                                "hh:mm a")
+                                                            .format(
+                                                                timeWithoutFormat);
+                                                        dateWithoutFormat =
+                                                            date;
+                                                        _dateExam = DateFormat(
+                                                                "dd MMM, yyyy")
+                                                            .format(
+                                                                dateWithoutFormat);
+                                                      });
+                                                    },
+                                                            currentTime:
+                                                                DateTime.now(),
+                                                            locale:
+                                                                LocaleType.en);
                                                   },
                                                       currentTime:
                                                           DateTime.now(),
@@ -527,18 +523,16 @@ addExamDialog(BuildContext context, List modulesList, AppDatabase database) {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            if(_module != null){
-                            final test = Test(
-                                module: _module,
-                                location: _location,
-                                date: dateWithoutFormat,
-                                time: timeWithoutFormat);
-                            database.insertTest(test);
-                            Navigator.pop(context);
-                            }else{
-                              Toast.show(
-                                  "Module cannot be empty",
-                                  context,
+                            if (_module != null) {
+                              final test = Test(
+                                  module: _module,
+                                  location: _location,
+                                  date: dateWithoutFormat,
+                                  time: timeWithoutFormat);
+                              database.insertTest(test);
+                              Navigator.pop(context);
+                            } else {
+                              Toast.show("Module cannot be empty", context,
                                   duration: Toast.LENGTH_LONG,
                                   backgroundRadius: 10);
                             }
@@ -592,7 +586,6 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                     child: Column(
                       children: <Widget>[
-
                         Container(
                           decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
@@ -610,12 +603,13 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                               ),
                               iconSize: 30,
                               elevation: 0,
-                              style: TextStyle(color: Color(teal_bg), fontSize: 20),
+                              style: TextStyle(
+                                  color: Color(teal_bg), fontSize: 20),
                               onChanged: (newValue) {
                                 setState(() {
                                   module = newValue;
-                                  database
-                                      .updateTest(itemTest.copyWith(module: newValue));
+                                  database.updateTest(
+                                      itemTest.copyWith(module: newValue));
                                 });
                               },
                               items: modulesList.map((value) {
@@ -635,20 +629,24 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                             children: <Widget>[
                               Text(
                                 "Venue",
-                                style: TextStyle(fontSize: 18, color: Color(label_clr)),
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(label_clr)),
                               ),
                               TextField(
                                   controller: locationController,
                                   cursorColor: Colors.white,
-                                  style: TextStyle(color: Colors.white, fontSize: 25),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
                                   decoration: InputDecoration(
                                     hintText: "-",
-                                    hintStyle: TextStyle(color: Color(label_clr)),
+                                    hintStyle:
+                                        TextStyle(color: Color(label_clr)),
                                     focusColor: Colors.white,
-                                    enabledBorder:
-                                        UnderlineInputBorder(borderSide: BorderSide.none),
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide.none),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white),
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
                                     ),
                                   ),
                                   onTap: () {
@@ -666,7 +664,8 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                 color: Colors.white),
                             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: <Widget>[
@@ -683,7 +682,8 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                                   .toString()
                                               : "-",
                                           style: TextStyle(
-                                              color: Color(teal_bg), fontSize: 16)),
+                                              color: Color(teal_bg),
+                                              fontSize: 16)),
                                     ],
                                   ),
                                   Row(
@@ -698,7 +698,8 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                                   .toString()
                                               : "-",
                                           style: TextStyle(
-                                              color: Color(teal_bg), fontSize: 16)),
+                                              color: Color(teal_bg),
+                                              fontSize: 16)),
                                     ],
                                   ),
                                   ButtonTheme(
@@ -715,20 +716,24 @@ viewExamDialog(BuildContext context, List modulesList, Test itemTest,
                                               maxTime: DateTime(2050, 6, 7),
                                               onConfirm: (date_new) {
                                             setState(() {
-                                              DatePicker.showTime12hPicker(context,
+                                              DatePicker.showTime12hPicker(
+                                                  context,
                                                   showTitleActions: true,
                                                   onConfirm: (time_new) {
                                                 setState(() {
-                                                  database.updateTest(itemTest.copyWith(
-                                                      time: time_new, date: date_new));
+                                                  database.updateTest(
+                                                      itemTest.copyWith(
+                                                          time: time_new,
+                                                          date: date_new));
                                                   _time = time_new;
                                                   _date = date_new;
                                                 });
                                               }, locale: LocaleType.en);
                                             });
                                           },
-                                              currentTime:
-                                                  _date != "" ? _date : DateTime.now(),
+                                              currentTime: _date != ""
+                                                  ? _date
+                                                  : DateTime.now(),
                                               locale: LocaleType.en);
                                         },
                                       )),
