@@ -163,7 +163,7 @@ class _ItemAcademicState extends State<ItemAcademic> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 15, 10),
+          padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
           height: 75,
           decoration: BoxDecoration(
             gradient: LinearGradient(
