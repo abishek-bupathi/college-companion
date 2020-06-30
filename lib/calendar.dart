@@ -1,4 +1,5 @@
 import 'package:college_companion/database.dart';
+import 'package:college_companion/user_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -6,7 +7,8 @@ import 'package:table_calendar/table_calendar.dart';
 
 class Calendar_dialog extends StatefulWidget {
   AppDatabase database;
-  var _events = <DateTime, List>{};
+  var _events = <DateTime, List>{}, _holidays = <DateTime, List>{};
+
 
   Calendar_dialog(this.database);
 
@@ -34,6 +36,7 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
 
   @override
   Widget build(BuildContext context) {
+
     eventsData(widget.database).then((value) => {
           if (this.mounted && ctr == 0)
             {
@@ -46,7 +49,12 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
 
     print(widget._events);
 
-    return Dialog(
+    for(int i = UserDetails().getDob().year; i < UserDetails().getDob().year + 50; i++)
+      {
+        widget._holidays.addAll({DateTime(i,UserDetails().getDob().month, UserDetails().getDob().day): ["Happy Birthday !"]});
+      }
+
+  return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -65,8 +73,10 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
             // padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
             child: TableCalendar(
               events: widget._events,
+              holidays: widget._holidays,
               initialCalendarFormat: CalendarFormat.month,
               initialSelectedDay: DateTime.now(),
+
               calendarStyle: CalendarStyle(
                 markersColor: Colors.grey,
                 todayColor: Colors.orangeAccent,
@@ -134,8 +144,8 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
                   if (holidays.isNotEmpty) {
                     children.add(
                       Positioned(
-                        right: -2,
-                        top: -2,
+                        right: -1,
+                        top: -1,
                         child: _buildHolidaysMarker(),
                       ),
                     );
@@ -203,9 +213,9 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
 
   Widget _buildHolidaysMarker() {
     return Icon(
-      Icons.add_box,
+      Icons.cake,
       size: 20.0,
-      color: Colors.blueGrey[800],
+      color: Colors.deepOrange,
     );
   }
 
