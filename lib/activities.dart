@@ -132,7 +132,7 @@ class _ActivitiesState extends State<Activities> {
                             onTap: () {
                               showDialog(
                                       context: context,
-                                      barrierDismissible: false,
+                                  //    barrierDismissible: false,
                                       builder: (context) => editActivityDialog(
                                           context, itemActivity, database))
                                   .then((_) => setState(() {}));

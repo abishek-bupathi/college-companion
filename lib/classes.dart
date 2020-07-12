@@ -323,7 +323,7 @@ class _timeTableState extends State<timeTable> {
                         if (itemPeriod.module != "") {
                           showDialog(
                               context: context,
-                              barrierDismissible: false,
+                            //  barrierDismissible: false,
                               builder: (context) => viewClassDialog(context,
                                   widget.modulesList, itemPeriod, database));
                         } else {

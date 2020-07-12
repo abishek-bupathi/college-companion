@@ -123,7 +123,7 @@ class _AcademicState extends State<Academic> {
                               onTap: () {
                                 showDialog(
                                     context: context,
-                                    barrierDismissible: false,
+                                 //   barrierDismissible: false,
                                     builder: (context) => editTaskDialog(
                                         context,
                                         itemTask,

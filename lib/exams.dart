@@ -153,7 +153,7 @@ class _ExamsState extends State<Exams> {
                                       onTap: () {
                                         showDialog(
                                                 context: context,
-                                                barrierDismissible: false,
+                                              //  barrierDismissible: false,
                                                 builder: (context) =>
                                                     viewExamDialog(
                                                         context,
