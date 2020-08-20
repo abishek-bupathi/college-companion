@@ -6,9 +6,16 @@
 
 An app developed using Flutter to manage all the Activities during college life.
 
+
+## Download
+ 
+ Download apk - 
+ [College companion v1.0-beta.apk](https://github.com/abishek-bupathi/college-companion/raw/master/Apk/companion%20v1.0-beta.apk)
+ 
+ 
 ## Screenshots
 
-<div>
+
 <p float="left">
 <img src="https://raw.githubusercontent.com/abishek-bupathi/college-companion/master/docs/Screenshots/personel details.png" height="400"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="400"/>
@@ -18,10 +25,6 @@ An app developed using Flutter to manage all the Activities during college life.
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="400"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="400"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/view exam.png" height="400"/>
- </p>
- </div>
+</p>
  
- ## Downloads
- 
- [College companion v1.0-beta.apk - Download](https://github.com/abishek-bupathi/college-companion/raw/master/Apk/companion%20v1.0-beta.apk)
  
