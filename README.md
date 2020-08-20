@@ -3,7 +3,7 @@
 <h1 align = "center">College Companion</h1>
 </p>
 
-
+-------
 ## About this app
 
 Organize and plan all your College activities at one place !
@@ -19,12 +19,12 @@ Download apk -
 ## Screenshots
 
 <p>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:25px;padding-bottom: 25px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:15px;padding-bottom: 15px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
 </p>
 
 
