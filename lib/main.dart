@@ -28,6 +28,7 @@ void main() async {
   }
 
   runApp(new MaterialApp(
+      debugShowCheckedModeBanner:false,
       home: FutureBuilder(
     future: _openBox(),
     builder: (BuildContext context, AsyncSnapshot snapshot) {
