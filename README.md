@@ -8,7 +8,7 @@
 
 Organize and plan all your College activities at one place !
 
-Seperate pages for Academics and Extra-cirricular activities to maintain an efficient planner and never miss any deadlines.
+Seperate pages for academics and extra-curricular activities to maintain an efficient planner and never miss any deadlines.
 
 ## Download  [![release](https://img.shields.io/github/v/release/abishek-bupathi/college-companion?include_prereleases)](https://github.com/abishek-bupathi/college-companion/blob/master/Apk/companion%20v1.0-beta.apk)
 
