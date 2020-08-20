@@ -1,5 +1,5 @@
 <p align = "center">
-<img src="https://github.com/abishek-bupathi/college-companion/blob/master/assets/logo.png" height="75" style = "float:left;"/> 
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/assets/logo.png" height="75" style = "float:left;"/> 
 <h1 align = "center" style = "float:right;">College Companion</h1>
 </p>
 
@@ -22,8 +22,8 @@ Download apk -
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:25px;padding-bottom: 25px"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:25px; padding-bottom: 25px""/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:25px; padding-bottom: 25px""/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:25px; padding-bottom: 25px"/>
 </p>
 
 
