@@ -24,7 +24,7 @@ An app developed using Flutter to manage all the Activities during college life.
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250"/>
 <img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/view exam.png" height="200"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/view exam.png" height="250"/>
 </p>
  
  
