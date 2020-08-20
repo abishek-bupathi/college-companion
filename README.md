@@ -19,12 +19,12 @@ Download apk -
 ## Screenshots
 
 <p>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:15px;padding-bottom: 15px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:15px; padding-bottom: 15px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="250" style = "padding-right:10px; padding-bottom: 10px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:10px;padding-bottom: 10px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:10px; padding-bottom: 10px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:10px; padding-bottom: 10px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:10px; padding-bottom: 10px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:10px; padding-bottom: 10px"/>
 </p>
 
 
