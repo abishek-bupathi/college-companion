@@ -1,7 +1,8 @@
 <p align = "center">
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/assets/logo.png" height="75" style = "float:left;"/> 
-<h1 align = "center" style = "float:right;">College Companion</h1>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/assets/logo.png" height="75"/> 
+<h1 align = "center">College Companion</h1>
 </p>
+
 
 ## About this app
 
