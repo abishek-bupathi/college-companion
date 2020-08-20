@@ -17,21 +17,21 @@ Download apk -
   
 ## Screenshots
 
-<p align="center">
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="250" style = "padding-right:70px;"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:70px;"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:70px;"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:70px;"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:70px;"/>
-<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:70px;"/>
+<p>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Academic tasks.png" height="250" style = "padding-right:50px; padding bottom: 25px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Activities list.png" height="250" style = "padding-right:50px;padding bottom: 25px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Exams.png" height="250" style = "padding-right:50px; padding bottom: 25px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Classes.png" height="250" style = "padding-right:50px; padding bottom: 25px"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Profile.png" height="250" style = "padding-right:50px;"/>
+<img src="https://github.com/abishek-bupathi/college-companion/raw/master/docs/Screenshots/Settings.png" height="250" style = "padding-right:50px;"/>
 </p>
 
 
 ## License  [![license](https://img.shields.io/github/license/abishek-bupathi/college-companion.svg?color=blue)](https://github.com/abishek-bupathi/college-companion/blob/master/LICENSE)
 
-![](https://github.com/abishek-bupathi/college-companion/blob/master/docs/license.png)
-
-
+<p>
+<img src="https://github.com/abishek-bupathi/college-companion/blob/master/docs/license.png""/>
+</p>
 
 
  
