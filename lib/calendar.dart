@@ -156,7 +156,7 @@ class _Calendar_dialogState extends State<Calendar_dialog> {
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
               calendarController: _calendarController,
-              onDaySelected: (date, events) {
+              onDaySelected: (date, events, _) {
                 setState(() {
                   print(date.toIso8601String());
                   _selectedEvents = events;
